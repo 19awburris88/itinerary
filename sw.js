@@ -1,7 +1,9 @@
 /* US Open Weekend — offline cache.
+   Fonts are self-hosted, so install() precaches everything the app needs and one
+   online load is enough to go fully offline.
    Bump CACHE when you edit index.html so phones pick up the new version. */
 
-const CACHE = "usopen-v1";
+const CACHE = "usopen-v2";
 
 const SHELL = [
   "./",
@@ -10,11 +12,13 @@ const SHELL = [
   "./icons/icon-192.png",
   "./icons/icon-512.png",
   "./icons/icon-maskable-512.png",
-  "./icons/apple-touch-icon.png"
+  "./icons/apple-touch-icon.png",
+  "./fonts/big-shoulders-display-var.woff2",
+  "./fonts/instrument-sans-var.woff2",
+  "./fonts/ibm-plex-mono-400.woff2",
+  "./fonts/ibm-plex-mono-500.woff2",
+  "./fonts/ibm-plex-mono-600.woff2"
 ];
-
-// Fonts get cached the first time you load the page online.
-const FONT_HOSTS = ["fonts.googleapis.com", "fonts.gstatic.com"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -35,21 +39,6 @@ self.addEventListener("fetch", (event) => {
   if (req.method !== "GET") return;
 
   const url = new URL(req.url);
-
-  // Fonts: serve from cache, fall back to network and store the result.
-  if (FONT_HOSTS.includes(url.hostname)) {
-    event.respondWith(
-      caches.match(req).then((hit) => {
-        if (hit) return hit;
-        return fetch(req).then((res) => {
-          const copy = res.clone();
-          caches.open(CACHE).then((c) => c.put(req, copy));
-          return res;
-        }).catch(() => hit);
-      })
-    );
-    return;
-  }
 
   // The page itself: try the network so edits show up, fall back to cache underground.
   if (req.mode === "navigate") {

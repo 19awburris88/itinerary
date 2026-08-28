@@ -7,6 +7,7 @@ index.html      the whole app
 manifest.json   name, colors, icons
 sw.js           offline cache
 icons/          192 / 512 / maskable / apple-touch
+fonts/          5 self-hosted woff2, latin subset
 ```
 
 ## Deploy to GitHub Pages
@@ -41,22 +42,37 @@ her notes won't sync to yours.
 
 ## Offline
 
-The service worker caches the page, icons, and fonts, so it opens on the 7 train
-and inside the grounds where service drops.
+The service worker precaches the page, the icons, and the fonts on install, so one load
+on wifi is all it takes — after that it opens on the 7 train and inside the grounds where
+service drops. There are no third-party requests at all; the fonts are served from `fonts/`.
 
-**Load it twice on wifi before you fly.** The first load installs the service worker, but the
-Google Fonts requests fire before the worker is controlling the page, so they miss the cache.
-The second load is what gets the fonts in. After one load the itinerary still opens offline and
-works fully — it just falls back to Arial Narrow instead of Big Shoulders. Self-hosting the
-fonts would make a single load enough.
+## Calendar
+
+The **Add to calendar** button builds a `.ics` for the seven booked items (both flights,
+three sessions, Markette, the Circle Line) with an alert on each, and hands it to your
+calendar app. It's generated in the browser from the same `DAYS` data the cards render
+from, so it works offline too.
+
+Each of those seven items carries an `ics:{...}` field right next to its `time:` on the
+card. **Change a time on a card and change it in `ics` too** — they sit on the same object
+so it's hard to miss, but nothing enforces it.
+
+Times use `TZID` with real `VTIMEZONE` blocks rather than UTC, which is what lets the two
+flights carry a Central departure and an Eastern arrival (and the reverse coming home).
+The `UID`s are stable, so re-importing updates the events instead of duplicating them.
+
+Two end times are estimates, not bookings: the Circle Line cruise (the booking doesn't list
+one) and the two Armstrong night sessions. Each says so in its description. The Ashe end
+time is deliberately 4:15 PM — when you need to leave Flushing for the Markette table,
+not when play finishes.
 
 ## After you edit index.html
 
-Bump the cache name in `sw.js` (`usopen-v1` → `usopen-v2`) and push. Without that, phones
+Bump the cache name in `sw.js` (`usopen-v2` → `usopen-v3`) and push. Without that, phones
 that already installed it may keep serving the old copy.
 
 ## Notes
 
 - Checklist and planning notes save to `localStorage` on the device.
 - Dates are hardcoded to September 2026 — the countdown and the auto-selected day key off it.
-- No analytics, no network calls beyond Google Fonts.
+- No analytics and no network calls at all — nothing leaves the device.

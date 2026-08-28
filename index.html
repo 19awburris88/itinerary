@@ -4,10 +4,38 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>US Open Weekend — Austin + Adrienne</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" href="fonts/big-shoulders-display-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/instrument-sans-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+  /* Self-hosted, latin subset. Big Shoulders and Instrument Sans are variable
+     fonts — one file each covers the whole weight range. Preloaded above so the
+     first paint doesn't flash the fallback. */
+  @font-face{
+    font-family:"Big Shoulders Display";
+    src:url("fonts/big-shoulders-display-var.woff2") format("woff2");
+    font-weight:500 900; font-style:normal; font-display:swap;
+  }
+  @font-face{
+    font-family:"Instrument Sans";
+    src:url("fonts/instrument-sans-var.woff2") format("woff2");
+    font-weight:400 600; font-style:normal; font-display:swap;
+  }
+  @font-face{
+    font-family:"IBM Plex Mono";
+    src:url("fonts/ibm-plex-mono-400.woff2") format("woff2");
+    font-weight:400; font-style:normal; font-display:swap;
+  }
+  @font-face{
+    font-family:"IBM Plex Mono";
+    src:url("fonts/ibm-plex-mono-500.woff2") format("woff2");
+    font-weight:500; font-style:normal; font-display:swap;
+  }
+  @font-face{
+    font-family:"IBM Plex Mono";
+    src:url("fonts/ibm-plex-mono-600.woff2") format("woff2");
+    font-weight:600; font-style:normal; font-display:swap;
+  }
   :root{
     --night:#0C1B33;
     --court:#2A5CAA;
@@ -273,6 +301,21 @@
   }
   .basecamp .addr span{display:block;color:#8FA6C4;font-weight:500;font-size:20px;}
   .basecamp .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;}
+
+  .calbox{background:var(--night);color:#fff;border-radius:8px;padding:22px 20px;}
+  .calbox .row{display:flex;gap:10px;flex-wrap:wrap;}
+  .callist{list-style:none;margin:18px 0 0;padding:16px 0 0;border-top:1px solid rgba(255,255,255,.2);}
+  .callist li{
+    display:flex;gap:12px;align-items:baseline;justify-content:space-between;
+    font-size:13.5px;color:#D6E1F0;padding:5px 0;
+  }
+  .callist .when{font-family:var(--mono);font-size:11px;color:var(--ball);white-space:nowrap;letter-spacing:.04em;}
+  .callist .alarm{font-family:var(--mono);font-size:11px;color:#8FA6C4;white-space:nowrap;}
+  .callist .what{flex:1;}
+  @media (max-width:420px){
+    .callist li{flex-wrap:wrap;gap:2px 10px;}
+    .callist .what{flex:1 0 100%;order:3;}
+  }
   .btn{
     font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
     padding:8px 13px;border-radius:4px;border:1px solid rgba(255,255,255,.35);
@@ -403,6 +446,18 @@
   </section>
 
   <section class="section">
+    <h3>Calendar</h3>
+    <p class="sub">The seven things that are actually booked, with alerts. Nothing that's still open goes in.</p>
+    <div class="calbox">
+      <div class="row">
+        <button class="btn solid" id="icsBtn">Add to calendar</button>
+        <button class="btn" id="icsShare" hidden>Share to a phone</button>
+      </div>
+      <ul class="callist" id="callist"></ul>
+    </div>
+  </section>
+
+  <section class="section">
     <h3>Still to plan</h3>
     <p class="sub">Check things off as they lock in. Jot the plan next to each one so it lands in the right day.</p>
     <p class="progress" id="progress">— of — locked in</p>
@@ -431,6 +486,10 @@
       items:[
         { time:"5:30 PM", kind:"Flight out", title:"AA 1248 · DFW → JFK", where:"American Airlines · arrives 10:14 PM",
           cls:"travel",
+          ics:{ uid:"flight-out", alarm:120,
+            start:["2026-09-03T17:30","America/Chicago"], end:["2026-09-03T22:14","America/New_York"],
+            summary:"AA 1248 · DFW → JFK", location:"Dallas/Fort Worth International Airport",
+            desc:"American Airlines 1248. Seats 8A & 8B. 3h 44m in the air. Lands JFK Terminal 8 at 10:14 PM ET." },
           facts:[["Route","Dallas/Fort Worth → New York JFK"],["Seats","8A &amp; 8B"],["In the air","3h 44m"]],
           note:"Late arrival — plan on getting to Midtown around 11:30 PM." },
         { time:"10:14 PM", kind:"Arrive", title:"Land at JFK", where:"Terminal 8 · AirTrain to Jamaica",
@@ -449,6 +508,10 @@
         { time:"Afternoon", kind:"Open", title:"Lunch, then back to Midtown", where:"Nothing booked", cls:"open-slot" },
         { time:"7:00 PM", kind:"US Open · Session 12", title:"Louis Armstrong Stadium", where:"USTA Billie Jean King National Tennis Center, Flushing",
           cls:"session", anchor:true, session:"12",
+          ics:{ uid:"session-12", alarm:90,
+            start:["2026-09-04T19:00","America/New_York"], end:["2026-09-04T23:30","America/New_York"],
+            summary:"US Open · Session 12 · Louis Armstrong", location:"USTA Billie Jean King National Tennis Center, Flushing, NY",
+            desc:"Night session at Louis Armstrong — two matches. 7 train to Mets–Willets Point, about 45 min from Midtown. Leave by 5:30 PM to catch the first match. End time is an estimate; expect to be out past 11:00 PM." },
           facts:[["Getting there","7 train to Mets–Willets Point · about 45 min from Midtown"],["Leave by","5:30 PM to catch the first match"],["Gates","<a href='"+m("USTA Billie Jean King National Tennis Center")+"' target='_blank' rel='noopener'>Open in Maps</a>"]],
           note:"Night sessions at Armstrong are two matches — expect to be out past 11:00 PM." },
         { time:"After", kind:"Open", title:"Late dinner or drinks", where:"Nothing booked", cls:"open-slot" }
@@ -462,6 +525,10 @@
           facts:[["Still open","Where you're meeting and how you're getting there"],["Watch","Build in buffer — you need to be at Armstrong by 7:00 PM"]] },
         { time:"7:00 PM", kind:"US Open · Session 14", title:"Louis Armstrong Stadium", where:"USTA Billie Jean King National Tennis Center, Flushing",
           cls:"session", anchor:true, session:"14",
+          ics:{ uid:"session-14", alarm:120,
+            start:["2026-09-05T19:00","America/New_York"], end:["2026-09-05T23:30","America/New_York"],
+            summary:"US Open · Session 14 · Louis Armstrong", location:"USTA Billie Jean King National Tennis Center, Flushing, NY",
+            desc:"Night session at Louis Armstrong. Coming back from New Jersey — allow 90 min through Manhattan on a Saturday. 7 train to Mets–Willets Point. End time is an estimate." },
           facts:[["Getting there","7 train to Mets–Willets Point"],["From New Jersey","Allow 90 min back through Manhattan on a Saturday"],["Gates","<a href='"+m("USTA Billie Jean King National Tennis Center")+"' target='_blank' rel='noopener'>Open in Maps</a>"]] },
         { time:"After", kind:"Open", title:"Wide open", where:"Nothing booked", cls:"open-slot" }
       ]
@@ -472,13 +539,25 @@
       items:[
         { time:"11:30 AM", kind:"US Open · Session 15", title:"Arthur Ashe Stadium", where:"USTA Billie Jean King National Tennis Center, Flushing",
           cls:"session", anchor:true, session:"15",
+          ics:{ uid:"session-15", alarm:90,
+            start:["2026-09-06T11:30","America/New_York"], end:["2026-09-06T16:15","America/New_York"],
+            summary:"US Open · Session 15 · Arthur Ashe", location:"USTA Billie Jean King National Tennis Center, Flushing, NY",
+            desc:"Day session at Arthur Ashe. 7 train to Mets–Willets Point, about 45 min. Leave Midtown by 10:00 AM. The end time here is when you need to leave Flushing for the 5:15 PM table, not when play finishes — Ashe day sessions run long." },
           facts:[["Getting there","7 train to Mets–Willets Point · about 45 min"],["Leave by","10:00 AM"],["Heads up","Ashe day sessions run long — you'll likely leave mid-match"]] },
         { time:"5:15 PM", kind:"Dinner · booked", title:"Markette", where:"326 7th Ave · table for 2", cls:"meal",
+          ics:{ uid:"markette", alarm:60,
+            start:["2026-09-06T17:15","America/New_York"], end:["2026-09-06T18:00","America/New_York"],
+            summary:"Dinner · Markette (table for 2)", location:"Markette, 326 7th Ave, New York, NY",
+            desc:"Confirmation 19934. Party of 2. Leave Flushing by 4:15 PM to make the table. Leave dinner by 6:00 PM — boarding at Pier 83 is 6:15 PM." },
           facts:[["Confirmation","<span class='mono'>19934</span>"],["Address","<a href='"+m("Markette, 326 7th Ave, New York, NY")+"' target='_blank' rel='noopener'>326 7th Ave</a>"],["Party","2"]],
           note:"Tightest turn of the trip: leave Flushing by 4:15 PM to make the table, and you only have about an hour before you need to be at the pier." },
         { time:"6:15 PM", kind:"Boarding", title:"Board at Pier 83", where:"W 42nd St &amp; 12th Ave",
           facts:[["From Markette","About 15 min by cab · leave dinner by 6:00 PM"],["Pier","<a href='"+m("Circle Line Pier 83, W 42nd St & 12th Ave, New York")+"' target='_blank' rel='noopener'>Open in Maps</a>"]] },
         { time:"7:00 PM", kind:"Cruise · booked", title:"Harbor Lights Premier", where:"Circle Line · Pier 83",
+          ics:{ uid:"circle-line", alarm:30,
+            start:["2026-09-06T18:15","America/New_York"], end:["2026-09-06T21:00","America/New_York"],
+            summary:"Circle Line · Harbor Lights Premier", location:"Circle Line Pier 83, W 42nd St & 12th Ave, New York, NY",
+            desc:"Boarding 6:15 PM at Pier 83, cruise departs 7:00 PM. About 15 min by cab from Markette. Bring a layer — it is cold on the water after dark. End time is an estimate; the booking does not list one. You dock a 12-minute walk from the apartment." },
           facts:[["Boards","6:15 PM"],["Bring","A layer — it's cold on the water after dark"]] },
         { time:"After", kind:"Open", title:"Wide open", where:"Nothing booked", cls:"open-slot",
           facts:[["Nearby","You dock a 12-minute walk from the apartment"]] }
@@ -497,6 +576,10 @@
           facts:[["Allow","60–75 min · Monday traffic to Queens is unkind"],["At the airport by","4:45 PM"]],
           note:"Leave Midtown by 3:30 PM at the latest for a 6:30 PM departure." },
         { time:"6:30 PM", kind:"Flight home", title:"AA 606 · JFK → DFW", where:"American Airlines · arrives 9:35 PM", cls:"travel", anchor:true,
+          ics:{ uid:"flight-home", alarm:180,
+            start:["2026-09-07T18:30","America/New_York"], end:["2026-09-07T21:35","America/Chicago"],
+            summary:"AA 606 · JFK → DFW", location:"John F. Kennedy International Airport",
+            desc:"American Airlines 606. Seats 9E & 9F. 4h 05m in the air. Leave Midtown by 3:30 PM at the latest — allow 60–75 min to JFK." },
           facts:[["Route","New York JFK → Dallas/Fort Worth"],["Seats","9E &amp; 9F"],["In the air","4h 05m"]] }
       ]
     }
@@ -672,6 +755,136 @@
     });
   }
 
+  /* ---------- calendar ----------
+     Events are declared inline on the DAYS items (the `ics` field) so a time that
+     changes on a card changes in the .ics too. Only booked things carry one.
+     TZID + VTIMEZONE rather than UTC, so the flights keep their two timezones and
+     every client reads the same wall-clock time. */
+
+  function zone(tzid, dName, dFrom, dTo, sName, sFrom, sTo){
+    return [
+      "BEGIN:VTIMEZONE","TZID:"+tzid,
+      "BEGIN:DAYLIGHT","TZOFFSETFROM:"+dFrom,"TZOFFSETTO:"+dTo,"TZNAME:"+dName,
+      "DTSTART:19700308T020000","RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU","END:DAYLIGHT",
+      "BEGIN:STANDARD","TZOFFSETFROM:"+sFrom,"TZOFFSETTO:"+sTo,"TZNAME:"+sName,
+      "DTSTART:19701101T020000","RRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU","END:STANDARD",
+      "END:VTIMEZONE"
+    ];
+  }
+  var ZONES = {
+    "America/New_York": zone("America/New_York","EDT","-0500","-0400","EST","-0400","-0500"),
+    "America/Chicago":  zone("America/Chicago", "CDT","-0600","-0500","CST","-0500","-0600")
+  };
+
+  function calEvents(){
+    var out = [];
+    DAYS.forEach(function(d){
+      d.items.forEach(function(it){ if(it.ics) out.push(it.ics); });
+    });
+    return out;
+  }
+
+  /* RFC 5545 TEXT escaping, then 75-octet line folding. */
+  function icsEsc(v){
+    return String(v).replace(/\\/g,"\\\\").replace(/([;,])/g,"\\$1").replace(/\r?\n/g,"\\n");
+  }
+  function octets(ch){
+    var c = ch.codePointAt(0);
+    return c < 0x80 ? 1 : c < 0x800 ? 2 : c < 0x10000 ? 3 : 4;
+  }
+  function fold(line){
+    var chars = Array.from(line), out = [], cur = "", len = 0;
+    for(var i=0;i<chars.length;i++){
+      var n = octets(chars[i]);
+      if(len + n > 75){ out.push(cur); cur = " "; len = 1; }
+      cur += chars[i]; len += n;
+    }
+    out.push(cur);
+    return out.join("\r\n");
+  }
+  function utcStamp(d){
+    function p(n){ return (n < 10 ? "0" : "") + n; }
+    return d.getUTCFullYear() + p(d.getUTCMonth()+1) + p(d.getUTCDate()) + "T" +
+           p(d.getUTCHours()) + p(d.getUTCMinutes()) + p(d.getUTCSeconds()) + "Z";
+  }
+  function icsLocal(v){ return v.replace(/[-:]/g,"") + "00"; }
+
+  function buildIcs(){
+    var evs = calEvents(), used = {}, lines = [
+      "BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//US Open Weekend//Itinerary//EN",
+      "CALSCALE:GREGORIAN","METHOD:PUBLISH","X-WR-CALNAME:US Open Weekend"
+    ];
+    evs.forEach(function(e){ used[e.start[1]] = 1; used[e.end[1]] = 1; });
+    Object.keys(used).forEach(function(z){ lines = lines.concat(ZONES[z]); });
+
+    var now = utcStamp(new Date());
+    evs.forEach(function(e){
+      lines.push(
+        "BEGIN:VEVENT",
+        "UID:usopen2026-" + e.uid + "@19awburris88.github.io",
+        "DTSTAMP:" + now,
+        "SEQUENCE:0",
+        "DTSTART;TZID=" + e.start[1] + ":" + icsLocal(e.start[0]),
+        "DTEND;TZID="   + e.end[1]   + ":" + icsLocal(e.end[0]),
+        "SUMMARY:"     + icsEsc(e.summary),
+        "LOCATION:"    + icsEsc(e.location),
+        "DESCRIPTION:" + icsEsc(e.desc),
+        "BEGIN:VALARM","ACTION:DISPLAY",
+        "DESCRIPTION:" + icsEsc(e.summary),
+        "TRIGGER:-PT" + e.alarm + "M","END:VALARM",
+        "END:VEVENT"
+      );
+    });
+    lines.push("END:VCALENDAR");
+    return lines.map(fold).join("\r\n") + "\r\n";
+  }
+
+  var CAL_MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  function calWhen(v){
+    var d = v.slice(0,10).split("-"), t = v.slice(11).split(":");
+    var h = Number(t[0]);
+    return CAL_MON[Number(d[1]) - 1] + " " + Number(d[2]) + " · " +
+           (h % 12 || 12) + ":" + t[1] + " " + (h >= 12 ? "PM" : "AM");
+  }
+  function calAlarm(n){ return (n % 60 === 0 ? (n/60) + "h" : n + " min") + " before"; }
+
+  function icsBlob(){
+    return new Blob([buildIcs()], {type:"text/calendar;charset=utf-8"});
+  }
+  function icsDownload(){
+    var url = URL.createObjectURL(icsBlob());
+    var a = document.createElement("a");
+    a.href = url; a.download = "us-open-weekend.ics";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 4000);
+    toast(calEvents().length + " events downloaded");
+  }
+  function icsShare(){
+    var file = new File([icsBlob()], "us-open-weekend.ics", {type:"text/calendar"});
+    navigator.share({files:[file], title:"US Open Weekend"})
+      .then(function(){ toast("Sent"); })
+      .catch(function(err){ if(!err || err.name !== "AbortError") icsDownload(); });
+  }
+  function canShareIcs(){
+    if(!(window.File && navigator.canShare && navigator.share)) return false;
+    try {
+      return navigator.canShare({files:[new File([""], "x.ics", {type:"text/calendar"})]});
+    } catch(err){ return false; }
+  }
+
+  function renderCal(){
+    document.getElementById("callist").innerHTML = calEvents().map(function(e){
+      return '<li>' +
+        '<span class="when">' + calWhen(e.start[0]) + '</span>' +
+        '<span class="what">' + e.summary + '</span>' +
+        '<span class="alarm">' + calAlarm(e.alarm) + '</span>' +
+      '</li>';
+    }).join("");
+    document.getElementById("icsBtn").addEventListener("click", icsDownload);
+    var sh = document.getElementById("icsShare");
+    if(canShareIcs()){ sh.hidden = false; sh.addEventListener("click", icsShare); }
+  }
+
   /* ---------- copy ---------- */
   function toast(msg){
     var el = document.getElementById("toast");
@@ -695,6 +908,7 @@
     loadState();
     renderTodos();
     wireTodos();
+    renderCal();
   })();
 
   /* ---------- service worker ---------- */
