@@ -41,8 +41,14 @@ her notes won't sync to yours.
 
 ## Offline
 
-The service worker caches the page and fonts on first load, so it opens on the 7 train
-and inside the grounds where service drops. Load it once on wifi before you fly.
+The service worker caches the page, icons, and fonts, so it opens on the 7 train
+and inside the grounds where service drops.
+
+**Load it twice on wifi before you fly.** The first load installs the service worker, but the
+Google Fonts requests fire before the worker is controlling the page, so they miss the cache.
+The second load is what gets the fonts in. After one load the itinerary still opens offline and
+works fully — it just falls back to Arial Narrow instead of Big Shoulders. Self-hosting the
+fonts would make a single load enough.
 
 ## After you edit index.html
 
