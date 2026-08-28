@@ -303,6 +303,28 @@
   .basecamp .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;}
 
   .calbox{background:var(--night);color:#fff;border-radius:8px;padding:22px 20px;}
+  .merge{background:var(--night);color:#fff;border-radius:8px;padding:20px;margin:0 0 18px;}
+  .merge-head{
+    font-family:var(--display);font-size:24px;font-weight:800;text-transform:uppercase;
+    margin:0 0 2px;letter-spacing:.005em;
+  }
+  .merge-sub{font-size:13.5px;color:#8FA6C4;margin:0 0 4px;}
+  .merge-list{list-style:none;margin:0 0 16px;padding:14px 0 0;border-top:1px solid rgba(255,255,255,.2);}
+  .merge-list li{font-size:13.5px;color:#D6E1F0;padding:4px 0;display:flex;gap:10px;align-items:baseline;}
+  .merge-list .tag{
+    font-family:var(--mono);font-size:10.5px;color:var(--ball);text-transform:uppercase;
+    letter-spacing:.08em;white-space:nowrap;flex:none;min-width:62px;
+  }
+  .merge-list .val{flex:1;}
+  .merge-list .val b{color:#fff;font-weight:600;}
+  .merge .row{display:flex;gap:10px;flex-wrap:wrap;}
+  .shareRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;align-items:center;}
+  .shareRow .hint{font-size:12.5px;color:var(--muted);}
+  /* .btn is white-on-navy; .ink is the same button on the paper background. */
+  .btn.ink{border-color:rgba(12,27,51,.3);color:var(--ink);}
+  .btn.ink:hover{background:rgba(12,27,51,.06);}
+  .btn.ink.solid{background:var(--night);color:#fff;border-color:var(--night);}
+  .btn.ink.solid:hover{background:#16294A;}
   .calbox .row{display:flex;gap:10px;flex-wrap:wrap;}
   .callist{list-style:none;margin:18px 0 0;padding:16px 0 0;border-top:1px solid rgba(255,255,255,.2);}
   .callist li{
@@ -461,7 +483,22 @@
     <h3>Still to plan</h3>
     <p class="sub">Check things off as they lock in. Jot the plan next to each one so it lands in the right day.</p>
     <p class="progress" id="progress">— of — locked in</p>
+
+    <div class="merge" id="merge" hidden>
+      <p class="merge-head">Shared plan</p>
+      <p class="merge-sub" id="mergeSub"></p>
+      <ul class="merge-list" id="mergeList"></ul>
+      <div class="row">
+        <button class="btn solid" id="mergeYes">Merge</button>
+        <button class="btn" id="mergeNo">Ignore</button>
+      </div>
+    </div>
+
     <div class="todo" id="todo"></div>
+    <div class="shareRow">
+      <button class="btn ink solid" id="shareBtn">Share my notes</button>
+      <span class="hint">Sends a link — no account, works with no signal.</span>
+    </div>
   </section>
 
   <div class="foot">
@@ -723,7 +760,7 @@
         '<div class="todo-body">' +
           '<span class="todo-when">'+t.when+'</span>' +
           '<span class="todo-label">'+t.label+'</span>' +
-          '<input class="todo-input" type="text" placeholder="What\'s the plan?" value="'+(s.note||"").replace(/"/g,"&quot;")+'">' +
+          '<input class="todo-input" type="text" placeholder="What\'s the plan?" value="'+h(s.note||"")+'">' +
         '</div></div>';
     }).join("");
     updateProgress();
@@ -741,6 +778,7 @@
       var row = b.closest(".todo-item"), id = row.dataset.id;
       state[id] = state[id] || {};
       state[id].done = !state[id].done;
+      state[id].dts = nowSec();
       row.classList.toggle("done", state[id].done);
       b.setAttribute("aria-pressed", String(state[id].done));
       updateProgress(); saveState();
@@ -751,7 +789,168 @@
       var id = e.target.closest(".todo-item").dataset.id;
       state[id] = state[id] || {};
       state[id].note = e.target.value;
+      state[id].nts = nowSec();
       clearTimeout(timer); timer = setTimeout(saveState, 500);
+    });
+  }
+
+  /* ---------- sharing the checklist ----------
+     No server and no account: the checklist is packed into a link, sent by text,
+     and merged on the other phone. `done` and `note` carry separate timestamps so
+     a merge takes the newer of the two per field instead of letting one phone
+     clobber the other. Notes written before this existed have no timestamp and
+     count as oldest, so an incoming value wins.
+     Everything here is local — encoding a link works with no signal. */
+
+  function nowSec(){ return Math.floor(Date.now() / 1000); }
+
+  function h(v){
+    return String(v).replace(/&/g,"&amp;").replace(/</g,"&lt;")
+                    .replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+  }
+
+  function b64url(str){
+    var bytes = new TextEncoder().encode(str), bin = "";
+    for(var i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+    return btoa(bin).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+  }
+  function unb64url(v){
+    var t = v.replace(/-/g,"+").replace(/_/g,"/");
+    while(t.length % 4) t += "=";
+    var bin = atob(t), bytes = new Uint8Array(bin.length);
+    for(var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    return new TextDecoder().decode(bytes);
+  }
+
+  var NOTE_MAX = 500;
+
+  function packPlan(){
+    var out = {};
+    TODOS.forEach(function(t){
+      var s = state[t.id];
+      if(!s) return;
+      /* An item that was checked and then unchecked still has a timestamp, and
+         still needs to travel — otherwise the uncheck never reaches the other phone. */
+      if(!s.done && !s.note && !s.dts && !s.nts) return;
+      var rec = {};
+      if(s.done) rec.d = 1;
+      if(s.note) rec.n = String(s.note).slice(0, NOTE_MAX);
+      if(s.dts)  rec.x = s.dts;
+      if(s.nts)  rec.y = s.nts;
+      out[t.id] = rec;
+    });
+    return {v:1, t:nowSec(), i:out};
+  }
+
+  function planChanges(inc){
+    var known = {}, out = [];
+    TODOS.forEach(function(t){ known[t.id] = t; });
+    Object.keys(inc.i || {}).forEach(function(id){
+      if(!known[id]) return;                       /* an id this build doesn't have */
+      var r = inc.i[id] || {}, mine = state[id] || {};
+      var theirDone = !!r.d, theirDts = Number(r.x) || 0;
+      var theirNote = String(r.n || "").slice(0, NOTE_MAX), theirNts = Number(r.y) || 0;
+      if(theirDts > (mine.dts || 0) && theirDone !== !!mine.done){
+        out.push({id:id, field:"done", value:theirDone, ts:theirDts, label:known[id]});
+      }
+      if(theirNts > (mine.nts || 0) && theirNote !== (mine.note || "")){
+        out.push({id:id, field:"note", value:theirNote, ts:theirNts, label:known[id]});
+      }
+    });
+    return out;
+  }
+
+  function applyChanges(changes){
+    changes.forEach(function(c){
+      var s = state[c.id] = state[c.id] || {};
+      if(c.field === "done"){ s.done = c.value; s.dts = c.ts; }
+      else { s.note = c.value; s.nts = c.ts; }
+    });
+    saveState();
+    renderTodos();
+  }
+
+  function changeRow(c){
+    var tag, val;
+    var name = "<b>" + h(c.label.when) + " · " + h(c.label.label) + "</b>";
+    if(c.field === "done"){
+      tag = c.value ? "Checked" : "Unchecked";
+      val = name;
+    } else {
+      tag = c.value ? "Note" : "Cleared";
+      val = name + (c.value ? " — " + h(c.value) : "");
+    }
+    return '<li><span class="tag">' + tag + '</span><span class="val">' + val + '</span></li>';
+  }
+
+  var pendingChanges = null;
+
+  function showMerge(changes){
+    pendingChanges = changes;
+    var box = document.getElementById("merge");
+    document.getElementById("mergeSub").textContent =
+      changes.length + (changes.length === 1 ? " update" : " updates") +
+      " in that link that you don't have. Your newer notes stay put.";
+    document.getElementById("mergeList").innerHTML = changes.map(changeRow).join("");
+    box.hidden = false;
+    box.scrollIntoView({block:"center", behavior:"smooth"});
+  }
+  function hideMerge(){
+    pendingChanges = null;
+    document.getElementById("merge").hidden = true;
+  }
+
+  function readSharedLink(){
+    var m = /[#&]s=([A-Za-z0-9_-]+)/.exec(location.hash);
+    if(!m) return;
+    /* Drop it from the URL straight away so a refresh doesn't ask again. */
+    try{ history.replaceState(null, "", location.href.split("#")[0]); }catch(err){}
+    var inc;
+    try{
+      if(m[1].length > 200000) throw new Error("oversized");
+      inc = JSON.parse(unb64url(m[1]));
+    }catch(err){ toast("That link didn't read properly"); return; }
+    if(!inc || inc.v !== 1 || typeof inc.i !== "object"){
+      toast("That link is from a different version"); return;
+    }
+    var changes = planChanges(inc);
+    if(!changes.length){ toast("Nothing new in that link"); return; }
+    showMerge(changes);
+  }
+
+  function planLink(){
+    return location.href.split("#")[0] + "#s=" + b64url(JSON.stringify(packPlan()));
+  }
+  function copyPlanLink(url){
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(url)
+        .then(function(){ toast("Link copied — text it over"); })
+        .catch(function(){ toast("Couldn't copy the link"); });
+    } else { toast("Copy isn't available here"); }
+  }
+  function sharePlan(){
+    var url = planLink();
+    if(navigator.share){
+      navigator.share({title:"US Open Weekend", text:"My notes for the trip", url:url})
+        .then(function(){ toast("Sent"); })
+        .catch(function(err){ if(!err || err.name !== "AbortError") copyPlanLink(url); });
+    } else copyPlanLink(url);
+  }
+
+  function wireShare(){
+    document.getElementById("shareBtn").addEventListener("click", sharePlan);
+    /* A link tapped while the app is already open only changes the fragment —
+       the page never reloads, so init doesn't run again. Catch it here. */
+    window.addEventListener("hashchange", readSharedLink);
+    document.getElementById("mergeYes").addEventListener("click", function(){
+      var n = pendingChanges ? pendingChanges.length : 0;
+      if(pendingChanges) applyChanges(pendingChanges);
+      hideMerge();
+      toast(n + (n === 1 ? " update merged" : " updates merged"));
+    });
+    document.getElementById("mergeNo").addEventListener("click", function(){
+      hideMerge();
+      toast("Left your notes alone");
     });
   }
 
@@ -909,6 +1108,8 @@
     renderTodos();
     wireTodos();
     renderCal();
+    wireShare();
+    readSharedLink();
   })();
 
   /* ---------- service worker ---------- */

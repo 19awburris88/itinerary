@@ -37,8 +37,29 @@ Chrome won't offer to install over plain HTTP.
 If **Install app** doesn't appear: confirm you're on HTTPS, hard-refresh once, and check
 DevTools → Application → Manifest for a warning.
 
-Adrienne can install it from the same URL on her phone. The checklist is per-device —
-her notes won't sync to yours.
+Adrienne can install it from the same URL on her phone.
+
+## Sharing the checklist
+
+**Share my notes** packs your checklist into a link and hands it to the share sheet (or the
+clipboard). Text it over; the other phone opens it and gets a **Shared plan** panel listing
+only what it doesn't already have, with Merge and Ignore.
+
+No server, no account, no token — the whole payload rides in the URL fragment, which never
+leaves the device until you send it. Roughly 350–450 characters with a handful of notes.
+Encoding a link works with no signal.
+
+`done` and `note` carry separate timestamps, so a merge takes the newer of the two per field
+instead of one phone clobbering the other. Notes written before this existed have no
+timestamp and count as oldest, so an incoming value wins. Unchecking travels too — an item
+that was checked and then cleared still ships its timestamp. The link is dropped from the URL
+as soon as it's read, so refreshing doesn't ask twice.
+
+It is not automatic. Someone has to press the button, and nothing syncs in the background.
+
+**On iPhone this is worth knowing:** a home-screen web app has its own storage, separate from
+Safari. Open a share link in Safari and the merge lands in Safari, not in the installed app.
+Pick one and stick with it. Android doesn't split them.
 
 ## Offline
 
@@ -68,11 +89,12 @@ not when play finishes.
 
 ## After you edit index.html
 
-Bump the cache name in `sw.js` (`usopen-v2` → `usopen-v3`) and push. Without that, phones
+Bump the cache name in `sw.js` (`usopen-v3` → `usopen-v4`) and push. Without that, phones
 that already installed it may keep serving the old copy.
 
 ## Notes
 
-- Checklist and planning notes save to `localStorage` on the device.
+- Checklist and planning notes save to `localStorage` on the device, and move
+  between phones only when you press **Share my notes**.
 - Dates are hardcoded to September 2026 — the countdown and the auto-selected day key off it.
 - No analytics and no network calls at all — nothing leaves the device.
