@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>US Open Weekend — Austin + Adrienne</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#0C1B33;
+    --court:#2A5CAA;
+    --court-deep:#1D4380;
+    --apron:#6FA53C;
+    --ball:#DDE82F;
+    --paper:#F4F7FA;
+    --card:#FFFFFF;
+    --ink:#0C1B33;
+    --muted:#5B6B84;
+    --hair:#D5DEE9;
+    --shadow:0 1px 2px rgba(12,27,51,.06), 0 8px 24px rgba(12,27,51,.06);
+
+    --display:"Big Shoulders Display","Haettenschweiler","Arial Narrow",sans-serif;
+    --body:"Instrument Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  }
+
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--body);
+    font-size:16px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:0 20px 80px;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    background:var(--night);
+    color:#fff;
+    overflow:hidden;
+    padding:38px 0 0;
+  }
+  .hero .wrap{padding-bottom:0;}
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--ball);
+    margin:0 0 14px;
+  }
+  h1{
+    font-family:var(--display);
+    font-weight:800;
+    font-size:clamp(58px,17vw,124px);
+    line-height:.82;
+    letter-spacing:-.005em;
+    text-transform:uppercase;
+    margin:0;
+  }
+  h1 .thin{font-weight:500;color:#8FA6C4;display:block;}
+  .hero-meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px 26px;
+    align-items:baseline;
+    margin:24px 0 0;
+    font-family:var(--mono);
+    font-size:12.5px;
+    letter-spacing:.04em;
+    color:#B7C6DC;
+  }
+  .hero-meta strong{color:#fff;font-weight:500;}
+  .countdown{
+    color:var(--night);
+    background:var(--ball);
+    padding:3px 9px 2px;
+    border-radius:2px;
+    font-weight:600;
+  }
+  /* court line motif under the hero */
+  .baseline{
+    margin-top:30px;
+    height:56px;
+    position:relative;
+    border-top:2px solid rgba(255,255,255,.55);
+  }
+  .baseline:before{
+    content:"";position:absolute;left:50%;top:-2px;bottom:0;
+    width:2px;background:rgba(255,255,255,.28);
+  }
+  .baseline:after{
+    content:"";position:absolute;left:12%;right:12%;top:26px;
+    border-top:2px solid rgba(255,255,255,.28);
+  }
+
+  /* ---------- scoreboard nav ---------- */
+  .board{
+    position:sticky;top:0;z-index:20;
+    background:var(--night);
+    border-bottom:1px solid rgba(255,255,255,.14);
+  }
+  .board-inner{
+    max-width:760px;margin:0 auto;padding:0 12px;
+    display:flex;
+  }
+  .day-btn{
+    flex:1 1 0;
+    background:none;border:0;
+    border-right:1px solid rgba(255,255,255,.12);
+    color:#8FA6C4;
+    padding:11px 4px 9px;
+    cursor:pointer;
+    font-family:var(--display);
+    text-transform:uppercase;
+    display:block;
+    position:relative;
+    transition:color .18s ease, background .18s ease;
+  }
+  .day-btn:last-child{border-right:0;}
+  .day-btn .dow{display:block;font-size:13px;font-weight:600;letter-spacing:.1em;}
+  .day-btn .dnum{display:block;font-family:var(--mono);font-size:19px;font-weight:500;line-height:1.15;letter-spacing:-.02em;}
+  .day-btn .serve{
+    display:block;width:6px;height:6px;border-radius:50%;
+    background:var(--ball);margin:5px auto 0;opacity:0;
+  }
+  .day-btn.has-session .serve{opacity:.55;}
+  .day-btn:hover{color:#fff;background:rgba(255,255,255,.05);}
+  .day-btn[aria-selected="true"]{color:#fff;}
+  .day-btn[aria-selected="true"].has-session .serve{opacity:1;}
+  .day-btn[aria-selected="true"]:after{
+    content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--ball);
+  }
+  .day-btn:focus-visible{outline:2px solid var(--ball);outline-offset:-3px;}
+
+  /* ---------- day panel ---------- */
+  .day-head{padding:34px 0 4px;}
+  .day-head .kicker{
+    font-family:var(--mono);font-size:11px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--muted);margin:0 0 6px;
+  }
+  .day-head h2{
+    font-family:var(--display);font-weight:800;text-transform:uppercase;
+    font-size:clamp(34px,9vw,54px);line-height:.9;margin:0;letter-spacing:-.01em;
+  }
+  .day-head .tag{
+    display:inline-block;margin-top:12px;
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;
+    color:var(--muted);border:1px solid var(--hair);
+    padding:3px 9px;border-radius:99px;background:#fff;
+  }
+
+  /* timeline rail */
+  .rail{
+    position:relative;margin:26px 0 0;padding-left:78px;
+  }
+  .rail:before{
+    content:"";position:absolute;left:56px;top:8px;bottom:14px;
+    width:2px;background:var(--hair);
+  }
+  .item{position:relative;margin:0 0 14px;}
+  .item .clock{
+    position:absolute;left:-78px;top:14px;width:64px;text-align:right;
+    font-family:var(--mono);font-size:12px;font-weight:500;
+    color:var(--muted);letter-spacing:-.02em;line-height:1.25;
+  }
+  .item .clock em{display:block;font-style:normal;font-size:10.5px;color:#8C9BB2;}
+  .item .dot{
+    position:absolute;left:-25px;top:19px;width:9px;height:9px;border-radius:50%;
+    background:#fff;border:2px solid var(--hair);z-index:2;
+  }
+  .item.anchor .dot{background:var(--ball);border-color:var(--ball);box-shadow:0 0 0 4px rgba(221,232,47,.28);}
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--hair);
+    border-radius:6px;
+    box-shadow:var(--shadow);
+    overflow:hidden;
+  }
+  .card-top{
+    width:100%;text-align:left;background:none;border:0;
+    padding:14px 16px;cursor:pointer;font:inherit;color:inherit;
+    display:flex;gap:12px;align-items:flex-start;
+  }
+  .card-top:focus-visible{outline:2px solid var(--court);outline-offset:-2px;}
+  .card-top .grow{flex:1 1 auto;min-width:0;}
+  .kind{
+    font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);display:block;margin-bottom:3px;
+  }
+  .title{
+    font-family:var(--display);font-size:24px;font-weight:700;text-transform:uppercase;
+    line-height:1.02;letter-spacing:.005em;display:block;
+  }
+  .where{font-size:13.5px;color:var(--muted);margin-top:4px;display:block;}
+  .chev{
+    flex:0 0 auto;width:22px;height:22px;margin-top:4px;
+    color:var(--muted);transition:transform .2s ease;
+  }
+  .card-top[aria-expanded="true"] .chev{transform:rotate(180deg);}
+  .body{display:none;padding:0 16px 16px;border-top:1px solid var(--hair);margin-top:-1px;}
+  .body.open{display:block;}
+  .body p{margin:12px 0 0;font-size:14.5px;}
+  .facts{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:7px;}
+  .facts li{display:flex;gap:12px;font-size:13.5px;align-items:baseline;}
+  .facts .lab{
+    flex:0 0 92px;font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;
+    text-transform:uppercase;color:var(--muted);
+  }
+  .facts .val{flex:1 1 auto;min-width:0;}
+  .facts .val a{color:var(--court);text-decoration:none;border-bottom:1px solid rgba(42,92,170,.3);}
+  .facts .val a:hover{border-bottom-color:var(--court);}
+  .mono{font-family:var(--mono);letter-spacing:-.01em;}
+
+  /* session cards — the anchor of each day */
+  .card.session{background:var(--court);border-color:var(--court-deep);color:#fff;}
+  .card.session .kind{color:var(--ball);}
+  .card.session .where{color:#CFDFF5;}
+  .card.session .chev{color:#CFDFF5;}
+  .card.session .body{border-top-color:rgba(255,255,255,.2);}
+  .card.session .facts .lab{color:#9FBCE6;}
+  .card.session .facts .val a{color:#fff;border-bottom-color:rgba(255,255,255,.45);}
+  .card.session .stub{
+    display:flex;align-items:baseline;gap:10px;margin-top:12px;
+    padding-top:12px;border-top:1px dashed rgba(255,255,255,.3);
+  }
+  .card.session .stub .big{
+    font-family:var(--display);font-size:40px;font-weight:800;line-height:.85;color:var(--ball);
+  }
+  .card.session .stub .lil{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#CFDFF5;}
+
+  /* travel cards */
+  .card.travel{border-left:3px solid var(--night);}
+  .card.meal{border-left:3px solid var(--apron);}
+
+  /* open slot */
+  .card.open-slot{background:transparent;border-style:dashed;box-shadow:none;}
+  .card.open-slot .title{color:var(--muted);font-weight:600;}
+
+  /* watch the clock note */
+  .note{
+    margin:2px 0 16px 0;
+    background:#FFF9D6;border:1px solid #E8DE93;border-radius:6px;
+    padding:11px 14px;font-size:13.5px;
+  }
+  .note b{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+    display:block;margin-bottom:3px;color:#6E6413;
+  }
+
+  /* ---------- section blocks ---------- */
+  .section{margin-top:44px;}
+  .section > h3{
+    font-family:var(--display);font-size:30px;font-weight:800;text-transform:uppercase;
+    margin:0 0 4px;letter-spacing:.005em;
+  }
+  .section > .sub{font-size:14px;color:var(--muted);margin:0 0 16px;}
+
+  .basecamp{
+    background:var(--night);color:#fff;border-radius:8px;padding:22px 20px;
+  }
+  .basecamp .addr{
+    font-family:var(--display);font-size:32px;font-weight:700;text-transform:uppercase;
+    line-height:.95;margin:0 0 2px;
+  }
+  .basecamp .addr span{display:block;color:#8FA6C4;font-weight:500;font-size:20px;}
+  .basecamp .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;}
+  .btn{
+    font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    padding:8px 13px;border-radius:4px;border:1px solid rgba(255,255,255,.35);
+    background:transparent;color:#fff;cursor:pointer;text-decoration:none;display:inline-block;
+    transition:background .16s ease,border-color .16s ease;
+  }
+  .btn:hover{background:rgba(255,255,255,.12);}
+  .btn.solid{background:var(--ball);color:var(--night);border-color:var(--ball);font-weight:600;}
+  .btn.solid:hover{background:#EAF442;}
+  .btn:focus-visible{outline:2px solid var(--ball);outline-offset:2px;}
+  .steps{list-style:none;counter-reset:s;margin:20px 0 0;padding:18px 0 0;border-top:1px solid rgba(255,255,255,.2);}
+  .steps li{
+    counter-increment:s;position:relative;padding-left:34px;margin-bottom:11px;
+    font-size:14px;color:#D6E1F0;
+  }
+  .steps li:before{
+    content:counter(s);position:absolute;left:0;top:0;
+    font-family:var(--mono);font-size:11px;color:var(--ball);
+    border:1px solid rgba(221,232,47,.45);border-radius:50%;
+    width:21px;height:21px;display:flex;align-items:center;justify-content:center;
+  }
+  .steps li b{color:#fff;font-weight:600;}
+
+  /* checklist */
+  .todo{display:grid;gap:8px;}
+  .todo-item{
+    background:#fff;border:1px solid var(--hair);border-radius:6px;padding:12px 14px;
+    display:flex;gap:12px;align-items:flex-start;
+  }
+  .todo-item.done{background:#F0F4F0;border-color:#CBDAC6;}
+  .cbox{
+    flex:0 0 auto;width:20px;height:20px;margin-top:1px;border-radius:4px;
+    border:1.5px solid #A9B7C9;background:#fff;cursor:pointer;padding:0;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .cbox:focus-visible{outline:2px solid var(--court);outline-offset:2px;}
+  .todo-item.done .cbox{background:var(--apron);border-color:var(--apron);}
+  .cbox svg{opacity:0;width:12px;height:12px;color:#fff;}
+  .todo-item.done .cbox svg{opacity:1;}
+  .todo-body{flex:1 1 auto;min-width:0;}
+  .todo-label{font-size:14.5px;font-weight:500;display:block;}
+  .todo-item.done .todo-label{text-decoration:line-through;color:var(--muted);}
+  .todo-when{font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:2px;}
+  .todo-input{
+    width:100%;margin-top:8px;border:0;border-bottom:1px solid var(--hair);
+    font-family:var(--body);font-size:13.5px;padding:4px 0;background:transparent;color:var(--ink);
+  }
+  .todo-input::placeholder{color:#A3AFC0;}
+  .todo-input:focus{outline:none;border-bottom-color:var(--court);}
+  .progress{
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--muted);margin:0 0 14px;
+  }
+  .progress b{color:var(--ink);}
+
+  .foot{
+    margin-top:48px;padding-top:18px;border-top:1px solid var(--hair);
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:#93A2B6;
+    display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  }
+
+  .toast{
+    position:fixed;left:50%;bottom:24px;transform:translate(-50%,14px);
+    background:var(--night);color:#fff;padding:9px 16px;border-radius:99px;
+    font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    opacity:0;pointer-events:none;transition:opacity .2s ease,transform .2s ease;z-index:60;
+  }
+  .toast.show{opacity:1;transform:translate(-50%,0);}
+
+  @media (max-width:560px){
+    .rail{padding-left:62px;}
+    .rail:before{left:44px;}
+    .item .clock{left:-62px;width:52px;}
+    .item .dot{left:-22px;}
+    .facts li{flex-direction:column;gap:2px;}
+    .facts .lab{flex:none;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none !important;animation:none !important;scroll-behavior:auto !important;}
+  }
+</style>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0C1B33">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="US Open">
+<link rel="icon" href="icons/icon-192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Sept 3–7, 2026 · Midtown + Flushing Meadows</p>
+    <h1>US Open<span class="thin">Weekend</span></h1>
+    <div class="hero-meta">
+      <span><strong>Austin + Adrienne</strong></span>
+      <span>5 days · 3 sessions</span>
+      <span id="countdown" class="countdown">—</span>
+    </div>
+    <div class="baseline" aria-hidden="true"></div>
+  </div>
+</header>
+
+<nav class="board" aria-label="Days">
+  <div class="board-inner" id="board" role="tablist"></div>
+</nav>
+
+<main class="wrap">
+  <div id="days"></div>
+
+  <section class="section">
+    <h3>Base camp</h3>
+    <p class="sub">Matt's place, Midtown West — between 40th and 41st, on the left.</p>
+    <div class="basecamp">
+      <p class="addr">555 10th Ave <span>Apt 37G · New York, NY 10018</span></p>
+      <div class="row">
+        <button class="btn solid" data-copy="555 10th Ave Apt 37G, New York, NY 10018">Copy address</button>
+        <a class="btn" href="https://www.google.com/maps/search/?api=1&query=555%2010th%20Ave%2C%20New%20York%2C%20NY%2010018" target="_blank" rel="noopener">Open in Maps</a>
+      </div>
+      <ol class="steps">
+        <li><b>AirTran from JFK to Jamaica Station.</b> Follow signs for the LIRR once you're off.</li>
+        <li><b>LIRR from Jamaica.</b> Get off at Penn Station or Grand Central — whichever train comes first.</li>
+        <li><b>Cab to 41st &amp; 10th.</b> The building is on the left, between 40th and 41st.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section">
+    <h3>Still to plan</h3>
+    <p class="sub">Check things off as they lock in. Jot the plan next to each one so it lands in the right day.</p>
+    <p class="progress" id="progress">— of — locked in</p>
+    <div class="todo" id="todo"></div>
+  </section>
+
+  <div class="foot">
+    <span>Austin + Adrienne · New York</span>
+    <span>Sept 3–7, 2026</span>
+  </div>
+</main>
+
+<div class="toast" id="toast">Copied</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var MAP = "https://www.google.com/maps/search/?api=1&query=";
+  function m(q){ return MAP + encodeURIComponent(q); }
+
+  var DAYS = [
+    {
+      id:"thu", dow:"Thu", num:"03", date:"Thursday, September 3",
+      title:"Travel day", tag:"Wheels up 5:30 PM · lands 10:14 PM",
+      items:[
+        { time:"5:30 PM", kind:"Flight out", title:"AA 1248 · DFW → JFK", where:"American Airlines · arrives 10:14 PM",
+          cls:"travel",
+          facts:[["Route","Dallas/Fort Worth → New York JFK"],["Seats","8A &amp; 8B"],["In the air","3h 44m"]],
+          note:"Late arrival — plan on getting to Midtown around 11:30 PM." },
+        { time:"10:14 PM", kind:"Arrive", title:"Land at JFK", where:"Terminal 8 · AirTrain to Jamaica",
+          facts:[["Getting in","AirTrain → LIRR → cab to 41st &amp; 10th"],["Address","<a href='"+m("555 10th Ave, New York, NY 10018")+"' target='_blank' rel='noopener'>555 10th Ave, Apt 37G</a>"]] },
+        { time:"Late", kind:"Open", title:"Late-night food if you need it", where:"Nothing booked", cls:"open-slot",
+          facts:[["Nearby","Hell's Kitchen and 9th Ave run late"]] }
+      ]
+    },
+    {
+      id:"fri", dow:"Fri", num:"04", date:"Friday, September 4",
+      title:"First session", tag:"Session 12 · Louis Armstrong · 7:00 PM",
+      items:[
+        { time:"Morning", kind:"Open", title:"Breakfast", where:"Nothing booked", cls:"open-slot" },
+        { time:"Day", kind:"Open", title:"Explore the city", where:"Nothing booked", cls:"open-slot",
+          facts:[["Note","Keep it walkable — you're back in Midtown to change before the match"]] },
+        { time:"Afternoon", kind:"Open", title:"Lunch, then back to Midtown", where:"Nothing booked", cls:"open-slot" },
+        { time:"7:00 PM", kind:"US Open · Session 12", title:"Louis Armstrong Stadium", where:"USTA Billie Jean King National Tennis Center, Flushing",
+          cls:"session", anchor:true, session:"12",
+          facts:[["Getting there","7 train to Mets–Willets Point · about 45 min from Midtown"],["Leave by","5:30 PM to catch the first match"],["Gates","<a href='"+m("USTA Billie Jean King National Tennis Center")+"' target='_blank' rel='noopener'>Open in Maps</a>"]],
+          note:"Night sessions at Armstrong are two matches — expect to be out past 11:00 PM." },
+        { time:"After", kind:"Open", title:"Late dinner or drinks", where:"Nothing booked", cls:"open-slot" }
+      ]
+    },
+    {
+      id:"sat", dow:"Sat", num:"05", date:"Saturday, September 5",
+      title:"Jersey, then tennis", tag:"Session 14 · Louis Armstrong · 7:00 PM",
+      items:[
+        { time:"Daytime", kind:"With friends", title:"New Jersey · Alex &amp; Thurston", where:"Details still to come",
+          facts:[["Still open","Where you're meeting and how you're getting there"],["Watch","Build in buffer — you need to be at Armstrong by 7:00 PM"]] },
+        { time:"7:00 PM", kind:"US Open · Session 14", title:"Louis Armstrong Stadium", where:"USTA Billie Jean King National Tennis Center, Flushing",
+          cls:"session", anchor:true, session:"14",
+          facts:[["Getting there","7 train to Mets–Willets Point"],["From New Jersey","Allow 90 min back through Manhattan on a Saturday"],["Gates","<a href='"+m("USTA Billie Jean King National Tennis Center")+"' target='_blank' rel='noopener'>Open in Maps</a>"]] },
+        { time:"After", kind:"Open", title:"Wide open", where:"Nothing booked", cls:"open-slot" }
+      ]
+    },
+    {
+      id:"sun", dow:"Sun", num:"06", date:"Sunday, September 6",
+      title:"Ashe to the harbor", tag:"Biggest day · three things booked",
+      items:[
+        { time:"11:30 AM", kind:"US Open · Session 15", title:"Arthur Ashe Stadium", where:"USTA Billie Jean King National Tennis Center, Flushing",
+          cls:"session", anchor:true, session:"15",
+          facts:[["Getting there","7 train to Mets–Willets Point · about 45 min"],["Leave by","10:00 AM"],["Heads up","Ashe day sessions run long — you'll likely leave mid-match"]] },
+        { time:"5:15 PM", kind:"Dinner · booked", title:"Markette", where:"326 7th Ave · table for 2", cls:"meal",
+          facts:[["Confirmation","<span class='mono'>19934</span>"],["Address","<a href='"+m("Markette, 326 7th Ave, New York, NY")+"' target='_blank' rel='noopener'>326 7th Ave</a>"],["Party","2"]],
+          note:"Tightest turn of the trip: leave Flushing by 4:15 PM to make the table, and you only have about an hour before you need to be at the pier." },
+        { time:"6:15 PM", kind:"Boarding", title:"Board at Pier 83", where:"W 42nd St &amp; 12th Ave",
+          facts:[["From Markette","About 15 min by cab · leave dinner by 6:00 PM"],["Pier","<a href='"+m("Circle Line Pier 83, W 42nd St & 12th Ave, New York")+"' target='_blank' rel='noopener'>Open in Maps</a>"]] },
+        { time:"7:00 PM", kind:"Cruise · booked", title:"Harbor Lights Premier", where:"Circle Line · Pier 83",
+          facts:[["Boards","6:15 PM"],["Bring","A layer — it's cold on the water after dark"]] },
+        { time:"After", kind:"Open", title:"Wide open", where:"Nothing booked", cls:"open-slot",
+          facts:[["Nearby","You dock a 12-minute walk from the apartment"]] }
+      ]
+    },
+    {
+      id:"mon", dow:"Mon", num:"07", date:"Monday, September 7",
+      title:"Last day home", tag:"Wheels up 6:30 PM",
+      items:[
+        { time:"Morning", kind:"Open", title:"Breakfast or brunch", where:"Nothing booked", cls:"open-slot" },
+        { time:"Day", kind:"Maybe", title:"See Sukh", where:"Not confirmed", cls:"open-slot" },
+        { time:"Day", kind:"Open", title:"One last thing in the city", where:"Nothing booked", cls:"open-slot",
+          facts:[["Keep it close","Bags are still in Midtown"]] },
+        { time:"Afternoon", kind:"Open", title:"Lunch", where:"Nothing booked", cls:"open-slot" },
+        { time:"3:30 PM", kind:"Move", title:"Grab bags, head to JFK", where:"555 10th Ave → JFK", cls:"travel",
+          facts:[["Allow","60–75 min · Monday traffic to Queens is unkind"],["At the airport by","4:45 PM"]],
+          note:"Leave Midtown by 3:30 PM at the latest for a 6:30 PM departure." },
+        { time:"6:30 PM", kind:"Flight home", title:"AA 606 · JFK → DFW", where:"American Airlines · arrives 9:35 PM", cls:"travel", anchor:true,
+          facts:[["Route","New York JFK → Dallas/Fort Worth"],["Seats","9E &amp; 9F"],["In the air","4h 05m"]] }
+      ]
+    }
+  ];
+
+  var TODOS = [
+    {id:"t1", when:"Friday", label:"Daytime plans"},
+    {id:"t2", when:"Friday", label:"Breakfast and lunch"},
+    {id:"t3", when:"Friday", label:"After the match"},
+    {id:"t4", when:"Saturday", label:"New Jersey details with Alex & Thurston"},
+    {id:"t5", when:"Saturday", label:"After the match"},
+    {id:"t6", when:"Sunday", label:"Breakfast before Ashe"},
+    {id:"t7", when:"Sunday", label:"After the cruise"},
+    {id:"t8", when:"Monday", label:"Daytime plans · Sukh?"},
+    {id:"t9", when:"Monday", label:"Lunch"},
+    {id:"t10", when:"All week", label:"Airport transportation, both directions"}
+  ];
+
+  /* ---------- countdown ---------- */
+  function setCountdown(){
+    var el = document.getElementById("countdown");
+    var start = new Date(2026,8,3), end = new Date(2026,8,7,23,59);
+    var now = new Date();
+    var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    if(now > end){ el.textContent = "Trip wrapped"; return; }
+    if(now >= start){
+      var n = Math.round((today - start)/86400000) + 1;
+      el.textContent = "Day " + n + " of 5";
+      return;
+    }
+    var d = Math.round((start - today)/86400000);
+    el.textContent = d === 1 ? "1 day out" : d + " days out";
+  }
+
+  /* ---------- render ---------- */
+  var CHEV = '<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>';
+
+  function itemHTML(it, di, ii){
+    var uid = "e-" + di + "-" + ii;
+    var facts = "";
+    if(it.facts && it.facts.length){
+      facts = '<ul class="facts">' + it.facts.map(function(f){
+        return '<li><span class="lab">'+f[0]+'</span><span class="val">'+f[1]+'</span></li>';
+      }).join("") + '</ul>';
+    }
+    var stub = it.session
+      ? '<div class="stub"><span class="big">'+it.session+'</span><span class="lil">Session</span></div>'
+      : "";
+    var hasBody = !!(facts || stub);
+    var timeParts = it.time.split(" ");
+    var clock = '<span class="clock">'+timeParts[0]+(timeParts[1]?'<em>'+timeParts[1]+'</em>':'')+'</span>';
+
+    return '<div class="item'+(it.anchor?" anchor":"")+'">' +
+      clock +
+      '<span class="dot" aria-hidden="true"></span>' +
+      '<article class="card '+(it.cls||"")+'">' +
+        '<button class="card-top" aria-expanded="false" aria-controls="'+uid+'"'+(hasBody?"":' disabled style="cursor:default"')+'>' +
+          '<span class="grow">' +
+            '<span class="kind">'+it.kind+'</span>' +
+            '<span class="title">'+it.title+'</span>' +
+            (it.where?'<span class="where">'+it.where+'</span>':'') +
+          '</span>' +
+          (hasBody?CHEV:'') +
+        '</button>' +
+        (hasBody?'<div class="body" id="'+uid+'">'+facts+stub+'</div>':'') +
+      '</article>' +
+    '</div>' +
+    (it.note ? '<div class="note"><b>Watch the clock</b>'+it.note+'</div>' : '');
+  }
+
+  function render(){
+    var board = document.getElementById("board");
+    var host  = document.getElementById("days");
+    board.innerHTML = DAYS.map(function(d,i){
+      var hasSession = d.items.some(function(x){return x.cls === "session";});
+      return '<button class="day-btn'+(hasSession?" has-session":"")+'" role="tab" aria-selected="'+(i===0)+'" data-i="'+i+'">' +
+        '<span class="dow">'+d.dow+'</span><span class="dnum">'+d.num+'</span>' +
+        '<span class="serve" aria-hidden="true"></span></button>';
+    }).join("");
+
+    host.innerHTML = DAYS.map(function(d,i){
+      return '<section class="day-panel" data-i="'+i+'" '+(i===0?"":'hidden')+'>' +
+        '<div class="day-head"><p class="kicker">'+d.date+'</p><h2>'+d.title+'</h2>' +
+        '<span class="tag">'+d.tag+'</span></div>' +
+        '<div class="rail">' + d.items.map(function(it,ii){return itemHTML(it,i,ii);}).join("") + '</div>' +
+      '</section>';
+    }).join("");
+
+    board.addEventListener("click", function(e){
+      var b = e.target.closest(".day-btn"); if(!b) return;
+      select(parseInt(b.dataset.i,10));
+    });
+    host.addEventListener("click", function(e){
+      var t = e.target.closest(".card-top"); if(!t || t.disabled) return;
+      var open = t.getAttribute("aria-expanded") === "true";
+      t.setAttribute("aria-expanded", String(!open));
+      document.getElementById(t.getAttribute("aria-controls")).classList.toggle("open", !open);
+    });
+  }
+
+  function select(i){
+    document.querySelectorAll(".day-btn").forEach(function(b,j){ b.setAttribute("aria-selected", String(i===j)); });
+    document.querySelectorAll(".day-panel").forEach(function(p,j){ p.hidden = (i!==j); });
+    var board = document.querySelector(".board");
+    if(window.scrollY > board.offsetTop) window.scrollTo({top: board.offsetTop});
+  }
+
+  /* ---------- today-aware default day ---------- */
+  function defaultDay(){
+    var n = new Date();
+    if(n.getFullYear()===2026 && n.getMonth()===8){
+      var d = n.getDate();
+      if(d>=3 && d<=7) return d-3;
+    }
+    return 0;
+  }
+
+  /* ---------- checklist (persists when storage is available) ---------- */
+  var state = {};
+  var KEY = "nyc2026:plan";
+
+  function loadState(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw) state = JSON.parse(raw);
+    }catch(err){ state = {}; }
+  }
+  function saveState(){
+    try{ localStorage.setItem(KEY, JSON.stringify(state)); }
+    catch(err){ /* private mode or storage full — keep going in memory */ }
+  }
+
+  function renderTodos(){
+    var host = document.getElementById("todo");
+    host.innerHTML = TODOS.map(function(t){
+      var s = state[t.id] || {};
+      return '<div class="todo-item'+(s.done?" done":"")+'" data-id="'+t.id+'">' +
+        '<button class="cbox" aria-pressed="'+(s.done?"true":"false")+'" aria-label="Mark '+t.label.replace(/"/g,"")+'">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' +
+        '</button>' +
+        '<div class="todo-body">' +
+          '<span class="todo-when">'+t.when+'</span>' +
+          '<span class="todo-label">'+t.label+'</span>' +
+          '<input class="todo-input" type="text" placeholder="What\'s the plan?" value="'+(s.note||"").replace(/"/g,"&quot;")+'">' +
+        '</div></div>';
+    }).join("");
+    updateProgress();
+  }
+
+  function updateProgress(){
+    var done = TODOS.filter(function(t){ return state[t.id] && state[t.id].done; }).length;
+    document.getElementById("progress").innerHTML = "<b>"+done+"</b> of <b>"+TODOS.length+"</b> locked in";
+  }
+
+  function wireTodos(){
+    var host = document.getElementById("todo");
+    host.addEventListener("click", function(e){
+      var b = e.target.closest(".cbox"); if(!b) return;
+      var row = b.closest(".todo-item"), id = row.dataset.id;
+      state[id] = state[id] || {};
+      state[id].done = !state[id].done;
+      row.classList.toggle("done", state[id].done);
+      b.setAttribute("aria-pressed", String(state[id].done));
+      updateProgress(); saveState();
+    });
+    var timer;
+    host.addEventListener("input", function(e){
+      if(!e.target.classList.contains("todo-input")) return;
+      var id = e.target.closest(".todo-item").dataset.id;
+      state[id] = state[id] || {};
+      state[id].note = e.target.value;
+      clearTimeout(timer); timer = setTimeout(saveState, 500);
+    });
+  }
+
+  /* ---------- copy ---------- */
+  function toast(msg){
+    var el = document.getElementById("toast");
+    el.textContent = msg; el.classList.add("show");
+    setTimeout(function(){ el.classList.remove("show"); }, 1600);
+  }
+  document.addEventListener("click", function(e){
+    var b = e.target.closest("[data-copy]"); if(!b) return;
+    var text = b.dataset.copy;
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){ toast("Address copied"); })
+        .catch(function(){ toast("Copy didn't go through"); });
+    } else { toast("Copy isn't available here"); }
+  });
+
+  /* ---------- go ---------- */
+  (function init(){
+    setCountdown();
+    render();
+    select(defaultDay());
+    loadState();
+    renderTodos();
+    wireTodos();
+  })();
+
+  /* ---------- service worker ---------- */
+  if("serviceWorker" in navigator){
+    window.addEventListener("load", function(){
+      navigator.serviceWorker.register("sw.js").catch(function(){ /* offline cache unavailable */ });
+    });
+  }
+})();
+</script>
+</body>
+</html>
