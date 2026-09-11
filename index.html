@@ -821,10 +821,10 @@
     {
       id:"ind-nov", uid:"ind-nov2026",
       name:"Indianapolis · Thanksgiving", h1:["Indy","Thanksgiving"],
-      eyebrow:"Nov 21–30, 2026 · Indianapolis", sub:"Ten days at Dad's · Burn, the Bucket, and the Colts",
+      eyebrow:"Nov 21–30, 2026 · Indianapolis", sub:"Ten days at Dad's · Nash's blessing, Burn, the Bucket, the Colts",
       start:"2026-11-21", end:"2026-11-30",
       theme:{ gold:"#D98C3F", link:"#9A5A1A", ember:"#211510" },
-      meta:["Dad's house · Dior Court","10 days · 3 events · his car"],
+      meta:["Dad's house · Dior Court","10 days · 4 events · his car"],
       stay:{
         sub:"Dad's house on the northwest side — and his car for the week, so no rental.",
         addr:"7002 Dior Court", addr2:"Dad's · Indianapolis, IN 46278",
@@ -835,7 +835,7 @@
           ["Dad's car is yours for the stay.","No rental, no rideshare — just keep it fueled."]
         ]
       },
-      calNote:"Both flights and the Colts game, with alerts. The Thanksgiving Eve party and the Bucket join once their start times are posted.",
+      calNote:"Both flights, Nash's blessing, and the Colts game, with alerts. The Thanksgiving Eve party and the Bucket join once their start times are posted.",
       days: span("2026-11-21","2026-11-30", {
         "2026-11-21":{ title:"Fly in", tag:"Wheels up 7:00 AM · lands 10:13 AM", items:[
           { time:"7:00 AM", kind:"Flight out", title:"AA 1506 · DFW → IND", where:"American Airlines · First · arrives 10:13 AM", cls:"travel", anchor:true,
@@ -848,6 +848,19 @@
           { time:"10:13 AM", kind:"Arrive", title:"Land at IND", where:"Baggage claim, then out to Dad's",
             facts:[["Bags","Two checked"],["To the house","<a href='"+m("7002 Dior Court, Indianapolis, IN 46278")+"' target='_blank' rel='noopener'>7002 Dior Court</a> · 25–30 min up I-465"],["Pickup","Dad, or the car — still on the list"]] },
           { time:"Afternoon", kind:"Open", title:"Settle in", where:"Nothing booked", cls:"open-slot" }
+        ]},
+        "2026-11-22":{ title:"Nash's blessing", tag:"Heartland Church · 9:00 AM · breakfast after", items:[
+          { time:"8:10 AM", kind:"Move", title:"Head to Fishers", where:"Across the north side on I-465 · about 35–40 min", cls:"travel",
+            note:"9:00 start on a Sunday morning — out of Dad's by 8:10, and it's a church, so a few minutes early is the right kind of early." },
+          { time:"9:00 AM", kind:"★ Family", title:"Nash's baby blessing", where:"Heartland Church · Fishers",
+            cls:"session", anchor:true,
+            ics:{ uid:"nash-blessing", alarm:90,
+              start:["2026-11-22T09:00","America/Indiana/Indianapolis"], end:["2026-11-22T10:30","America/Indiana/Indianapolis"],
+              summary:"Nash's baby blessing · Heartland Church", location:"Heartland Church, 14900 126th St, Fishers, IN 46037",
+              desc:"Godson Nash's baby blessing, 9:00 AM ET. Breakfast after at 5764 Teak Ln, McCordsville, IN 46055. End time is an estimate." },
+            facts:[["Who","Your godson, Nash"],["Address","<a href='"+m("Heartland Church, 14900 126th St, Fishers, IN 46037")+"' target='_blank' rel='noopener'>14900 126th St, Fishers</a>"],["Then","Breakfast at the house — about 15 min east"]] },
+          { time:"After", kind:"Breakfast", title:"Breakfast with the family", where:"5764 Teak Ln · McCordsville", cls:"meal",
+            facts:[["Address","<a href='"+m("5764 Teak Ln, McCordsville, IN 46055")+"' target='_blank' rel='noopener'>5764 Teak Ln, McCordsville, IN 46055</a>"],["From the church","About 15 minutes east on 126th / Olio"]] }
         ]},
         "2026-11-25":{ title:"Thanksgiving Eve", tag:"Burn by Rocky Patel · time TBA", items:[
           { time:"Evening", kind:"★ Save the date", title:"Thanksgiving Eve Party", where:"Burn by Rocky Patel · 110 S Meridian St",
