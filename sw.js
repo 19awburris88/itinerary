@@ -1,9 +1,9 @@
-/* Atlanta Cigar Week — offline cache.
+/* Austin's Trips — offline cache.
    Fonts are self-hosted, so install() precaches everything the app needs and one
    online load is enough to go fully offline.
    Bump CACHE when you edit index.html so phones pick up the new version. */
 
-const CACHE = "cigarweek-v2";
+const CACHE = "trips-v1";
 
 const SHELL = [
   "./",

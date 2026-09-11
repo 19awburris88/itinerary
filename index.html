@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>Atlanta Cigar Week — Itinerary</title>
+<title>Trips — Austin</title>
 <link rel="preload" href="fonts/big-shoulders-display-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/instrument-sans-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
@@ -123,6 +123,40 @@
     border-top:1px solid rgba(201,162,83,.55);
   }
 
+  .back{
+    display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    color:#A89F8C;text-decoration:none;margin:0 0 18px;padding:2px 0;
+  }
+  .back:hover{color:#fff;}
+  .back:focus-visible{outline:2px solid var(--gold);outline-offset:3px;}
+
+  /* ---------- home: the list of trips ---------- */
+  .trips{display:grid;gap:14px;margin:26px 0 0;}
+  .trip-card{
+    display:block;position:relative;text-decoration:none;color:var(--ink);
+    background:var(--card);border:1px solid var(--hair);border-left:5px solid var(--accent,var(--gold));
+    border-radius:8px;padding:18px 18px 16px;box-shadow:var(--shadow);
+    transition:transform .16s ease,box-shadow .16s ease;
+  }
+  .trip-card:hover{transform:translateY(-1px);box-shadow:0 1px 2px rgba(20,18,15,.08),0 12px 28px rgba(20,18,15,.10);}
+  .trip-card:focus-visible{outline:2px solid var(--link);outline-offset:3px;}
+  .trip-card .dates{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+  .trip-card .name{
+    display:block;font-family:var(--display);font-size:38px;font-weight:800;text-transform:uppercase;
+    line-height:.88;margin:8px 0 6px;letter-spacing:.005em;padding-right:96px;
+  }
+  .trip-card .sub{display:block;font-size:14px;color:var(--muted);}
+  .trip-card .status{
+    position:absolute;top:18px;right:18px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;
+    padding:3px 9px 2px;border-radius:2px;background:var(--accent,var(--gold));color:var(--night);font-weight:600;
+  }
+  .trip-card.past{opacity:.55;}
+  .trip-card.past .status{background:var(--hair);color:var(--muted);}
+  @media (max-width:420px){
+    .trip-card .name{padding-right:0;font-size:34px;}
+    .trip-card .status{position:static;display:inline-block;margin-top:10px;}
+  }
+
   /* ---------- scoreboard nav ---------- */
   .board{
     position:sticky;top:0;z-index:20;
@@ -131,10 +165,11 @@
   }
   .board-inner{
     max-width:760px;margin:0 auto;padding:0 12px;
-    display:flex;
+    display:flex;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;
   }
+  .board-inner::-webkit-scrollbar{display:none;}
   .day-btn{
-    flex:1 1 0;
+    flex:1 0 64px;min-width:64px;
     background:none;border:0;
     border-right:1px solid rgba(255,255,255,.12);
     color:#A89F8C;
@@ -341,6 +376,7 @@
   .btn:hover{background:rgba(255,255,255,.12);}
   .btn.solid{background:var(--gold);color:var(--night);border-color:var(--gold);font-weight:600;}
   .btn.solid:hover{background:#D8B665;}
+  .btn:disabled{opacity:.4;cursor:default;}
   .btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
   .steps{list-style:none;counter-reset:s;margin:20px 0 0;padding:18px 0 0;border-top:1px solid rgba(255,255,255,.2);}
   .steps li{
@@ -418,7 +454,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Cigar Week">
+<meta name="apple-mobile-web-app-title" content="Trips">
 <link rel="icon" href="icons/icon-192.png" sizes="192x192">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 </head>
@@ -426,79 +462,68 @@
 
 <header class="hero">
   <div class="wrap">
-    <p class="eyebrow">Oct 1–4, 2026 · Midtown Atlanta</p>
-    <h1>Atlanta<span class="thin">Cigar Week</span></h1>
-    <div class="hero-meta">
-      <span><strong>Kimpton Shane · Midtown</strong></span>
-      <span>4 days · 5 signature events</span>
-      <span id="countdown" class="countdown">—</span>
-    </div>
+    <a class="back" id="back" href="#trips" hidden>← All trips</a>
+    <p class="eyebrow" id="eyebrow"></p>
+    <h1 id="h1"></h1>
+    <div class="hero-meta" id="heroMeta"></div>
     <div class="baseline" aria-hidden="true"></div>
   </div>
 </header>
 
-<nav class="board" aria-label="Days">
+<nav class="board" id="boardNav" aria-label="Days" hidden>
   <div class="board-inner" id="board" role="tablist"></div>
 </nav>
 
 <main class="wrap">
-  <div id="days"></div>
-
-  <section class="section">
-    <h3>Base camp</h3>
-    <p class="sub">Kimpton Shane Hotel, Midtown — check in Thursday 3:00 PM, out Sunday noon.</p>
-    <div class="basecamp">
-      <p class="addr">1340 W Peachtree St NW <span>Kimpton Shane Hotel · Atlanta, GA 30309</span></p>
-      <div class="row">
-        <button class="btn solid" data-copy="Kimpton Shane Hotel, 1340 W Peachtree St NW, Atlanta, GA 30309">Copy address</button>
-        <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Kimpton%20Shane%20Hotel%2C%201340%20W%20Peachtree%20St%20NW%2C%20Atlanta%2C%20GA%2030309" target="_blank" rel="noopener">Open in Maps</a>
-      </div>
-      <ol class="steps">
-        <li><b>Land at the Domestic Terminal, grab the bags.</b> American flies into the domestic side at ATL.</li>
-        <li><b>SkyTrain to the Rental Car Center.</b> Follow the signs from baggage claim — about 15 minutes. Alamo is in the center.</li>
-        <li><b>Drive up to Midtown.</b> I-75/85 north to W Peachtree — 20–30 minutes without traffic. Hotel itinerary <span class="mono">73510930020810</span>.</li>
-      </ol>
-    </div>
+  <section id="home" hidden>
+    <div class="trips" id="trips"></div>
   </section>
 
-  <section class="section">
-    <h3>Calendar</h3>
-    <p class="sub">Everything with a fixed time — flights, the five events, checkout, the car — with alerts. Nothing that's still open goes in.</p>
-    <div class="calbox">
-      <div class="row">
-        <button class="btn solid" id="icsBtn">Add to calendar</button>
-        <button class="btn" id="icsShare" hidden>Share to a phone</button>
+  <div id="tripView" hidden>
+    <div id="days"></div>
+
+    <section class="section" id="stay" hidden>
+      <h3>Base camp</h3>
+      <p class="sub" id="staySub"></p>
+      <div class="basecamp" id="stayBox"></div>
+    </section>
+
+    <section class="section">
+      <h3>Calendar</h3>
+      <p class="sub" id="calSub"></p>
+      <div class="calbox">
+        <div class="row">
+          <button class="btn solid" id="icsBtn">Add to calendar</button>
+          <button class="btn" id="icsShare" hidden>Share to a phone</button>
+        </div>
+        <ul class="callist" id="callist"></ul>
       </div>
-      <ul class="callist" id="callist"></ul>
-    </div>
-  </section>
+    </section>
 
-  <section class="section">
-    <h3>Still to plan</h3>
-    <p class="sub">Check things off as they lock in. Jot the plan next to each one so it lands in the right day.</p>
-    <p class="progress" id="progress">— of — locked in</p>
+    <section class="section">
+      <h3>Still to plan</h3>
+      <p class="sub">Check things off as they lock in. Jot the plan next to each one so it lands in the right day.</p>
+      <p class="progress" id="progress">— of — locked in</p>
 
-    <div class="merge" id="merge" hidden>
-      <p class="merge-head">Shared plan</p>
-      <p class="merge-sub" id="mergeSub"></p>
-      <ul class="merge-list" id="mergeList"></ul>
-      <div class="row">
-        <button class="btn solid" id="mergeYes">Merge</button>
-        <button class="btn" id="mergeNo">Ignore</button>
+      <div class="merge" id="merge" hidden>
+        <p class="merge-head">Shared plan</p>
+        <p class="merge-sub" id="mergeSub"></p>
+        <ul class="merge-list" id="mergeList"></ul>
+        <div class="row">
+          <button class="btn solid" id="mergeYes">Merge</button>
+          <button class="btn" id="mergeNo">Ignore</button>
+        </div>
       </div>
-    </div>
 
-    <div class="todo" id="todo"></div>
-    <div class="shareRow">
-      <button class="btn ink solid" id="shareBtn">Share my notes</button>
-      <span class="hint">Sends a link — no account, works with no signal.</span>
-    </div>
-  </section>
-
-  <div class="foot">
-    <span>Atlanta Cigar Week</span>
-    <span>Oct 1–4, 2026</span>
+      <div class="todo" id="todo"></div>
+      <div class="shareRow">
+        <button class="btn ink solid" id="shareBtn">Share my notes</button>
+        <span class="hint">Sends a link — no account, works with no signal.</span>
+      </div>
+    </section>
   </div>
+
+  <div class="foot" id="foot"></div>
 </main>
 
 <div class="toast" id="toast">Copied</div>
@@ -510,9 +535,136 @@
   var MAP = "https://www.google.com/maps/search/?api=1&query=";
   function m(q){ return MAP + encodeURIComponent(q); }
 
-  var DAYS = [
+  /* ---------- trips ----------
+     Every trip is one object here: dates, accent colour, where you're staying,
+     the days, and the open items. `days` are keyed by ISO date; the renderer
+     works out the weekday and the long form. `span()` fills a date range with
+     "wide open" days so a sparse trip only spells out the days that matter.
+     `ics:{}` on an item puts it in that trip's calendar export. */
+
+  function span(start, end, known){
+    var out = [], d = iso(start), last = iso(end);
+    while(d <= last){
+      var k = key(d), day = known[k] || {};
+      out.push({
+        d:k,
+        title: day.title || "Wide open",
+        tag:   day.tag   || "Nothing booked yet",
+        items: day.items || [{ time:"Day", kind:"Open", title:"Wide open", where:"Nothing booked", cls:"open-slot" }]
+      });
+      d = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1);
+    }
+    return out;
+  }
+  function iso(s){ var p = s.split("-"); return new Date(+p[0], +p[1]-1, +p[2]); }
+  function key(d){ function p(n){ return (n<10?"0":"")+n; } return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate()); }
+
+  var DOW = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  var MON = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  var MON3 = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+  var TRIPS = [
     {
-      id:"thu", dow:"Thu", num:"01", date:"Thursday, October 1",
+      id:"usher", uid:"usher-sep2026", local:true,
+      name:"Usher + Chris Brown", h1:["Usher +","Chris Brown"],
+      eyebrow:"Sat, Sept 12, 2026 · AT&T Stadium, Arlington", sub:"AT&T Stadium · 7:00 PM",
+      start:"2026-09-12", end:"2026-09-12",
+      theme:{ gold:"#B79BEA", link:"#6B4FB3", ember:"#1B1426" },
+      meta:["AT&T Stadium · Arlington","Saturday · 7:00 PM"],
+      stay:null,
+      calNote:"The show, with an alert two hours ahead — AT&T Stadium traffic is its own event.",
+      days:[
+        { d:"2026-09-12", title:"Usher + Chris Brown", tag:"AT&T Stadium · 7:00 PM", items:[
+          { time:"4:30 PM", kind:"Move", title:"Head to Arlington", where:"Allow the full two and a half hours", cls:"travel",
+            facts:[["Why so early","Stadium-show traffic on I-30 and the lots — a 7:00 start means parked by 6:15"],["Parking","<a href='"+m("AT&T Stadium, Arlington, TX")+"' target='_blank' rel='noopener'>Open in Maps</a> · sort a lot pass before you leave"]] },
+          { time:"7:00 PM", kind:"★ Concert", title:"Usher + Chris Brown", where:"AT&T Stadium · Arlington, TX",
+            cls:"session", anchor:true,
+            ics:{ uid:"show", alarm:120,
+              start:["2026-09-12T19:00","America/Chicago"], end:["2026-09-12T23:00","America/Chicago"],
+              summary:"Usher + Chris Brown · AT&T Stadium", location:"AT&T Stadium, 1 AT&T Way, Arlington, TX 76011",
+              desc:"7:00 PM at AT&T Stadium. End time is an estimate. Leave by 4:30 for the traffic." },
+            facts:[["Getting there","<a href='"+m("AT&T Stadium, Arlington, TX")+"' target='_blank' rel='noopener'>Open in Maps</a>"],["Getting out","Stadium lots take an hour to clear — nowhere to be after"]] }
+        ]}
+      ],
+      todos:[
+        {id:"t1", when:"Before",   label:"Tickets · on the phone and ready"},
+        {id:"t2", when:"Before",   label:"Parking pass, or rideshare"},
+        {id:"t3", when:"Saturday", label:"Who's going, who's driving"}
+      ]
+    },
+    {
+      id:"ind-sep", uid:"ind-sep2026",
+      name:"Indianapolis", h1:["Indy","September"],
+      eyebrow:"Sept 16–20, 2026 · Indianapolis", sub:"Wednesday to Sunday · Dad's house, Dad's car",
+      start:"2026-09-16", end:"2026-09-20",
+      theme:{ gold:"#8FB3E6", link:"#2F5F9E", ember:"#121A2A" },
+      meta:["Dad's house · Dior Court","Wed → Sun · his car for the week"],
+      stay:{
+        sub:"Dad's house on the northwest side — and his car for the week, so no rental.",
+        addr:"7002 Dior Court", addr2:"Dad's · Indianapolis, IN 46278",
+        copy:"7002 Dior Court, Indianapolis, IN 46278",
+        steps:[
+          ["Land at IND, grab the bags.","Baggage claim is on the lower level."],
+          ["Out to the house.","About 25–30 minutes up I-465 to the northwest side. Whether Dad picks you up or the car's waiting is still on the list."],
+          ["Dad's car is yours for the stay.","No rental, no rideshare — just keep it fueled."]
+        ]
+      },
+      calNote:"Both flights, with alerts early enough to make 7 AM and 8 AM departures.",
+      days: span("2026-09-16","2026-09-20", {
+        "2026-09-16":{ title:"Fly in", tag:"Wheels up 7:09 AM · lands 10:25 AM", items:[
+          { time:"7:09 AM", kind:"Flight out", title:"AA 1506 · DFW → IND", where:"American Airlines · First · arrives 10:25 AM", cls:"travel", anchor:true,
+            ics:{ uid:"flight-out", alarm:120,
+              start:["2026-09-16T07:09","America/Chicago"], end:["2026-09-16T10:25","America/Indiana/Indianapolis"],
+              summary:"AA 1506 · DFW → IND", location:"Dallas/Fort Worth International Airport",
+              desc:"American Airlines 1506, First. Seat 2B. One checked bag. 2h 16m in the air, lands Indianapolis at 10:25 AM ET. Boeing 737-800." },
+            facts:[["Route","Dallas/Fort Worth → Indianapolis"],["Seat","2B · First"],["Bags","1 checked"],["In the air","2h 16m · Boeing 737-800"]],
+            note:"Early one — out the door by 5:15 AM to be at DFW two hours ahead." },
+          { time:"10:25 AM", kind:"Arrive", title:"Land at IND", where:"Baggage claim, then out to Dad's",
+            facts:[["Bags","One checked"],["To the house","<a href='"+m("7002 Dior Court, Indianapolis, IN 46278")+"' target='_blank' rel='noopener'>7002 Dior Court</a> · 25–30 min up I-465"],["Pickup","Dad, or the car — still on the list"]] },
+          { time:"Afternoon", kind:"Open", title:"Settle in", where:"Nothing booked", cls:"open-slot" },
+          { time:"Evening", kind:"Open", title:"Dinner", where:"Nothing booked", cls:"open-slot" }
+        ]},
+        "2026-09-20":{ title:"Fly home", tag:"Wheels up 8:01 AM", items:[
+          { time:"6:00 AM", kind:"Move", title:"Head to IND", where:"Be at the airport by 6:30", cls:"travel",
+            note:"8:01 departure — out of Dad's by 6:00 AM at the latest. Sort out who's driving the night before." },
+          { time:"8:01 AM", kind:"Flight home", title:"AA 1296 · IND → DFW", where:"American Airlines · First · arrives 9:27 AM", cls:"travel", anchor:true,
+            ics:{ uid:"flight-home", alarm:120,
+              start:["2026-09-20T08:01","America/Indiana/Indianapolis"], end:["2026-09-20T09:27","America/Chicago"],
+              summary:"AA 1296 · IND → DFW", location:"Indianapolis International Airport",
+              desc:"American Airlines 1296, First. Seat 3E. One checked bag. 2h 26m in the air, lands DFW at 9:27 AM CT. Boeing 737 MAX 8." },
+            facts:[["Route","Indianapolis → Dallas/Fort Worth"],["Seat","3E · First"],["Bags","1 checked"],["In the air","2h 26m · Boeing 737 MAX 8"]] }
+        ]}
+      }),
+      todos:[
+        {id:"t2", when:"Wednesday",label:"IND to Dad's · pickup, or is the car there?"},
+        {id:"t3", when:"Thursday", label:"Plans"},
+        {id:"t4", when:"Friday",   label:"Plans"},
+        {id:"t5", when:"Saturday", label:"Plans"},
+        {id:"t6", when:"Sunday",   label:"Who's driving to IND at 6:00 AM"}
+      ]
+    },
+    {
+      id:"atl", uid:"atlcw2026",
+      name:"Atlanta Cigar Week", h1:["Atlanta","Cigar Week"],
+      eyebrow:"Oct 1–4, 2026 · Midtown Atlanta", sub:"Kimpton Shane · five signature events",
+      start:"2026-10-01", end:"2026-10-04",
+      theme:{ gold:"#C9A253", link:"#8A6520", ember:"#1C1712" },
+      meta:["Kimpton Shane · Midtown","4 days · 5 signature events"],
+      stay:{
+        sub:"Kimpton Shane Hotel, Midtown — check in Thursday 3:00 PM, out Sunday noon.",
+        addr:"1340 W Peachtree St NW", addr2:"Kimpton Shane Hotel · Atlanta, GA 30309",
+        copy:"Kimpton Shane Hotel, 1340 W Peachtree St NW, Atlanta, GA 30309",
+        steps:[
+          ["Land at the Domestic Terminal, grab the bags.","American flies into the domestic side at ATL."],
+          ["SkyTrain to the Rental Car Center.","Follow the signs from baggage claim — about 15 minutes. Alamo is in the center."],
+          ["Drive up to Midtown.","I-75/85 north to W Peachtree — 20–30 minutes without traffic. Hotel itinerary <span class='mono'>73510930020810</span>."]
+        ]
+      },
+      calNote:"Everything with a fixed time — flights, the five events, checkout, the car — with alerts. Nothing that's still open goes in.",
+      days:[
+
+    {
+      d:"2026-10-01",
       title:"Fly in, light up", tag:"Wheels up 9:30 AM · She Smokes Too 9:00 PM",
       items:[
         { time:"9:30 AM", kind:"Flight out", title:"AA 1276 · DFW → ATL", where:"American Airlines · First · arrives 12:41 PM",
@@ -544,7 +696,7 @@
       ]
     },
     {
-      id:"fri", dow:"Fri", num:"02", date:"Friday, October 2",
+      d:"2026-10-02",
       title:"Welcome to Atlanta", tag:"Fellaship · 6:00 PM",
       items:[
         { time:"Morning", kind:"Open", title:"Breakfast", where:"Nothing booked", cls:"open-slot" },
@@ -562,7 +714,7 @@
       ]
     },
     {
-      id:"sat", dow:"Sat", num:"03", date:"Saturday, October 3",
+      d:"2026-10-03",
       title:"The Oasis, then the music", tag:"Two signature events · 11:00 AM and 9:00 PM",
       items:[
         { time:"Morning", kind:"Open", title:"Breakfast", where:"Nothing booked", cls:"open-slot",
@@ -587,7 +739,7 @@
       ]
     },
     {
-      id:"sun", dow:"Sun", num:"04", date:"Sunday, October 4",
+      d:"2026-10-04",
       title:"Block Party, then home", tag:"Wheels up 8:15 PM · the car is the tight part",
       items:[
         { time:"Morning", kind:"Open", title:"Breakfast, then pack", where:"Nothing booked", cls:"open-slot" },
@@ -620,40 +772,339 @@
           facts:[["Route","Atlanta → Dallas/Fort Worth"],["Seat","2E · First"],["Bags","2 checked"],["In the air","2h 23m · Boeing 737-800"]] }
       ]
     }
-  ];
-
-  var TODOS = [
-    {id:"t1",  when:"Thursday",  label:"Lunch after landing"},
-    {id:"t2",  when:"Thursday",  label:"Dinner before She Smokes Too"},
-    {id:"t3",  when:"Thursday",  label:"Drive or rideshare to Air Rooftop"},
-    {id:"t4",  when:"Friday",    label:"Daytime plans"},
-    {id:"t5",  when:"Friday",    label:"Breakfast and lunch"},
-    {id:"t6",  when:"Friday",    label:"After Fellaship"},
-    {id:"t7",  when:"Saturday",  label:"Where The Oasis is · still TBD"},
-    {id:"t8",  when:"Saturday",  label:"Dinner between the two events"},
-    {id:"t9",  when:"Sunday",    label:"Where the Block Party is · still TBD"},
-    {id:"t10", when:"All week",  label:"Hotel parking · valet or self-park"},
-    {id:"t11", when:"All week",  label:"Who's coming · Dad and friends are a maybe"}
-  ];
-
-  /* ---------- countdown ---------- */
-  function setCountdown(){
-    var el = document.getElementById("countdown");
-    var start = new Date(2026,9,1), end = new Date(2026,9,4,23,59);
-    var now = new Date();
-    var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    if(now > end){ el.textContent = "Trip wrapped"; return; }
-    if(now >= start){
-      var n = Math.round((today - start)/86400000) + 1;
-      el.textContent = "Day " + n + " of 4";
-      return;
+      ],
+      todos:[
+        {id:"t1",  when:"Thursday",  label:"Lunch after landing"},
+        {id:"t2",  when:"Thursday",  label:"Dinner before She Smokes Too"},
+        {id:"t3",  when:"Thursday",  label:"Drive or rideshare to Air Rooftop"},
+        {id:"t4",  when:"Friday",    label:"Daytime plans"},
+        {id:"t5",  when:"Friday",    label:"Breakfast and lunch"},
+        {id:"t6",  when:"Friday",    label:"After Fellaship"},
+        {id:"t7",  when:"Saturday",  label:"Where The Oasis is · still TBD"},
+        {id:"t8",  when:"Saturday",  label:"Dinner between the two events"},
+        {id:"t9",  when:"Sunday",    label:"Where the Block Party is · still TBD"},
+        {id:"t10", when:"All week",  label:"Hotel parking · valet or self-park"},
+        {id:"t11", when:"All week",  label:"Who's coming · Dad and friends are a maybe"}
+      ]
+    },
+    {
+      id:"thrive", uid:"thrive2026", local:true,
+      name:"Thrive · BLK Men in Tech", h1:["Thrive","2026"],
+      eyebrow:"Oct 11–13, 2026 · Gilley's Dallas", sub:"Black Men in Tech conference · three days at Gilley's",
+      start:"2026-10-11", end:"2026-10-13",
+      theme:{ gold:"#5FC3B8", link:"#1F7F76", ember:"#0F1F1E" },
+      meta:["Gilley's · The Cedars","Sun → Tue · agenda not posted yet"],
+      stay:null,
+      calNote:"Nothing here until BLK Men in Tech posts the agenda — the days join the calendar once they have start times.",
+      days: span("2026-10-11","2026-10-13", {
+        "2026-10-11":{ title:"Thrive · Day 1", tag:"Gilley's Dallas · times TBA", items:[
+          { time:"TBA", kind:"★ Conference", title:"Thrive · Day 1", where:"Gilley's Dallas · 1135 S Lamar St",
+            cls:"session", anchor:true,
+            facts:[["What","BLK Men in Tech's annual conference — a week after Atlanta"],["Schedule","Not posted yet. Check <a href='https://www.blkmenintech.com/thrive' target='_blank' rel='noopener'>blkmenintech.com/thrive</a>"],["Getting there","<a href='"+m("Gilley's Dallas, 1135 S Lamar St, Dallas, TX 75215")+"' target='_blank' rel='noopener'>Open in Maps</a> · lot on site"]] }
+        ]},
+        "2026-10-12":{ title:"Thrive · Day 2", tag:"Gilley's Dallas · times TBA", items:[
+          { time:"TBA", kind:"★ Conference", title:"Thrive · Day 2", where:"Gilley's Dallas", cls:"session", anchor:true,
+            facts:[["Schedule","Not posted yet"]] }
+        ]},
+        "2026-10-13":{ title:"Thrive · Day 3", tag:"Gilley's Dallas · times TBA", items:[
+          { time:"TBA", kind:"★ Conference", title:"Thrive · Day 3", where:"Gilley's Dallas", cls:"session", anchor:true,
+            facts:[["Schedule","Not posted yet"]] }
+        ]}
+      }),
+      todos:[
+        {id:"t1", when:"Before",  label:"Registration · confirmed?"},
+        {id:"t2", when:"Before",  label:"Agenda · daily start times once posted"},
+        {id:"t3", when:"Before",  label:"Sessions and people worth planning around"},
+        {id:"t4", when:"Each day",label:"Getting there · drive and park, or rideshare"}
+      ]
+    },
+    {
+      id:"ind-nov", uid:"ind-nov2026",
+      name:"Indianapolis · Thanksgiving", h1:["Indy","Thanksgiving"],
+      eyebrow:"Nov 21–30, 2026 · Indianapolis", sub:"Ten days at Dad's · Burn, the Bucket, and the Colts",
+      start:"2026-11-21", end:"2026-11-30",
+      theme:{ gold:"#D98C3F", link:"#9A5A1A", ember:"#211510" },
+      meta:["Dad's house · Dior Court","10 days · 3 events · his car"],
+      stay:{
+        sub:"Dad's house on the northwest side — and his car for the week, so no rental.",
+        addr:"7002 Dior Court", addr2:"Dad's · Indianapolis, IN 46278",
+        copy:"7002 Dior Court, Indianapolis, IN 46278",
+        steps:[
+          ["Land at IND, grab the bags.","Baggage claim is on the lower level."],
+          ["Out to the house.","About 25–30 minutes up I-465 to the northwest side. Whether Dad picks you up or the car's waiting is still on the list."],
+          ["Dad's car is yours for the stay.","No rental, no rideshare — just keep it fueled."]
+        ]
+      },
+      calNote:"Both flights and the Colts game, with alerts. The Thanksgiving Eve party and the Bucket join once their start times are posted.",
+      days: span("2026-11-21","2026-11-30", {
+        "2026-11-21":{ title:"Fly in", tag:"Wheels up 7:00 AM · lands 10:13 AM", items:[
+          { time:"7:00 AM", kind:"Flight out", title:"AA 1506 · DFW → IND", where:"American Airlines · First · arrives 10:13 AM", cls:"travel", anchor:true,
+            ics:{ uid:"flight-out", alarm:120,
+              start:["2026-11-21T07:00","America/Chicago"], end:["2026-11-21T10:13","America/Indiana/Indianapolis"],
+              summary:"AA 1506 · DFW → IND", location:"Dallas/Fort Worth International Airport",
+              desc:"American Airlines 1506, First. Seat 2A. Two checked bags. 2h 13m in the air, lands Indianapolis at 10:13 AM ET." },
+            facts:[["Route","Dallas/Fort Worth → Indianapolis"],["Seat","2A · First"],["Bags","2 checked"],["In the air","2h 13m"]],
+            note:"Out the door by 5:00 AM. Saturday before Thanksgiving week — DFW will be busy." },
+          { time:"10:13 AM", kind:"Arrive", title:"Land at IND", where:"Baggage claim, then out to Dad's",
+            facts:[["Bags","Two checked"],["To the house","<a href='"+m("7002 Dior Court, Indianapolis, IN 46278")+"' target='_blank' rel='noopener'>7002 Dior Court</a> · 25–30 min up I-465"],["Pickup","Dad, or the car — still on the list"]] },
+          { time:"Afternoon", kind:"Open", title:"Settle in", where:"Nothing booked", cls:"open-slot" }
+        ]},
+        "2026-11-25":{ title:"Thanksgiving Eve", tag:"Burn by Rocky Patel · time TBA", items:[
+          { time:"Evening", kind:"★ Save the date", title:"Thanksgiving Eve Party", where:"Burn by Rocky Patel · 110 S Meridian St",
+            cls:"session", anchor:true,
+            facts:[["Hosted by","The Smoke Cask &amp; Barrel"],["What","Craft cocktails, premium cigars, music &amp; vibes"],["Getting there","<a href='"+m("Burn by Rocky Patel, 110 South Meridian Street, Indianapolis, IN")+"' target='_blank' rel='noopener'>Open in Maps</a> · downtown, about 25 min from Dad's"],["Time","Not posted yet — it goes in the calendar once it is"],["Check the date","The flyer says Wednesday the 26th, but the 26th is Thursday — Thanksgiving itself. This is on Wednesday the 25th, the actual eve. Confirm when details drop."]],
+            note:"Cigars and cocktails downtown, then Dad's car home — decide before you go whether it's a rideshare night." }
+        ]},
+        "2026-11-26":{ title:"Thanksgiving", tag:"Thursday the 26th", items:[
+          { time:"Day", kind:"Holiday", title:"Thanksgiving", where:"Plans still open", cls:"open-slot" }
+        ]},
+        "2026-11-28":{ title:"Old Oaken Bucket", tag:"Purdue at Indiana · Bloomington · kickoff TBA", items:[
+          { time:"Morning", kind:"Open", title:"Breakfast, then the drive", where:"Nothing booked", cls:"open-slot",
+            facts:[["Drive","Dad's to Bloomington is about 1h 15m down SR-37 / I-69 — more on a game day"]] },
+          { time:"TBA", kind:"★ Rivalry game", title:"Old Oaken Bucket", where:"Memorial Stadium · Bloomington, IN",
+            cls:"session", anchor:true,
+            facts:[["Matchup","Purdue at Indiana · the 2026 Bucket game"],["Kickoff","Not announced yet — the Big Ten sets times 6–12 days out. It goes in the calendar once it's set."],["Getting there","<a href='"+m("Memorial Stadium, Bloomington, IN")+"' target='_blank' rel='noopener'>Open in Maps</a>"],["Parking","Game-day lots fill early — plan on arriving two hours ahead"]],
+            note:"Long day with a drive both ways, and the Colts are at 1:00 the next afternoon. Don't linger in Bloomington." },
+          { time:"After", kind:"Open", title:"Back to Dad's", where:"Nothing booked", cls:"open-slot" }
+        ]},
+        "2026-11-29":{ title:"Colts", tag:"Giants at Colts · 1:00 PM · Lucas Oil", items:[
+          { time:"11:00 AM", kind:"Move", title:"Head downtown", where:"Lucas Oil Stadium · about 25 min from Dad's", cls:"travel",
+            facts:[["Parking","South of the stadium fills first — allow the full two hours"]] },
+          { time:"1:00 PM", kind:"★ NFL", title:"Giants at Colts", where:"Lucas Oil Stadium · Indianapolis",
+            cls:"session", anchor:true,
+            ics:{ uid:"colts", alarm:120,
+              start:["2026-11-29T13:00","America/Indiana/Indianapolis"], end:["2026-11-29T16:15","America/Indiana/Indianapolis"],
+              summary:"Giants at Colts · Lucas Oil Stadium", location:"Lucas Oil Stadium, 500 S Capitol Ave, Indianapolis, IN 46225",
+              desc:"New York Giants at Indianapolis Colts. Kickoff 1:00 PM ET (Google shows it as noon from Dallas). End time is an estimate." },
+            facts:[["Kickoff","1:00 PM Eastern — noon on a Dallas phone"],["Getting there","<a href='"+m("Lucas Oil Stadium, Indianapolis, IN")+"' target='_blank' rel='noopener'>Open in Maps</a>"],["Then","Early night — the flight home is 7:41 AM"]],
+            note:"Out the door at 5:45 the next morning. Pack Sunday night before the game, not after." }
+        ]},
+        "2026-11-30":{ title:"Fly home", tag:"Wheels up 7:41 AM", items:[
+          { time:"5:45 AM", kind:"Move", title:"Head to IND", where:"Be at the airport by 6:15", cls:"travel",
+            note:"7:41 departure with two bags to check — out of Dad's by 5:45 AM." },
+          { time:"7:41 AM", kind:"Flight home", title:"AA 3231 · IND → DFW", where:"American Airlines · First · arrives 9:29 AM", cls:"travel", anchor:true,
+            ics:{ uid:"flight-home", alarm:120,
+              start:["2026-11-30T07:41","America/Indiana/Indianapolis"], end:["2026-11-30T09:29","America/Chicago"],
+              summary:"AA 3231 · IND → DFW", location:"Indianapolis International Airport",
+              desc:"American Airlines 3231, First. Seat 2F. Two checked bags. 2h 48m in the air, lands DFW at 9:29 AM CT." },
+            facts:[["Route","Indianapolis → Dallas/Fort Worth"],["Seat","2F · First"],["Bags","2 checked"],["In the air","2h 48m"]] }
+        ]}
+      }),
+      todos:[
+        {id:"t2", when:"Saturday", label:"IND to Dad's · pickup, or is the car there?"},
+        {id:"t6", when:"Wednesday",label:"Thanksgiving Eve party · start time, once Burn posts it"},
+        {id:"t3", when:"Thursday", label:"Thanksgiving plans"},
+        {id:"t7", when:"Saturday", label:"Old Oaken Bucket · kickoff time, once the Big Ten posts it"},
+        {id:"t8", when:"Weekend",  label:"Tickets · Bucket and Colts, both in hand?"},
+        {id:"t4", when:"The week", label:"What else is on"},
+        {id:"t5", when:"Monday",   label:"Who's driving to IND at 5:45 AM"}
+      ]
+    },
+    {
+      id:"mex", uid:"mex-dec2026",
+      name:"Mexico City", h1:["Mexico","City"],
+      eyebrow:"Dec 10–15, 2026 · Ciudad de México", sub:"Two seats, Business both ways · nothing on the ground yet",
+      start:"2026-12-10", end:"2026-12-15",
+      theme:{ gold:"#E8608A", link:"#A33456", ember:"#24121B" },
+      meta:["Two seats · 3A + 3B","6 days · Business both ways"],
+      stay:null,
+      calNote:"Both flights, with alerts three hours ahead — it's international, so allow the extra time.",
+      days: span("2026-12-10","2026-12-15", {
+        "2026-12-10":{ title:"Fly down", tag:"Wheels up 4:54 PM · lands 7:40 PM", items:[
+          { time:"1:45 PM", kind:"Move", title:"Head to DFW", where:"International — be there by 2:00", cls:"travel" },
+          { time:"4:54 PM", kind:"Flight out", title:"AA 2233 · DFW → MEX", where:"American Airlines · Business · arrives 7:40 PM", cls:"travel", anchor:true,
+            ics:{ uid:"flight-out", alarm:180,
+              start:["2026-12-10T16:54","America/Chicago"], end:["2026-12-10T19:40","America/Mexico_City"],
+              summary:"AA 2233 · DFW → MEX", location:"Dallas/Fort Worth International Airport",
+              desc:"American Airlines 2233, Business. Seats 3A and 3B. One checked bag. Dinner on board. 2h 46m in the air, lands Mexico City at 7:40 PM local (same clock as Dallas in December)." },
+            facts:[["Route","Dallas/Fort Worth → Mexico City"],["Seats","3A &amp; 3B · Business"],["Bags","1 checked"],["On board","Dinner"],["In the air","2h 46m"]],
+            note:"Passports. Mexico City runs on the same clock as Dallas in December — no time change." },
+          { time:"7:40 PM", kind:"Arrive", title:"Land at MEX", where:"Immigration, then bags",
+            facts:[["Into the city","Still open — on the list below"],["Heads up","Immigration at MEX can take a while in the evening"]] }
+        ]},
+        "2026-12-15":{ title:"Fly home", tag:"Wheels up 4:15 PM", items:[
+          { time:"12:45 PM", kind:"Move", title:"Head to MEX", where:"International — be there by 1:15", cls:"travel",
+            note:"Three hours ahead for an international departure, and Mexico City traffic is its own thing." },
+          { time:"4:15 PM", kind:"Flight home", title:"AA 2351 · MEX → DFW", where:"American Airlines · Business · arrives 7:15 PM", cls:"travel", anchor:true,
+            ics:{ uid:"flight-home", alarm:180,
+              start:["2026-12-15T16:15","America/Mexico_City"], end:["2026-12-15T19:15","America/Chicago"],
+              summary:"AA 2351 · MEX → DFW", location:"Aeropuerto Internacional de la Ciudad de México",
+              desc:"American Airlines 2351, Business. Seats 3A and 3B. One checked bag. Dinner on board. 3h 00m in the air, lands DFW at 7:15 PM CT — then immigration and customs." },
+            facts:[["Route","Mexico City → Dallas/Fort Worth"],["Seats","3A &amp; 3B · Business"],["Bags","1 checked"],["On board","Dinner"],["In the air","3h 00m"]] }
+        ]}
+      }),
+      todos:[
+        {id:"t1", when:"Before",   label:"Where you're staying"},
+        {id:"t2", when:"Before",   label:"Passports · both valid past June 2027"},
+        {id:"t3", when:"Thursday", label:"Getting from MEX into the city"},
+        {id:"t4", when:"The week", label:"What to see and where to eat"},
+        {id:"t5", when:"Tuesday",  label:"Ride back to MEX · leave by 12:45"}
+      ]
     }
-    var d = Math.round((start - today)/86400000);
-    el.textContent = d === 1 ? "1 day out" : d + " days out";
+  ];
+
+  /* ---------- dates ---------- */
+  function today0(){ var n = new Date(); return new Date(n.getFullYear(), n.getMonth(), n.getDate()); }
+  function dayCount(t){ return Math.round((iso(t.end) - iso(t.start))/86400000) + 1; }
+  function shortRange(t){
+    var a = iso(t.start), b = iso(t.end);
+    if(t.start === t.end) return DOW[a.getDay()].slice(0,3) + " " + MON3[a.getMonth()] + " " + a.getDate();
+    var same = a.getMonth() === b.getMonth();
+    return MON3[a.getMonth()] + " " + a.getDate() + " – " + (same ? "" : MON3[b.getMonth()] + " ") + b.getDate();
+  }
+  /* "5 days out" / "Day 2 of 4" / "Wrapped" — used by the hero pill and the home cards */
+  function status(t){
+    var s = iso(t.start), e = iso(t.end), td = today0();
+    if(td > e) return {text:"Wrapped", state:"past"};
+    if(td >= s) return {text:(dayCount(t) === 1 ? "Today" : "Day " + (Math.round((td - s)/86400000) + 1) + " of " + dayCount(t)), state:"now"};
+    var d = Math.round((s - td)/86400000);
+    return {text:(d === 1 ? "Tomorrow" : d + " days out"), state:"soon"};
+  }
+  function defaultDay(t){
+    var s = iso(t.start), td = today0(), i = Math.round((td - s)/86400000);
+    return (i >= 0 && i < t.days.length) ? i : 0;
+  }
+
+  /* ---------- theme ---------- */
+  function applyTheme(t){
+    var r = document.documentElement.style;
+    ["gold","link","ember"].forEach(function(k){ r.removeProperty("--" + k); });
+    r.removeProperty("--ember-deep");
+    if(t && t.theme){
+      r.setProperty("--gold", t.theme.gold); r.setProperty("--ember-deep", t.theme.gold);
+      r.setProperty("--link", t.theme.link); r.setProperty("--ember", t.theme.ember);
+    }
+  }
+
+  /* ---------- routing ---------- */
+  var trip = null;               /* the trip on screen, or null on the home page */
+  function tripById(id){ for(var i=0;i<TRIPS.length;i++) if(TRIPS[i].id === id) return TRIPS[i]; return null; }
+  function hashTrip(){ var mm = /^#([a-z0-9-]+)/.exec(location.hash); return mm ? mm[1] : ""; }
+
+  function route(){
+    var id = hashTrip(), next = null;
+    if(id === "trips") next = null;
+    else if(id) next = tripById(id);
+    else {
+      /* No hash: during a trip, open straight to it — that's the one-handed case. */
+      for(var i=0;i<TRIPS.length;i++) if(status(TRIPS[i]).state === "now") next = TRIPS[i];
+    }
+    if(id && id !== "trips" && !next){ toast("No trip called " + id); next = null; }
+    if(next) showTrip(next); else showHome();
+  }
+
+  /* ---------- home ---------- */
+  function showHome(){
+    trip = null;
+    applyTheme(null);
+    document.title = "Trips — Austin";
+    document.getElementById("back").hidden = true;
+    document.getElementById("eyebrow").textContent = "Personal itinerary · " + TRIPS.length + " trips";
+    document.getElementById("h1").innerHTML = "Austin's<span class=\"thin\">Trips</span>";
+    var upcoming = TRIPS.filter(function(t){ return status(t).state !== "past"; })
+                        .sort(function(a,b){ return a.start < b.start ? -1 : 1; });
+    var nextT = upcoming[0];
+    document.getElementById("heroMeta").innerHTML = nextT
+      ? '<span><strong>Up next</strong></span><span>' + h(nextT.name) + ' · ' + shortRange(nextT) + '</span>' +
+        '<span class="countdown">' + status(nextT).text + '</span>'
+      : '<span>Nothing on the books</span>';
+    document.getElementById("boardNav").hidden = true;
+    document.getElementById("tripView").hidden = true;
+    var home = document.getElementById("home"); home.hidden = false;
+
+    var sorted = TRIPS.slice().sort(function(a,b){
+      var pa = status(a).state === "past", pb = status(b).state === "past";
+      if(pa !== pb) return pa ? 1 : -1;               /* wrapped trips sink */
+      return a.start < b.start ? -1 : 1;
+    });
+    document.getElementById("trips").innerHTML = sorted.map(function(t){
+      var st = status(t);
+      return '<a class="trip-card ' + st.state + '" href="#' + t.id + '" style="--accent:' + t.theme.gold + '">' +
+        '<span class="dates">' + shortRange(t) + ', ' + iso(t.start).getFullYear() + ' · ' + (t.local ? 'Local' : dayCount(t) + ' days') + '</span>' +
+        '<span class="name">' + h(t.name) + '</span>' +
+        '<span class="sub">' + h(t.sub) + '</span>' +
+        '<span class="status">' + st.text + '</span>' +
+      '</a>';
+    }).join("");
+    document.getElementById("foot").innerHTML = "<span>Austin</span><span>" + new Date().getFullYear() + "</span>";
+    window.scrollTo(0,0);
+  }
+
+  /* ---------- trip ---------- */
+  function showTrip(t){
+    var switching = trip !== t;
+    trip = t;
+    applyTheme(t);
+    document.title = t.name + " — Itinerary";
+    document.getElementById("back").hidden = false;
+    document.getElementById("eyebrow").textContent = t.eyebrow;
+    document.getElementById("h1").innerHTML = h(t.h1[0]) + '<span class="thin">' + h(t.h1[1]) + '</span>';
+    document.getElementById("heroMeta").innerHTML =
+      t.meta.map(function(x,i){ return '<span>' + (i===0 ? '<strong>'+h(x)+'</strong>' : h(x)) + '</span>'; }).join("") +
+      '<span id="countdown" class="countdown">' + status(t).text + '</span>';
+    document.getElementById("home").hidden = true;
+    document.getElementById("boardNav").hidden = t.days.length < 2;   /* one day needs no tabs */
+    document.getElementById("tripView").hidden = false;
+    document.getElementById("foot").innerHTML = "<span>" + h(t.name) + "</span><span>" + shortRange(t) + ", " + iso(t.start).getFullYear() + "</span>";
+
+    renderDays(t);
+    select(defaultDay(t));
+    renderStay(t);
+    loadState();
+    renderTodos();
+    renderCal();
+    hideMerge();
+    if(switching) window.scrollTo(0,0);
+  }
+
+  function renderStay(t){
+    var sec = document.getElementById("stay");
+    document.getElementById("calSub").textContent = t.calNote;
+    if(!t.stay){ sec.hidden = true; return; }
+    sec.hidden = false;
+    var s = t.stay;
+    document.getElementById("staySub").textContent = s.sub;
+    document.getElementById("stayBox").innerHTML =
+      '<p class="addr">' + h(s.addr) + ' <span>' + h(s.addr2) + '</span></p>' +
+      '<div class="row">' +
+        '<button class="btn solid" data-copy="' + h(s.copy) + '">Copy address</button>' +
+        '<a class="btn" href="' + m(s.copy) + '" target="_blank" rel="noopener">Open in Maps</a>' +
+      '</div>' +
+      '<ol class="steps">' + s.steps.map(function(st){ return '<li><b>' + st[0] + '</b> ' + st[1] + '</li>'; }).join("") + '</ol>';
   }
 
   /* ---------- render ---------- */
   var CHEV = '<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>';
+
+  function renderDays(t){
+    var board = document.getElementById("board");
+    var host  = document.getElementById("days");
+    board.innerHTML = t.days.map(function(d,i){
+      var dt = iso(d.d);
+      var hasSession = d.items.some(function(x){return x.cls === "session";});
+      return '<button class="day-btn'+(hasSession?" has-session":"")+'" role="tab" aria-selected="'+(i===0)+'" data-i="'+i+'">' +
+        '<span class="dow">'+DOW[dt.getDay()].slice(0,3)+'</span><span class="dnum">'+(dt.getDate()<10?"0":"")+dt.getDate()+'</span>' +
+        '<span class="serve" aria-hidden="true"></span></button>';
+    }).join("");
+    host.innerHTML = t.days.map(function(d,i){
+      var dt = iso(d.d);
+      return '<section class="day-panel" data-i="'+i+'" '+(i===0?"":'hidden')+'>' +
+        '<div class="day-head"><p class="kicker">'+DOW[dt.getDay()]+', '+MON[dt.getMonth()]+' '+dt.getDate()+'</p><h2>'+d.title+'</h2>' +
+        '<span class="tag">'+d.tag+'</span></div>' +
+        '<div class="rail">' + d.items.map(function(it,ii){return itemHTML(it,i,ii);}).join("") + '</div>' +
+      '</section>';
+    }).join("");
+  }
+
+  function select(i){
+    document.querySelectorAll(".day-btn").forEach(function(b,j){
+      b.setAttribute("aria-selected", String(i===j));
+      if(i===j && b.scrollIntoView) b.scrollIntoView({block:"nearest", inline:"center"});
+    });
+    document.querySelectorAll(".day-panel").forEach(function(p,j){ p.hidden = (i!==j); });
+    var board = document.querySelector(".board");
+    if(!board.hidden && window.scrollY > board.offsetTop) window.scrollTo({top: board.offsetTop});
+  }
 
   function itemHTML(it, di, ii){
     var uid = "e-" + di + "-" + ii;
@@ -687,72 +1138,27 @@
     '</div>' +
     (it.note ? '<div class="note"><b>Watch the clock</b>'+it.note+'</div>' : '');
   }
-
-  function render(){
-    var board = document.getElementById("board");
-    var host  = document.getElementById("days");
-    board.innerHTML = DAYS.map(function(d,i){
-      var hasSession = d.items.some(function(x){return x.cls === "session";});
-      return '<button class="day-btn'+(hasSession?" has-session":"")+'" role="tab" aria-selected="'+(i===0)+'" data-i="'+i+'">' +
-        '<span class="dow">'+d.dow+'</span><span class="dnum">'+d.num+'</span>' +
-        '<span class="serve" aria-hidden="true"></span></button>';
-    }).join("");
-
-    host.innerHTML = DAYS.map(function(d,i){
-      return '<section class="day-panel" data-i="'+i+'" '+(i===0?"":'hidden')+'>' +
-        '<div class="day-head"><p class="kicker">'+d.date+'</p><h2>'+d.title+'</h2>' +
-        '<span class="tag">'+d.tag+'</span></div>' +
-        '<div class="rail">' + d.items.map(function(it,ii){return itemHTML(it,i,ii);}).join("") + '</div>' +
-      '</section>';
-    }).join("");
-
-    board.addEventListener("click", function(e){
-      var b = e.target.closest(".day-btn"); if(!b) return;
-      select(parseInt(b.dataset.i,10));
-    });
-    host.addEventListener("click", function(e){
-      var t = e.target.closest(".card-top"); if(!t || t.disabled) return;
-      var open = t.getAttribute("aria-expanded") === "true";
-      t.setAttribute("aria-expanded", String(!open));
-      document.getElementById(t.getAttribute("aria-controls")).classList.toggle("open", !open);
-    });
-  }
-
-  function select(i){
-    document.querySelectorAll(".day-btn").forEach(function(b,j){ b.setAttribute("aria-selected", String(i===j)); });
-    document.querySelectorAll(".day-panel").forEach(function(p,j){ p.hidden = (i!==j); });
-    var board = document.querySelector(".board");
-    if(window.scrollY > board.offsetTop) window.scrollTo({top: board.offsetTop});
-  }
-
-  /* ---------- today-aware default day ---------- */
-  function defaultDay(){
-    var n = new Date();
-    if(n.getFullYear()===2026 && n.getMonth()===9){
-      var d = n.getDate();
-      if(d>=1 && d<=4) return d-1;
-    }
-    return 0;
-  }
-
   /* ---------- checklist (persists when storage is available) ---------- */
   var state = {};
-  var KEY = "atl2026:plan";
+  function KEY(){ return "trips:" + trip.id + ":plan"; }
 
   function loadState(){
+    state = {};
     try{
-      var raw = localStorage.getItem(KEY);
-      if(raw) state = JSON.parse(raw);
+      var raw = localStorage.getItem(KEY());
+      /* The Atlanta checklist predates multiple trips — carry it across once. */
+      if(!raw && trip.id === "atl") raw = localStorage.getItem("atl2026:plan");
+      if(raw) state = JSON.parse(raw) || {};
     }catch(err){ state = {}; }
   }
   function saveState(){
-    try{ localStorage.setItem(KEY, JSON.stringify(state)); }
+    try{ localStorage.setItem(KEY(), JSON.stringify(state)); }
     catch(err){ /* private mode or storage full — keep going in memory */ }
   }
 
   function renderTodos(){
     var host = document.getElementById("todo");
-    host.innerHTML = TODOS.map(function(t){
+    host.innerHTML = trip.todos.map(function(t){
       var s = state[t.id] || {};
       return '<div class="todo-item'+(s.done?" done":"")+'" data-id="'+t.id+'">' +
         '<button class="cbox" aria-pressed="'+(s.done?"true":"false")+'" aria-label="Mark '+t.label.replace(/"/g,"")+'">' +
@@ -768,12 +1174,12 @@
   }
 
   function updateProgress(){
-    var done = TODOS.filter(function(t){ return state[t.id] && state[t.id].done; }).length;
-    document.getElementById("progress").innerHTML = "<b>"+done+"</b> of <b>"+TODOS.length+"</b> locked in";
+    var done = trip.todos.filter(function(t){ return state[t.id] && state[t.id].done; }).length;
+    document.getElementById("progress").innerHTML = "<b>"+done+"</b> of <b>"+trip.todos.length+"</b> locked in";
   }
 
   function wireTodos(){
-    var host = document.getElementById("todo");
+    var host = document.getElementById("todo");   /* delegated once; survives every re-render */
     host.addEventListener("click", function(e){
       var b = e.target.closest(".cbox"); if(!b) return;
       var row = b.closest(".todo-item"), id = row.dataset.id;
@@ -827,7 +1233,7 @@
 
   function packPlan(){
     var out = {};
-    TODOS.forEach(function(t){
+    trip.todos.forEach(function(t){
       var s = state[t.id];
       if(!s) return;
       /* An item that was checked and then unchecked still has a timestamp, and
@@ -840,12 +1246,12 @@
       if(s.nts)  rec.y = s.nts;
       out[t.id] = rec;
     });
-    return {v:1, t:nowSec(), i:out};
+    return {v:2, trip:trip.id, t:nowSec(), i:out};
   }
 
   function planChanges(inc){
     var known = {}, out = [];
-    TODOS.forEach(function(t){ known[t.id] = t; });
+    trip.todos.forEach(function(t){ known[t.id] = t; });
     Object.keys(inc.i || {}).forEach(function(id){
       if(!known[id]) return;                       /* an id this build doesn't have */
       var r = inc.i[id] || {}, mine = state[id] || {};
@@ -904,15 +1310,20 @@
   function readSharedLink(){
     var m = /[#&]s=([A-Za-z0-9_-]+)/.exec(location.hash);
     if(!m) return;
-    /* Drop it from the URL straight away so a refresh doesn't ask again. */
-    try{ history.replaceState(null, "", location.href.split("#")[0]); }catch(err){}
+    /* Drop the payload from the URL straight away so a refresh doesn't ask again,
+       but keep the trip so the page stays where it is. */
+    try{ history.replaceState(null, "", location.href.split("#")[0] + (trip ? "#" + trip.id : "")); }catch(err){}
     var inc;
     try{
       if(m[1].length > 200000) throw new Error("oversized");
       inc = JSON.parse(unb64url(m[1]));
     }catch(err){ toast("That link didn't read properly"); return; }
-    if(!inc || inc.v !== 1 || typeof inc.i !== "object"){
+    if(!inc || inc.v !== 2 || typeof inc.i !== "object"){
       toast("That link is from a different version"); return;
+    }
+    if(!trip || inc.trip !== trip.id){
+      var other = tripById(inc.trip);
+      toast(other ? "That link is for " + other.name : "That link is for a trip this build doesn't have"); return;
     }
     var changes = planChanges(inc);
     if(!changes.length){ toast("Nothing new in that link"); return; }
@@ -920,7 +1331,7 @@
   }
 
   function planLink(){
-    return location.href.split("#")[0] + "#s=" + b64url(JSON.stringify(packPlan()));
+    return location.href.split("#")[0] + "#" + trip.id + "&s=" + b64url(JSON.stringify(packPlan()));
   }
   function copyPlanLink(url){
     if(navigator.clipboard && navigator.clipboard.writeText){
@@ -932,7 +1343,7 @@
   function sharePlan(){
     var url = planLink();
     if(navigator.share){
-      navigator.share({title:"Atlanta Cigar Week", text:"My notes for the trip", url:url})
+      navigator.share({title:trip.name, text:"My notes for " + trip.name, url:url})
         .then(function(){ toast("Sent"); })
         .catch(function(err){ if(!err || err.name !== "AbortError") copyPlanLink(url); });
     } else copyPlanLink(url);
@@ -942,7 +1353,7 @@
     document.getElementById("shareBtn").addEventListener("click", sharePlan);
     /* A link tapped while the app is already open only changes the fragment —
        the page never reloads, so init doesn't run again. Catch it here. */
-    window.addEventListener("hashchange", readSharedLink);
+    window.addEventListener("hashchange", function(){ route(); readSharedLink(); });
     document.getElementById("mergeYes").addEventListener("click", function(){
       var n = pendingChanges ? pendingChanges.length : 0;
       if(pendingChanges) applyChanges(pendingChanges);
@@ -956,7 +1367,7 @@
   }
 
   /* ---------- calendar ----------
-     Events are declared inline on the DAYS items (the `ics` field) so a time that
+     Events are declared inline on the trip's items (the `ics` field) so a time that
      changes on a card changes in the .ics too. Only booked things carry one.
      TZID + VTIMEZONE rather than UTC, so the flights keep their two timezones and
      every client reads the same wall-clock time. */
@@ -973,12 +1384,16 @@
   }
   var ZONES = {
     "America/New_York": zone("America/New_York","EDT","-0500","-0400","EST","-0400","-0500"),
-    "America/Chicago":  zone("America/Chicago", "CDT","-0600","-0500","CST","-0500","-0600")
+    "America/Chicago":  zone("America/Chicago", "CDT","-0600","-0500","CST","-0500","-0600"),
+    "America/Indiana/Indianapolis": zone("America/Indiana/Indianapolis","EDT","-0500","-0400","EST","-0400","-0500"),
+    /* Mexico stopped observing DST in 2022 — a single fixed offset. */
+    "America/Mexico_City": ["BEGIN:VTIMEZONE","TZID:America/Mexico_City","BEGIN:STANDARD",
+      "TZOFFSETFROM:-0600","TZOFFSETTO:-0600","TZNAME:CST","DTSTART:19700101T000000","END:STANDARD","END:VTIMEZONE"]
   };
 
   function calEvents(){
     var out = [];
-    DAYS.forEach(function(d){
+    trip.days.forEach(function(d){
       d.items.forEach(function(it){ if(it.ics) out.push(it.ics); });
     });
     return out;
@@ -1011,8 +1426,8 @@
 
   function buildIcs(){
     var evs = calEvents(), used = {}, lines = [
-      "BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Atlanta Cigar Week//Itinerary//EN",
-      "CALSCALE:GREGORIAN","METHOD:PUBLISH","X-WR-CALNAME:Atlanta Cigar Week"
+      "BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Austin's Trips//Itinerary//EN",
+      "CALSCALE:GREGORIAN","METHOD:PUBLISH","X-WR-CALNAME:" + icsEsc(trip.name)
     ];
     evs.forEach(function(e){ used[e.start[1]] = 1; used[e.end[1]] = 1; });
     Object.keys(used).forEach(function(z){ lines = lines.concat(ZONES[z]); });
@@ -1021,7 +1436,7 @@
     evs.forEach(function(e){
       lines.push(
         "BEGIN:VEVENT",
-        "UID:atlcw2026-" + e.uid + "@19awburris88.github.io",
+        "UID:" + trip.uid + "-" + e.uid + "@19awburris88.github.io",
         "DTSTAMP:" + now,
         "SEQUENCE:0",
         "DTSTART;TZID=" + e.start[1] + ":" + icsLocal(e.start[0]),
@@ -1048,20 +1463,21 @@
   }
   function calAlarm(n){ return (n % 60 === 0 ? (n/60) + "h" : n + " min") + " before"; }
 
+  function icsName(){ return trip.name.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"") + ".ics"; }
   function icsBlob(){
     return new Blob([buildIcs()], {type:"text/calendar;charset=utf-8"});
   }
   function icsDownload(){
     var url = URL.createObjectURL(icsBlob());
     var a = document.createElement("a");
-    a.href = url; a.download = "atlanta-cigar-week.ics";
+    a.href = url; a.download = icsName();
     document.body.appendChild(a); a.click(); a.remove();
     setTimeout(function(){ URL.revokeObjectURL(url); }, 4000);
     toast(calEvents().length + " events downloaded");
   }
   function icsShare(){
-    var file = new File([icsBlob()], "atlanta-cigar-week.ics", {type:"text/calendar"});
-    navigator.share({files:[file], title:"Atlanta Cigar Week"})
+    var file = new File([icsBlob()], icsName(), {type:"text/calendar"});
+    navigator.share({files:[file], title:trip.name})
       .then(function(){ toast("Sent"); })
       .catch(function(err){ if(!err || err.name !== "AbortError") icsDownload(); });
   }
@@ -1073,13 +1489,22 @@
   }
 
   function renderCal(){
-    document.getElementById("callist").innerHTML = calEvents().map(function(e){
+    var evs = calEvents(), empty = evs.length === 0;
+    document.getElementById("icsBtn").disabled = empty;
+    document.getElementById("icsShare").disabled = empty;
+    if(empty){
+      document.getElementById("callist").innerHTML = '<li><span class="what">Nothing with a fixed time yet — items join here once they have one.</span></li>';
+      return;
+    }
+    document.getElementById("callist").innerHTML = evs.map(function(e){
       return '<li>' +
         '<span class="when">' + calWhen(e.start[0]) + '</span>' +
         '<span class="what">' + e.summary + '</span>' +
         '<span class="alarm">' + calAlarm(e.alarm) + '</span>' +
       '</li>';
     }).join("");
+  }
+  function wireCal(){
     document.getElementById("icsBtn").addEventListener("click", icsDownload);
     var sh = document.getElementById("icsShare");
     if(canShareIcs()){ sh.hidden = false; sh.addEventListener("click", icsShare); }
@@ -1102,14 +1527,20 @@
 
   /* ---------- go ---------- */
   (function init(){
-    setCountdown();
-    render();
-    select(defaultDay());
-    loadState();
-    renderTodos();
     wireTodos();
-    renderCal();
     wireShare();
+    wireCal();
+    document.getElementById("days").addEventListener("click", function(e){
+      var t = e.target.closest(".card-top"); if(!t || t.disabled) return;
+      var open = t.getAttribute("aria-expanded") === "true";
+      t.setAttribute("aria-expanded", String(!open));
+      document.getElementById(t.getAttribute("aria-controls")).classList.toggle("open", !open);
+    });
+    document.getElementById("board").addEventListener("click", function(e){
+      var b = e.target.closest(".day-btn"); if(!b) return;
+      select(parseInt(b.dataset.i,10));
+    });
+    route();
     readSharedLink();
   })();
 
@@ -1121,5 +1552,6 @@
   }
 })();
 </script>
+
 </body>
 </html>

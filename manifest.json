@@ -1,7 +1,7 @@
 {
-  "name": "Atlanta Cigar Week — Itinerary",
-  "short_name": "Cigar Week",
-  "description": "Atlanta itinerary, October 1–4, 2026.",
+  "name": "Austin's Trips",
+  "short_name": "Trips",
+  "description": "Personal itineraries — flights, stays, events, and the open questions for each trip.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
