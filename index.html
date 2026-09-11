@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>US Open Weekend — Austin + Adrienne</title>
+<title>Atlanta Cigar Week — Itinerary</title>
 <link rel="preload" href="fonts/big-shoulders-display-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/instrument-sans-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
@@ -37,17 +37,19 @@
     font-weight:600; font-style:normal; font-display:swap;
   }
   :root{
-    --night:#0C1B33;
-    --court:#2A5CAA;
-    --court-deep:#1D4380;
-    --apron:#6FA53C;
-    --ball:#DDE82F;
-    --paper:#F4F7FA;
+    --night:#0A0A0D;
+    --ember:#1C1712;
+    --ember-deep:#C9A253;
+    --gold:#C9A253;
+    --leaf:#8B5E34;
+    --done:#5E7F4A;
+    --link:#8A6520;
+    --paper:#F6F3EC;
     --card:#FFFFFF;
-    --ink:#0C1B33;
-    --muted:#5B6B84;
-    --hair:#D5DEE9;
-    --shadow:0 1px 2px rgba(12,27,51,.06), 0 8px 24px rgba(12,27,51,.06);
+    --ink:#14120F;
+    --muted:#6E675C;
+    --hair:#E3DDD0;
+    --shadow:0 1px 2px rgba(20,18,15,.06), 0 8px 24px rgba(20,18,15,.06);
 
     --display:"Big Shoulders Display","Haettenschweiler","Arial Narrow",sans-serif;
     --body:"Instrument Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
@@ -81,7 +83,7 @@
     font-size:11px;
     letter-spacing:.16em;
     text-transform:uppercase;
-    color:var(--ball);
+    color:var(--gold);
     margin:0 0 14px;
   }
   h1{
@@ -93,7 +95,7 @@
     text-transform:uppercase;
     margin:0;
   }
-  h1 .thin{font-weight:500;color:#8FA6C4;display:block;}
+  h1 .thin{font-weight:500;color:#A89F8C;display:block;}
   .hero-meta{
     display:flex;
     flex-wrap:wrap;
@@ -103,30 +105,22 @@
     font-family:var(--mono);
     font-size:12.5px;
     letter-spacing:.04em;
-    color:#B7C6DC;
+    color:#C9C2B2;
   }
   .hero-meta strong{color:#fff;font-weight:500;}
   .countdown{
     color:var(--night);
-    background:var(--ball);
+    background:var(--gold);
     padding:3px 9px 2px;
     border-radius:2px;
     font-weight:600;
   }
   /* court line motif under the hero */
+  /* A single gold rule under the hero — the court markings went with the tennis. */
   .baseline{
     margin-top:30px;
-    height:56px;
-    position:relative;
-    border-top:2px solid rgba(255,255,255,.55);
-  }
-  .baseline:before{
-    content:"";position:absolute;left:50%;top:-2px;bottom:0;
-    width:2px;background:rgba(255,255,255,.28);
-  }
-  .baseline:after{
-    content:"";position:absolute;left:12%;right:12%;top:26px;
-    border-top:2px solid rgba(255,255,255,.28);
+    height:28px;
+    border-top:1px solid rgba(201,162,83,.55);
   }
 
   /* ---------- scoreboard nav ---------- */
@@ -143,7 +137,7 @@
     flex:1 1 0;
     background:none;border:0;
     border-right:1px solid rgba(255,255,255,.12);
-    color:#8FA6C4;
+    color:#A89F8C;
     padding:11px 4px 9px;
     cursor:pointer;
     font-family:var(--display);
@@ -157,16 +151,16 @@
   .day-btn .dnum{display:block;font-family:var(--mono);font-size:19px;font-weight:500;line-height:1.15;letter-spacing:-.02em;}
   .day-btn .serve{
     display:block;width:6px;height:6px;border-radius:50%;
-    background:var(--ball);margin:5px auto 0;opacity:0;
+    background:var(--gold);margin:5px auto 0;opacity:0;
   }
   .day-btn.has-session .serve{opacity:.55;}
   .day-btn:hover{color:#fff;background:rgba(255,255,255,.05);}
   .day-btn[aria-selected="true"]{color:#fff;}
   .day-btn[aria-selected="true"].has-session .serve{opacity:1;}
   .day-btn[aria-selected="true"]:after{
-    content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--ball);
+    content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--gold);
   }
-  .day-btn:focus-visible{outline:2px solid var(--ball);outline-offset:-3px;}
+  .day-btn:focus-visible{outline:2px solid var(--gold);outline-offset:-3px;}
 
   /* ---------- day panel ---------- */
   .day-head{padding:34px 0 4px;}
@@ -195,16 +189,16 @@
   }
   .item{position:relative;margin:0 0 14px;}
   .item .clock{
-    position:absolute;left:-78px;top:14px;width:64px;text-align:right;
+    position:absolute;right:calc(100% + 30px);top:14px;white-space:nowrap;text-align:right;
     font-family:var(--mono);font-size:12px;font-weight:500;
     color:var(--muted);letter-spacing:-.02em;line-height:1.25;
   }
-  .item .clock em{display:block;font-style:normal;font-size:10.5px;color:#8C9BB2;}
+  .item .clock em{display:block;font-style:normal;font-size:10.5px;color:#A39B8B;}
   .item .dot{
     position:absolute;left:-25px;top:19px;width:9px;height:9px;border-radius:50%;
     background:#fff;border:2px solid var(--hair);z-index:2;
   }
-  .item.anchor .dot{background:var(--ball);border-color:var(--ball);box-shadow:0 0 0 4px rgba(221,232,47,.28);}
+  .item.anchor .dot{background:var(--gold);border-color:var(--gold);box-shadow:0 0 0 4px rgba(201,162,83,.32);}
 
   .card{
     background:var(--card);
@@ -218,7 +212,7 @@
     padding:14px 16px;cursor:pointer;font:inherit;color:inherit;
     display:flex;gap:12px;align-items:flex-start;
   }
-  .card-top:focus-visible{outline:2px solid var(--court);outline-offset:-2px;}
+  .card-top:focus-visible{outline:2px solid var(--link);outline-offset:-2px;}
   .card-top .grow{flex:1 1 auto;min-width:0;}
   .kind{
     font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
@@ -244,30 +238,30 @@
     text-transform:uppercase;color:var(--muted);
   }
   .facts .val{flex:1 1 auto;min-width:0;}
-  .facts .val a{color:var(--court);text-decoration:none;border-bottom:1px solid rgba(42,92,170,.3);}
-  .facts .val a:hover{border-bottom-color:var(--court);}
+  .facts .val a{color:var(--link);text-decoration:none;border-bottom:1px solid rgba(138,101,32,.35);}
+  .facts .val a:hover{border-bottom-color:var(--link);}
   .mono{font-family:var(--mono);letter-spacing:-.01em;}
 
   /* session cards — the anchor of each day */
-  .card.session{background:var(--court);border-color:var(--court-deep);color:#fff;}
-  .card.session .kind{color:var(--ball);}
-  .card.session .where{color:#CFDFF5;}
-  .card.session .chev{color:#CFDFF5;}
+  .card.session{background:var(--ember);border-color:var(--ember-deep);color:#fff;}
+  .card.session .kind{color:var(--gold);}
+  .card.session .where{color:#E2DCCF;}
+  .card.session .chev{color:#E2DCCF;}
   .card.session .body{border-top-color:rgba(255,255,255,.2);}
-  .card.session .facts .lab{color:#9FBCE6;}
+  .card.session .facts .lab{color:#C9B98F;}
   .card.session .facts .val a{color:#fff;border-bottom-color:rgba(255,255,255,.45);}
   .card.session .stub{
     display:flex;align-items:baseline;gap:10px;margin-top:12px;
     padding-top:12px;border-top:1px dashed rgba(255,255,255,.3);
   }
   .card.session .stub .big{
-    font-family:var(--display);font-size:40px;font-weight:800;line-height:.85;color:var(--ball);
+    font-family:var(--display);font-size:40px;font-weight:800;line-height:.85;color:var(--gold);
   }
-  .card.session .stub .lil{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#CFDFF5;}
+  .card.session .stub .lil{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#E2DCCF;}
 
   /* travel cards */
   .card.travel{border-left:3px solid var(--night);}
-  .card.meal{border-left:3px solid var(--apron);}
+  .card.meal{border-left:3px solid var(--leaf);}
 
   /* open slot */
   .card.open-slot{background:transparent;border-style:dashed;box-shadow:none;}
@@ -276,12 +270,12 @@
   /* watch the clock note */
   .note{
     margin:2px 0 16px 0;
-    background:#FFF9D6;border:1px solid #E8DE93;border-radius:6px;
+    background:#FBF3DF;border:1px solid #E4CF9B;border-radius:6px;
     padding:11px 14px;font-size:13.5px;
   }
   .note b{
     font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
-    display:block;margin-bottom:3px;color:#6E6413;
+    display:block;margin-bottom:3px;color:#7A5B1E;
   }
 
   /* ---------- section blocks ---------- */
@@ -299,7 +293,7 @@
     font-family:var(--display);font-size:32px;font-weight:700;text-transform:uppercase;
     line-height:.95;margin:0 0 2px;
   }
-  .basecamp .addr span{display:block;color:#8FA6C4;font-weight:500;font-size:20px;}
+  .basecamp .addr span{display:block;color:#A89F8C;font-weight:500;font-size:20px;}
   .basecamp .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;}
 
   .calbox{background:var(--night);color:#fff;border-radius:8px;padding:22px 20px;}
@@ -308,11 +302,11 @@
     font-family:var(--display);font-size:24px;font-weight:800;text-transform:uppercase;
     margin:0 0 2px;letter-spacing:.005em;
   }
-  .merge-sub{font-size:13.5px;color:#8FA6C4;margin:0 0 4px;}
+  .merge-sub{font-size:13.5px;color:#A89F8C;margin:0 0 4px;}
   .merge-list{list-style:none;margin:0 0 16px;padding:14px 0 0;border-top:1px solid rgba(255,255,255,.2);}
-  .merge-list li{font-size:13.5px;color:#D6E1F0;padding:4px 0;display:flex;gap:10px;align-items:baseline;}
+  .merge-list li{font-size:13.5px;color:#E2DCCF;padding:4px 0;display:flex;gap:10px;align-items:baseline;}
   .merge-list .tag{
-    font-family:var(--mono);font-size:10.5px;color:var(--ball);text-transform:uppercase;
+    font-family:var(--mono);font-size:10.5px;color:var(--gold);text-transform:uppercase;
     letter-spacing:.08em;white-space:nowrap;flex:none;min-width:62px;
   }
   .merge-list .val{flex:1;}
@@ -321,18 +315,18 @@
   .shareRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;align-items:center;}
   .shareRow .hint{font-size:12.5px;color:var(--muted);}
   /* .btn is white-on-navy; .ink is the same button on the paper background. */
-  .btn.ink{border-color:rgba(12,27,51,.3);color:var(--ink);}
-  .btn.ink:hover{background:rgba(12,27,51,.06);}
+  .btn.ink{border-color:rgba(20,18,15,.3);color:var(--ink);}
+  .btn.ink:hover{background:rgba(20,18,15,.06);}
   .btn.ink.solid{background:var(--night);color:#fff;border-color:var(--night);}
-  .btn.ink.solid:hover{background:#16294A;}
+  .btn.ink.solid:hover{background:#2A2620;}
   .calbox .row{display:flex;gap:10px;flex-wrap:wrap;}
   .callist{list-style:none;margin:18px 0 0;padding:16px 0 0;border-top:1px solid rgba(255,255,255,.2);}
   .callist li{
     display:flex;gap:12px;align-items:baseline;justify-content:space-between;
-    font-size:13.5px;color:#D6E1F0;padding:5px 0;
+    font-size:13.5px;color:#E2DCCF;padding:5px 0;
   }
-  .callist .when{font-family:var(--mono);font-size:11px;color:var(--ball);white-space:nowrap;letter-spacing:.04em;}
-  .callist .alarm{font-family:var(--mono);font-size:11px;color:#8FA6C4;white-space:nowrap;}
+  .callist .when{font-family:var(--mono);font-size:11px;color:var(--gold);white-space:nowrap;letter-spacing:.04em;}
+  .callist .alarm{font-family:var(--mono);font-size:11px;color:#A89F8C;white-space:nowrap;}
   .callist .what{flex:1;}
   @media (max-width:420px){
     .callist li{flex-wrap:wrap;gap:2px 10px;}
@@ -345,18 +339,18 @@
     transition:background .16s ease,border-color .16s ease;
   }
   .btn:hover{background:rgba(255,255,255,.12);}
-  .btn.solid{background:var(--ball);color:var(--night);border-color:var(--ball);font-weight:600;}
-  .btn.solid:hover{background:#EAF442;}
-  .btn:focus-visible{outline:2px solid var(--ball);outline-offset:2px;}
+  .btn.solid{background:var(--gold);color:var(--night);border-color:var(--gold);font-weight:600;}
+  .btn.solid:hover{background:#D8B665;}
+  .btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
   .steps{list-style:none;counter-reset:s;margin:20px 0 0;padding:18px 0 0;border-top:1px solid rgba(255,255,255,.2);}
   .steps li{
     counter-increment:s;position:relative;padding-left:34px;margin-bottom:11px;
-    font-size:14px;color:#D6E1F0;
+    font-size:14px;color:#E2DCCF;
   }
   .steps li:before{
     content:counter(s);position:absolute;left:0;top:0;
-    font-family:var(--mono);font-size:11px;color:var(--ball);
-    border:1px solid rgba(221,232,47,.45);border-radius:50%;
+    font-family:var(--mono);font-size:11px;color:var(--gold);
+    border:1px solid rgba(201,162,83,.5);border-radius:50%;
     width:21px;height:21px;display:flex;align-items:center;justify-content:center;
   }
   .steps li b{color:#fff;font-weight:600;}
@@ -367,14 +361,14 @@
     background:#fff;border:1px solid var(--hair);border-radius:6px;padding:12px 14px;
     display:flex;gap:12px;align-items:flex-start;
   }
-  .todo-item.done{background:#F0F4F0;border-color:#CBDAC6;}
+  .todo-item.done{background:#F0F2EA;border-color:#C9D2BC;}
   .cbox{
     flex:0 0 auto;width:20px;height:20px;margin-top:1px;border-radius:4px;
-    border:1.5px solid #A9B7C9;background:#fff;cursor:pointer;padding:0;
+    border:1.5px solid #BDB5A6;background:#fff;cursor:pointer;padding:0;
     display:flex;align-items:center;justify-content:center;
   }
-  .cbox:focus-visible{outline:2px solid var(--court);outline-offset:2px;}
-  .todo-item.done .cbox{background:var(--apron);border-color:var(--apron);}
+  .cbox:focus-visible{outline:2px solid var(--link);outline-offset:2px;}
+  .todo-item.done .cbox{background:var(--done);border-color:var(--done);}
   .cbox svg{opacity:0;width:12px;height:12px;color:#fff;}
   .todo-item.done .cbox svg{opacity:1;}
   .todo-body{flex:1 1 auto;min-width:0;}
@@ -385,8 +379,8 @@
     width:100%;margin-top:8px;border:0;border-bottom:1px solid var(--hair);
     font-family:var(--body);font-size:13.5px;padding:4px 0;background:transparent;color:var(--ink);
   }
-  .todo-input::placeholder{color:#A3AFC0;}
-  .todo-input:focus{outline:none;border-bottom-color:var(--court);}
+  .todo-input::placeholder{color:#B5AEA0;}
+  .todo-input:focus{outline:none;border-bottom-color:var(--link);}
   .progress{
     font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;
     color:var(--muted);margin:0 0 14px;
@@ -395,7 +389,7 @@
 
   .foot{
     margin-top:48px;padding-top:18px;border-top:1px solid var(--hair);
-    font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:#93A2B6;
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:#9B9384;
     display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
   }
 
@@ -410,7 +404,7 @@
   @media (max-width:560px){
     .rail{padding-left:62px;}
     .rail:before{left:44px;}
-    .item .clock{left:-62px;width:52px;}
+    .item .clock{right:calc(100% + 26px);font-size:11px;}
     .item .dot{left:-22px;}
     .facts li{flex-direction:column;gap:2px;}
     .facts .lab{flex:none;}
@@ -420,11 +414,11 @@
   }
 </style>
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#0C1B33">
+<meta name="theme-color" content="#0A0A0D">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="US Open">
+<meta name="apple-mobile-web-app-title" content="Cigar Week">
 <link rel="icon" href="icons/icon-192.png" sizes="192x192">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 </head>
@@ -432,11 +426,11 @@
 
 <header class="hero">
   <div class="wrap">
-    <p class="eyebrow">Sept 3–7, 2026 · Midtown + Flushing Meadows</p>
-    <h1>US Open<span class="thin">Weekend</span></h1>
+    <p class="eyebrow">Oct 1–4, 2026 · Midtown Atlanta</p>
+    <h1>Atlanta<span class="thin">Cigar Week</span></h1>
     <div class="hero-meta">
-      <span><strong>Austin + Adrienne</strong></span>
-      <span>5 days · 3 sessions</span>
+      <span><strong>Kimpton Shane · Midtown</strong></span>
+      <span>4 days · 5 signature events</span>
       <span id="countdown" class="countdown">—</span>
     </div>
     <div class="baseline" aria-hidden="true"></div>
@@ -452,24 +446,24 @@
 
   <section class="section">
     <h3>Base camp</h3>
-    <p class="sub">Matt's place, Midtown West — between 40th and 41st, on the left.</p>
+    <p class="sub">Kimpton Shane Hotel, Midtown — check in Thursday 3:00 PM, out Sunday noon.</p>
     <div class="basecamp">
-      <p class="addr">555 10th Ave <span>Apt 37G · New York, NY 10018</span></p>
+      <p class="addr">1340 W Peachtree St NW <span>Kimpton Shane Hotel · Atlanta, GA 30309</span></p>
       <div class="row">
-        <button class="btn solid" data-copy="555 10th Ave Apt 37G, New York, NY 10018">Copy address</button>
-        <a class="btn" href="https://www.google.com/maps/search/?api=1&query=555%2010th%20Ave%2C%20New%20York%2C%20NY%2010018" target="_blank" rel="noopener">Open in Maps</a>
+        <button class="btn solid" data-copy="Kimpton Shane Hotel, 1340 W Peachtree St NW, Atlanta, GA 30309">Copy address</button>
+        <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Kimpton%20Shane%20Hotel%2C%201340%20W%20Peachtree%20St%20NW%2C%20Atlanta%2C%20GA%2030309" target="_blank" rel="noopener">Open in Maps</a>
       </div>
       <ol class="steps">
-        <li><b>AirTran from JFK to Jamaica Station.</b> Follow signs for the LIRR once you're off.</li>
-        <li><b>LIRR from Jamaica.</b> Get off at Penn Station or Grand Central — whichever train comes first.</li>
-        <li><b>Cab to 41st &amp; 10th.</b> The building is on the left, between 40th and 41st.</li>
+        <li><b>Land at the Domestic Terminal, grab the bags.</b> American flies into the domestic side at ATL.</li>
+        <li><b>SkyTrain to the Rental Car Center.</b> Follow the signs from baggage claim — about 15 minutes. Alamo is in the center.</li>
+        <li><b>Drive up to Midtown.</b> I-75/85 north to W Peachtree — 20–30 minutes without traffic. Hotel itinerary <span class="mono">73510930020810</span>.</li>
       </ol>
     </div>
   </section>
 
   <section class="section">
     <h3>Calendar</h3>
-    <p class="sub">The seven things that are actually booked, with alerts. Nothing that's still open goes in.</p>
+    <p class="sub">Everything with a fixed time — flights, the five events, checkout, the car — with alerts. Nothing that's still open goes in.</p>
     <div class="calbox">
       <div class="row">
         <button class="btn solid" id="icsBtn">Add to calendar</button>
@@ -502,8 +496,8 @@
   </section>
 
   <div class="foot">
-    <span>Austin + Adrienne · New York</span>
-    <span>Sept 3–7, 2026</span>
+    <span>Atlanta Cigar Week</span>
+    <span>Oct 1–4, 2026</span>
   </div>
 </main>
 
@@ -518,133 +512,139 @@
 
   var DAYS = [
     {
-      id:"thu", dow:"Thu", num:"03", date:"Thursday, September 3",
-      title:"Travel day", tag:"Wheels up 5:30 PM · lands 10:14 PM",
+      id:"thu", dow:"Thu", num:"01", date:"Thursday, October 1",
+      title:"Fly in, light up", tag:"Wheels up 9:30 AM · She Smokes Too 9:00 PM",
       items:[
-        { time:"5:30 PM", kind:"Flight out", title:"AA 1248 · DFW → JFK", where:"American Airlines · arrives 10:14 PM",
+        { time:"9:30 AM", kind:"Flight out", title:"AA 1276 · DFW → ATL", where:"American Airlines · First · arrives 12:41 PM",
           cls:"travel",
           ics:{ uid:"flight-out", alarm:120,
-            start:["2026-09-03T17:30","America/Chicago"], end:["2026-09-03T22:14","America/New_York"],
-            summary:"AA 1248 · DFW → JFK", location:"Dallas/Fort Worth International Airport",
-            desc:"American Airlines 1248. Seats 8A & 8B. 3h 44m in the air. Lands JFK Terminal 8 at 10:14 PM ET." },
-          facts:[["Route","Dallas/Fort Worth → New York JFK"],["Seats","8A &amp; 8B"],["In the air","3h 44m"]],
-          note:"Late arrival — plan on getting to Midtown around 11:30 PM." },
-        { time:"10:14 PM", kind:"Arrive", title:"Land at JFK", where:"Terminal 8 · AirTrain to Jamaica",
-          facts:[["Getting in","AirTrain → LIRR → cab to 41st &amp; 10th"],["Address","<a href='"+m("555 10th Ave, New York, NY 10018")+"' target='_blank' rel='noopener'>555 10th Ave, Apt 37G</a>"]] },
-        { time:"Late", kind:"Open", title:"Late-night food if you need it", where:"Nothing booked", cls:"open-slot",
-          facts:[["Nearby","Hell's Kitchen and 9th Ave run late"]] }
+            start:["2026-10-01T09:30","America/Chicago"], end:["2026-10-01T12:41","America/New_York"],
+            summary:"AA 1276 · DFW → ATL", location:"Dallas/Fort Worth International Airport",
+            desc:"American Airlines 1276, First. Seat 2B. Two checked bags. 2h 11m in the air, lands ATL Domestic Terminal at 12:41 PM ET. Boeing 737-800." },
+          facts:[["Route","Dallas/Fort Worth → Atlanta"],["Seat","2B · First"],["Bags","2 checked"],["In the air","2h 11m · Boeing 737-800"]] },
+        { time:"12:41 PM", kind:"Arrive", title:"Land at ATL", where:"Domestic Terminal · baggage claim, then the SkyTrain",
+          facts:[["Bags","Two checked — domestic baggage claim"],["To the car","ATL SkyTrain from the Domestic Terminal to the Rental Car Center · about 15 min"]] },
+        { time:"1:15 PM", kind:"Rental · booked", title:"Alamo · PremiumElite", where:"ATL Rental Car Center", cls:"travel",
+          facts:[["Itinerary","<span class='mono'>73541812009458</span>"],["Booked","Oct 1 at 12:30 PM → Oct 4 at 9:00 PM"],["To Midtown","About 20–30 min up I-75/85 to W Peachtree"]],
+          note:"The reservation says 12:30 PM but you land at 12:41 — you'll really be at the counter closer to 1:15. Alamo holds the car; nothing to change." },
+        { time:"Early afternoon", kind:"Open", title:"Lunch on the way in", where:"Nothing booked", cls:"open-slot" },
+        { time:"3:00 PM", kind:"Check in", title:"Kimpton Shane Hotel", where:"1340 W Peachtree St NW · Midtown", cls:"meal",
+          facts:[["Itinerary","<span class='mono'>73510930020810</span>"],["Stay","Oct 1 at 3:00 PM → Oct 4 at 12:00 PM"],["Parking","Ask at the desk — valet or self-park is still open on the list below"],["Address","<a href='"+m("Kimpton Shane Hotel, 1340 W Peachtree St NW, Atlanta, GA 30309")+"' target='_blank' rel='noopener'>Open in Maps</a>"]],
+          note:"You'll likely reach the hotel before 3:00. The desk can hold bags if the room isn't ready." },
+        { time:"Evening", kind:"Open", title:"Dinner before the rooftop", where:"Nothing booked", cls:"open-slot",
+          facts:[["Timing","Doors at 9:00 — eat first, it runs until 2 AM"]] },
+        { time:"9:00 PM", kind:"★ Signature", title:"She Smokes Too®", where:"Air Rooftop Lounge",
+          cls:"session", anchor:true,
+          ics:{ uid:"she-smokes-too", alarm:60,
+            start:["2026-10-01T21:00","America/New_York"], end:["2026-10-02T02:00","America/New_York"],
+            summary:"She Smokes Too® · Air Rooftop Lounge", location:"Air Rooftop Lounge, Atlanta, GA",
+            desc:"Atlanta Cigar Week signature event. An Elevated Evening of Lively Music, Cigars & Dancing under the Stars. 9:00 PM to 2:00 AM." },
+          facts:[["What","An Elevated Evening of Lively Music, Cigars &amp; Dancing under the Stars"],["Runs","9:00 PM – 2:00 AM"],["Getting there","<a href='"+m("Air Rooftop Lounge, Atlanta, GA")+"' target='_blank' rel='noopener'>Open in Maps</a>"],["Driving","It's a cigar night — decide before you leave whether the car stays at the hotel"]],
+          note:"Runs until 2 AM. Nothing on Friday until 6:00 PM, so sleep in." }
       ]
     },
     {
-      id:"fri", dow:"Fri", num:"04", date:"Friday, September 4",
-      title:"First session", tag:"Session 12 · Louis Armstrong · 7:00 PM",
+      id:"fri", dow:"Fri", num:"02", date:"Friday, October 2",
+      title:"Welcome to Atlanta", tag:"Fellaship · 6:00 PM",
       items:[
         { time:"Morning", kind:"Open", title:"Breakfast", where:"Nothing booked", cls:"open-slot" },
         { time:"Day", kind:"Open", title:"Explore the city", where:"Nothing booked", cls:"open-slot",
-          facts:[["Note","Keep it walkable — you're back in Midtown to change before the match"]] },
-        { time:"Afternoon", kind:"Open", title:"Lunch, then back to Midtown", where:"Nothing booked", cls:"open-slot" },
-        { time:"7:00 PM", kind:"US Open · Session 12", title:"Louis Armstrong Stadium", where:"USTA Billie Jean King National Tennis Center, Flushing",
-          cls:"session", anchor:true, session:"12",
-          ics:{ uid:"session-12", alarm:90,
-            start:["2026-09-04T19:00","America/New_York"], end:["2026-09-04T23:30","America/New_York"],
-            summary:"US Open · Session 12 · Louis Armstrong", location:"USTA Billie Jean King National Tennis Center, Flushing, NY",
-            desc:"Night session at Louis Armstrong — two matches. 7 train to Mets–Willets Point, about 45 min from Midtown. Leave by 5:30 PM to catch the first match. End time is an estimate; expect to be out past 11:00 PM." },
-          facts:[["Getting there","7 train to Mets–Willets Point · about 45 min from Midtown"],["Leave by","5:30 PM to catch the first match"],["Gates","<a href='"+m("USTA Billie Jean King National Tennis Center")+"' target='_blank' rel='noopener'>Open in Maps</a>"]],
-          note:"Night sessions at Armstrong are two matches — expect to be out past 11:00 PM." },
+          facts:[["Note","Nothing on the books until 6:00 — you've got the car and the whole day"]] },
+        { time:"Afternoon", kind:"Open", title:"Lunch", where:"Nothing booked", cls:"open-slot" },
+        { time:"6:00 PM", kind:"★ Signature", title:"Welcome to Atlanta", where:"Fellaship",
+          cls:"session", anchor:true,
+          ics:{ uid:"welcome-to-atlanta", alarm:60,
+            start:["2026-10-02T18:00","America/New_York"], end:["2026-10-02T22:00","America/New_York"],
+            summary:"Welcome to Atlanta · Fellaship", location:"Fellaship, Atlanta, GA",
+            desc:"Atlanta Cigar Week signature event. A Celebration of the People, Places & Energy That Define the City. Starts 6:00 PM; end time is an estimate." },
+          facts:[["What","A Celebration of the People, Places &amp; Energy That Define the City"],["Getting there","<a href='"+m("Fellaship, Atlanta, GA")+"' target='_blank' rel='noopener'>Open in Maps</a>"]] },
         { time:"After", kind:"Open", title:"Late dinner or drinks", where:"Nothing booked", cls:"open-slot" }
       ]
     },
     {
-      id:"sat", dow:"Sat", num:"05", date:"Saturday, September 5",
-      title:"Jersey, then tennis", tag:"Session 14 · Louis Armstrong · 7:00 PM",
+      id:"sat", dow:"Sat", num:"03", date:"Saturday, October 3",
+      title:"The Oasis, then the music", tag:"Two signature events · 11:00 AM and 9:00 PM",
       items:[
-        { time:"Daytime", kind:"With friends", title:"New Jersey · Alex &amp; Thurston", where:"Details still to come",
-          facts:[["Still open","Where you're meeting and how you're getting there"],["Watch","Build in buffer — you need to be at Armstrong by 7:00 PM"]] },
-        { time:"7:00 PM", kind:"US Open · Session 14", title:"Louis Armstrong Stadium", where:"USTA Billie Jean King National Tennis Center, Flushing",
-          cls:"session", anchor:true, session:"14",
-          ics:{ uid:"session-14", alarm:120,
-            start:["2026-09-05T19:00","America/New_York"], end:["2026-09-05T23:30","America/New_York"],
-            summary:"US Open · Session 14 · Louis Armstrong", location:"USTA Billie Jean King National Tennis Center, Flushing, NY",
-            desc:"Night session at Louis Armstrong. Coming back from New Jersey — allow 90 min through Manhattan on a Saturday. 7 train to Mets–Willets Point. End time is an estimate." },
-          facts:[["Getting there","7 train to Mets–Willets Point"],["From New Jersey","Allow 90 min back through Manhattan on a Saturday"],["Gates","<a href='"+m("USTA Billie Jean King National Tennis Center")+"' target='_blank' rel='noopener'>Open in Maps</a>"]] },
+        { time:"Morning", kind:"Open", title:"Breakfast", where:"Nothing booked", cls:"open-slot",
+          facts:[["Timing","Before 11:00 — The Oasis is a daytime event"]] },
+        { time:"11:00 AM", kind:"★ Signature", title:"The Oasis", where:"Location TBD",
+          cls:"session", anchor:true,
+          ics:{ uid:"the-oasis", alarm:60,
+            start:["2026-10-03T11:00","America/New_York"], end:["2026-10-03T15:00","America/New_York"],
+            summary:"The Oasis · Atlanta Cigar Week", location:"Atlanta, GA (venue not yet announced)",
+            desc:"Atlanta Cigar Week signature event. A Day of Wellness, Restoration & Inspired Living. Starts 11:00 AM; venue still TBD on the Cigar Week site; end time is an estimate." },
+          facts:[["What","A Day of Wellness, Restoration &amp; Inspired Living"],["Where","Not announced yet — it's on the list below to check the week of"]] },
+        { time:"Afternoon", kind:"Open", title:"Lunch and downtime", where:"Nothing booked", cls:"open-slot" },
+        { time:"Evening", kind:"Open", title:"Dinner before House of Music", where:"Nothing booked", cls:"open-slot" },
+        { time:"9:00 PM", kind:"★ Signature", title:"House of Music", where:"Whiskey Mistress",
+          cls:"session", anchor:true,
+          ics:{ uid:"house-of-music", alarm:60,
+            start:["2026-10-03T21:00","America/New_York"], end:["2026-10-04T01:00","America/New_York"],
+            summary:"House of Music · Whiskey Mistress", location:"Whiskey Mistress, Atlanta, GA",
+            desc:"Atlanta Cigar Week signature event. A Celebration of Sound. Starts 9:00 PM; end time is an estimate." },
+          facts:[["What","A Celebration of Sound"],["Getting there","<a href='"+m("Whiskey Mistress, Atlanta, GA")+"' target='_blank' rel='noopener'>Open in Maps</a>"]] },
         { time:"After", kind:"Open", title:"Wide open", where:"Nothing booked", cls:"open-slot" }
       ]
     },
     {
-      id:"sun", dow:"Sun", num:"06", date:"Sunday, September 6",
-      title:"Ashe to the harbor", tag:"Biggest day · three things booked",
+      id:"sun", dow:"Sun", num:"04", date:"Sunday, October 4",
+      title:"Block Party, then home", tag:"Wheels up 8:15 PM · the car is the tight part",
       items:[
-        { time:"11:30 AM", kind:"US Open · Session 15", title:"Arthur Ashe Stadium", where:"USTA Billie Jean King National Tennis Center, Flushing",
-          cls:"session", anchor:true, session:"15",
-          ics:{ uid:"session-15", alarm:90,
-            start:["2026-09-06T11:30","America/New_York"], end:["2026-09-06T16:15","America/New_York"],
-            summary:"US Open · Session 15 · Arthur Ashe", location:"USTA Billie Jean King National Tennis Center, Flushing, NY",
-            desc:"Day session at Arthur Ashe. 7 train to Mets–Willets Point, about 45 min. Leave Midtown by 10:00 AM. The end time here is when you need to leave Flushing for the 5:15 PM table, not when play finishes — Ashe day sessions run long." },
-          facts:[["Getting there","7 train to Mets–Willets Point · about 45 min"],["Leave by","10:00 AM"],["Heads up","Ashe day sessions run long — you'll likely leave mid-match"]] },
-        { time:"5:15 PM", kind:"Dinner · booked", title:"Markette", where:"326 7th Ave · table for 2", cls:"meal",
-          ics:{ uid:"markette", alarm:60,
-            start:["2026-09-06T17:15","America/New_York"], end:["2026-09-06T18:00","America/New_York"],
-            summary:"Dinner · Markette (table for 2)", location:"Markette, 326 7th Ave, New York, NY",
-            desc:"Confirmation 19934. Party of 2. Leave Flushing by 4:15 PM to make the table. Leave dinner by 6:00 PM — boarding at Pier 83 is 6:15 PM." },
-          facts:[["Confirmation","<span class='mono'>19934</span>"],["Address","<a href='"+m("Markette, 326 7th Ave, New York, NY")+"' target='_blank' rel='noopener'>326 7th Ave</a>"],["Party","2"]],
-          note:"Tightest turn of the trip: leave Flushing by 4:15 PM to make the table, and you only have about an hour before you need to be at the pier." },
-        { time:"6:15 PM", kind:"Boarding", title:"Board at Pier 83", where:"W 42nd St &amp; 12th Ave",
-          facts:[["From Markette","About 15 min by cab · leave dinner by 6:00 PM"],["Pier","<a href='"+m("Circle Line Pier 83, W 42nd St & 12th Ave, New York")+"' target='_blank' rel='noopener'>Open in Maps</a>"]] },
-        { time:"7:00 PM", kind:"Cruise · booked", title:"Harbor Lights Premier", where:"Circle Line · Pier 83",
-          ics:{ uid:"circle-line", alarm:30,
-            start:["2026-09-06T18:15","America/New_York"], end:["2026-09-06T21:00","America/New_York"],
-            summary:"Circle Line · Harbor Lights Premier", location:"Circle Line Pier 83, W 42nd St & 12th Ave, New York, NY",
-            desc:"Boarding 6:15 PM at Pier 83, cruise departs 7:00 PM. About 15 min by cab from Markette. Bring a layer — it is cold on the water after dark. End time is an estimate; the booking does not list one. You dock a 12-minute walk from the apartment." },
-          facts:[["Boards","6:15 PM"],["Bring","A layer — it's cold on the water after dark"]] },
-        { time:"After", kind:"Open", title:"Wide open", where:"Nothing booked", cls:"open-slot",
-          facts:[["Nearby","You dock a 12-minute walk from the apartment"]] }
-      ]
-    },
-    {
-      id:"mon", dow:"Mon", num:"07", date:"Monday, September 7",
-      title:"Last day home", tag:"Wheels up 6:30 PM",
-      items:[
-        { time:"Morning", kind:"Open", title:"Breakfast or brunch", where:"Nothing booked", cls:"open-slot" },
-        { time:"Day", kind:"Maybe", title:"See Sukh", where:"Not confirmed", cls:"open-slot" },
-        { time:"Day", kind:"Open", title:"One last thing in the city", where:"Nothing booked", cls:"open-slot",
-          facts:[["Keep it close","Bags are still in Midtown"]] },
-        { time:"Afternoon", kind:"Open", title:"Lunch", where:"Nothing booked", cls:"open-slot" },
-        { time:"3:30 PM", kind:"Move", title:"Grab bags, head to JFK", where:"555 10th Ave → JFK", cls:"travel",
-          facts:[["Allow","60–75 min · Monday traffic to Queens is unkind"],["At the airport by","4:45 PM"]],
-          note:"Leave Midtown by 3:30 PM at the latest for a 6:30 PM departure." },
-        { time:"6:30 PM", kind:"Flight home", title:"AA 606 · JFK → DFW", where:"American Airlines · arrives 9:35 PM", cls:"travel", anchor:true,
-          ics:{ uid:"flight-home", alarm:180,
-            start:["2026-09-07T18:30","America/New_York"], end:["2026-09-07T21:35","America/Chicago"],
-            summary:"AA 606 · JFK → DFW", location:"John F. Kennedy International Airport",
-            desc:"American Airlines 606. Seats 9E & 9F. 4h 05m in the air. Leave Midtown by 3:30 PM at the latest — allow 60–75 min to JFK." },
-          facts:[["Route","New York JFK → Dallas/Fort Worth"],["Seats","9E &amp; 9F"],["In the air","4h 05m"]] }
+        { time:"Morning", kind:"Open", title:"Breakfast, then pack", where:"Nothing booked", cls:"open-slot" },
+        { time:"12:00 PM", kind:"Check out", title:"Kimpton Shane Hotel", where:"Bags go in the car", cls:"meal",
+          ics:{ uid:"hotel-checkout", alarm:60,
+            start:["2026-10-04T12:00","America/New_York"], end:["2026-10-04T12:15","America/New_York"],
+            summary:"Check out · Kimpton Shane Hotel", location:"Kimpton Shane Hotel, 1340 W Peachtree St NW, Atlanta, GA 30309",
+            desc:"Checkout is noon. Itinerary 73510930020810. Bags go in the car — you don't come back to Midtown." },
+          facts:[["Itinerary","<span class='mono'>73510930020810</span>"],["Then","Straight to the Block Party at 2:00"]] },
+        { time:"2:00 PM", kind:"★ Signature", title:"Block Party", where:"Location TBD",
+          cls:"session", anchor:true,
+          ics:{ uid:"block-party", alarm:60,
+            start:["2026-10-04T14:00","America/New_York"], end:["2026-10-04T17:15","America/New_York"],
+            summary:"Block Party · Atlanta Cigar Week", location:"Atlanta, GA (venue not yet announced)",
+            desc:"Atlanta Cigar Week signature event. An Afternoon of Music, Food & Good Company. Starts 2:00 PM. The end time here is when you need to leave for the airport, not when it wraps." },
+          facts:[["What","An Afternoon of Music, Food &amp; Good Company"],["Where","Not announced yet — on the list below"],["Leave by","5:15 PM — the car has to go back before the flight"]],
+          note:"Tightest turn of the trip: pull out by 5:15 PM to return the car and make an 8:15 flight. Plan on leaving mid-afternoon." },
+        { time:"5:45 PM", kind:"Return the car", title:"Alamo · ATL Rental Car Center", where:"Then the SkyTrain to the Domestic Terminal", cls:"travel",
+          ics:{ uid:"car-return", alarm:45,
+            start:["2026-10-04T17:45","America/New_York"], end:["2026-10-04T18:15","America/New_York"],
+            summary:"Return the car · Alamo ATL", location:"ATL Rental Car Center, Atlanta, GA",
+            desc:"Itinerary 73541812009458. The reservation runs to 9:00 PM but the flight leaves at 8:15 — be at the return lane by 6:00 PM. Fill up first; check the fuel policy on the agreement. SkyTrain to the Domestic Terminal is about 15 min." },
+          facts:[["Itinerary","<span class='mono'>73541812009458</span>"],["Fuel","Fill up before the airport — check the fuel policy on the agreement"],["To the terminal","SkyTrain · about 15 min, then check the bags"]],
+          note:"The reservation runs until 9:00 PM. Ignore that — 6:00 PM is the real deadline for an 8:15 departure." },
+        { time:"8:15 PM", kind:"Flight home", title:"AA 2403 · ATL → DFW", where:"American Airlines · First · arrives 9:38 PM", cls:"travel", anchor:true,
+          ics:{ uid:"flight-home", alarm:120,
+            start:["2026-10-04T20:15","America/New_York"], end:["2026-10-04T21:38","America/Chicago"],
+            summary:"AA 2403 · ATL → DFW", location:"Hartsfield-Jackson Atlanta International Airport, Domestic Terminal",
+            desc:"American Airlines 2403, First. Seat 2E. Two checked bags. 2h 23m in the air, lands DFW at 9:38 PM CT. Boeing 737-800." },
+          facts:[["Route","Atlanta → Dallas/Fort Worth"],["Seat","2E · First"],["Bags","2 checked"],["In the air","2h 23m · Boeing 737-800"]] }
       ]
     }
   ];
 
   var TODOS = [
-    {id:"t1", when:"Friday", label:"Daytime plans"},
-    {id:"t2", when:"Friday", label:"Breakfast and lunch"},
-    {id:"t3", when:"Friday", label:"After the match"},
-    {id:"t4", when:"Saturday", label:"New Jersey details with Alex & Thurston"},
-    {id:"t5", when:"Saturday", label:"After the match"},
-    {id:"t6", when:"Sunday", label:"Breakfast before Ashe"},
-    {id:"t7", when:"Sunday", label:"After the cruise"},
-    {id:"t8", when:"Monday", label:"Daytime plans · Sukh?"},
-    {id:"t9", when:"Monday", label:"Lunch"},
-    {id:"t10", when:"All week", label:"Airport transportation, both directions"}
+    {id:"t1",  when:"Thursday",  label:"Lunch after landing"},
+    {id:"t2",  when:"Thursday",  label:"Dinner before She Smokes Too"},
+    {id:"t3",  when:"Thursday",  label:"Drive or rideshare to Air Rooftop"},
+    {id:"t4",  when:"Friday",    label:"Daytime plans"},
+    {id:"t5",  when:"Friday",    label:"Breakfast and lunch"},
+    {id:"t6",  when:"Friday",    label:"After Fellaship"},
+    {id:"t7",  when:"Saturday",  label:"Where The Oasis is · still TBD"},
+    {id:"t8",  when:"Saturday",  label:"Dinner between the two events"},
+    {id:"t9",  when:"Sunday",    label:"Where the Block Party is · still TBD"},
+    {id:"t10", when:"All week",  label:"Hotel parking · valet or self-park"}
   ];
 
   /* ---------- countdown ---------- */
   function setCountdown(){
     var el = document.getElementById("countdown");
-    var start = new Date(2026,8,3), end = new Date(2026,8,7,23,59);
+    var start = new Date(2026,9,1), end = new Date(2026,9,4,23,59);
     var now = new Date();
     var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     if(now > end){ el.textContent = "Trip wrapped"; return; }
     if(now >= start){
       var n = Math.round((today - start)/86400000) + 1;
-      el.textContent = "Day " + n + " of 5";
+      el.textContent = "Day " + n + " of 4";
       return;
     }
     var d = Math.round((start - today)/86400000);
@@ -663,7 +663,7 @@
       }).join("") + '</ul>';
     }
     var stub = it.session
-      ? '<div class="stub"><span class="big">'+it.session+'</span><span class="lil">Session</span></div>'
+      ? '<div class="stub"><span class="big">'+it.session+'</span><span class="lil">Event</span></div>'
       : "";
     var hasBody = !!(facts || stub);
     var timeParts = it.time.split(" ");
@@ -727,16 +727,16 @@
   /* ---------- today-aware default day ---------- */
   function defaultDay(){
     var n = new Date();
-    if(n.getFullYear()===2026 && n.getMonth()===8){
+    if(n.getFullYear()===2026 && n.getMonth()===9){
       var d = n.getDate();
-      if(d>=3 && d<=7) return d-3;
+      if(d>=1 && d<=4) return d-1;
     }
     return 0;
   }
 
   /* ---------- checklist (persists when storage is available) ---------- */
   var state = {};
-  var KEY = "nyc2026:plan";
+  var KEY = "atl2026:plan";
 
   function loadState(){
     try{
@@ -931,7 +931,7 @@
   function sharePlan(){
     var url = planLink();
     if(navigator.share){
-      navigator.share({title:"US Open Weekend", text:"My notes for the trip", url:url})
+      navigator.share({title:"Atlanta Cigar Week", text:"My notes for the trip", url:url})
         .then(function(){ toast("Sent"); })
         .catch(function(err){ if(!err || err.name !== "AbortError") copyPlanLink(url); });
     } else copyPlanLink(url);
@@ -1010,8 +1010,8 @@
 
   function buildIcs(){
     var evs = calEvents(), used = {}, lines = [
-      "BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//US Open Weekend//Itinerary//EN",
-      "CALSCALE:GREGORIAN","METHOD:PUBLISH","X-WR-CALNAME:US Open Weekend"
+      "BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Atlanta Cigar Week//Itinerary//EN",
+      "CALSCALE:GREGORIAN","METHOD:PUBLISH","X-WR-CALNAME:Atlanta Cigar Week"
     ];
     evs.forEach(function(e){ used[e.start[1]] = 1; used[e.end[1]] = 1; });
     Object.keys(used).forEach(function(z){ lines = lines.concat(ZONES[z]); });
@@ -1020,7 +1020,7 @@
     evs.forEach(function(e){
       lines.push(
         "BEGIN:VEVENT",
-        "UID:usopen2026-" + e.uid + "@19awburris88.github.io",
+        "UID:atlcw2026-" + e.uid + "@19awburris88.github.io",
         "DTSTAMP:" + now,
         "SEQUENCE:0",
         "DTSTART;TZID=" + e.start[1] + ":" + icsLocal(e.start[0]),
@@ -1053,14 +1053,14 @@
   function icsDownload(){
     var url = URL.createObjectURL(icsBlob());
     var a = document.createElement("a");
-    a.href = url; a.download = "us-open-weekend.ics";
+    a.href = url; a.download = "atlanta-cigar-week.ics";
     document.body.appendChild(a); a.click(); a.remove();
     setTimeout(function(){ URL.revokeObjectURL(url); }, 4000);
     toast(calEvents().length + " events downloaded");
   }
   function icsShare(){
-    var file = new File([icsBlob()], "us-open-weekend.ics", {type:"text/calendar"});
-    navigator.share({files:[file], title:"US Open Weekend"})
+    var file = new File([icsBlob()], "atlanta-cigar-week.ics", {type:"text/calendar"});
+    navigator.share({files:[file], title:"Atlanta Cigar Week"})
       .then(function(){ toast("Sent"); })
       .catch(function(err){ if(!err || err.name !== "AbortError") icsDownload(); });
   }

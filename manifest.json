@@ -1,13 +1,13 @@
 {
-  "name": "US Open Weekend — Austin + Adrienne",
-  "short_name": "US Open",
-  "description": "New York itinerary, September 3–7, 2026.",
+  "name": "Atlanta Cigar Week — Itinerary",
+  "short_name": "Cigar Week",
+  "description": "Atlanta itinerary, October 1–4, 2026.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#0C1B33",
-  "theme_color": "#0C1B33",
+  "background_color": "#0A0A0D",
+  "theme_color": "#0A0A0D",
   "icons": [
     {
       "src": "icons/icon-192.png",

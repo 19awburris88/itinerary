@@ -1,9 +1,9 @@
-/* US Open Weekend — offline cache.
+/* Atlanta Cigar Week — offline cache.
    Fonts are self-hosted, so install() precaches everything the app needs and one
    online load is enough to go fully offline.
    Bump CACHE when you edit index.html so phones pick up the new version. */
 
-const CACHE = "usopen-v3";
+const CACHE = "cigarweek-v1";
 
 const SHELL = [
   "./",
