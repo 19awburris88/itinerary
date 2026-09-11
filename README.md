@@ -93,7 +93,7 @@ and it's booked until 9:00 PM Sunday but the flight leaves at 8:15. The Sunday c
 
 ## After you edit index.html
 
-Bump the cache name in `sw.js` (`cigarweek-v1` → `cigarweek-v2`) and push. Without that, phones
+Bump the cache name in `sw.js` (`cigarweek-v2` → `cigarweek-v3`) and push. Without that, phones
 that already installed it may keep serving the old copy.
 
 ## Notes
