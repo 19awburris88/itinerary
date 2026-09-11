@@ -567,10 +567,10 @@
     {
       id:"usher", uid:"usher-sep2026", local:true,
       name:"Usher + Chris Brown", h1:["Usher +","Chris Brown"],
-      eyebrow:"Sat, Sept 12, 2026 · AT&T Stadium, Arlington", sub:"AT&T Stadium · 7:00 PM",
+      eyebrow:"Sat, Sept 12, 2026 · AT&T Stadium, Arlington", sub:"AT&T Stadium · 7:00 PM · with Adrienne and Randi",
       start:"2026-09-12", end:"2026-09-12",
       theme:{ gold:"#B79BEA", link:"#6B4FB3", ember:"#1B1426" },
-      meta:["AT&T Stadium · Arlington","Saturday · 7:00 PM"],
+      meta:["Adrienne + Randi","AT&T Stadium · Saturday · 7:00 PM"],
       stay:null,
       calNote:"The show, with an alert two hours ahead — AT&T Stadium traffic is its own event.",
       days:[
@@ -583,13 +583,13 @@
               start:["2026-09-12T19:00","America/Chicago"], end:["2026-09-12T23:00","America/Chicago"],
               summary:"Usher + Chris Brown · AT&T Stadium", location:"AT&T Stadium, 1 AT&T Way, Arlington, TX 76011",
               desc:"7:00 PM at AT&T Stadium. End time is an estimate. Leave by 4:30 for the traffic." },
-            facts:[["Getting there","<a href='"+m("AT&T Stadium, Arlington, TX")+"' target='_blank' rel='noopener'>Open in Maps</a>"],["Getting out","Stadium lots take an hour to clear — nowhere to be after"]] }
+            facts:[["Who","You, Adrienne and Randi"],["Getting there","<a href='"+m("AT&T Stadium, Arlington, TX")+"' target='_blank' rel='noopener'>Open in Maps</a>"],["Getting out","Stadium lots take an hour to clear — nowhere to be after"]] }
         ]}
       ],
       todos:[
         {id:"t1", when:"Before",   label:"Tickets · on the phone and ready"},
         {id:"t2", when:"Before",   label:"Parking pass, or rideshare"},
-        {id:"t3", when:"Saturday", label:"Who's going, who's driving"}
+        {id:"t3", when:"Saturday", label:"Who's driving · you, Adrienne or Randi"}
       ]
     },
     {
@@ -858,6 +858,34 @@
         {id:"t5", when:"Before",  label:"Venues for After Dark, the socials, the afterparty · not on the agenda"},
         {id:"t4", when:"Each day",label:"Getting there · drive and park, or rideshare"},
         {id:"t6", when:"Mon + Tue",label:"6 AM workout · in or out?"}
+      ]
+    },
+    {
+      id:"art-overdose", uid:"artoverdose-nov2026", local:true,
+      name:"Art Overdose DTX", h1:["Art","Overdose"],
+      eyebrow:"Sat, Nov 7, 2026 · Stone Water, Dallas", sub:"Early Bird Table Top · 4–10 PM · with Adrienne and Randi",
+      start:"2026-11-07", end:"2026-11-07",
+      theme:{ gold:"#F08A5D", link:"#B4532C", ember:"#241410" },
+      meta:["Adrienne + Randi","Early Bird Table Top · 4:00 – 10:00 PM"],
+      stay:null,
+      calNote:"The show, 4 to 10, with an alert an hour ahead.",
+      days:[
+        { d:"2026-11-07", title:"Art Overdose", tag:"Stone Water · 4:00 – 10:00 PM · table top", items:[
+          { time:"3:15 PM", kind:"Move", title:"Head to Stone Water", where:"10261 Technology Blvd E · northwest Dallas", cls:"travel",
+            facts:[["Why 3:15","You've got a table — be there for doors at 4:00, not after"],["Getting there","<a href='"+m("Stone Water, 10261 Technology Blvd E, Dallas, TX")+"' target='_blank' rel='noopener'>Open in Maps</a>"]] },
+          { time:"4:00 PM", kind:"★ Art show", title:"Art Overdose DTX", where:"Stone Water · 4:00 – 10:00 PM",
+            cls:"session", anchor:true,
+            ics:{ uid:"show", alarm:60,
+              start:["2026-11-07T16:00","America/Chicago"], end:["2026-11-07T22:00","America/Chicago"],
+              summary:"Art Overdose DTX · Stone Water", location:"Stone Water, 10261 Technology Blvd E, Dallas, TX",
+              desc:"Art, hip hop, poetry, fashion. Early Bird Table Top with Adrienne and Randi. 4:00 to 10:00 PM." },
+            facts:[["Who","You, Adrienne and Randi"],["Ticket","Early Bird Table Top"],["What","Art, Hip Hop, Poetry, Fashion and more"],["Presented by","Eye Opener · Humble Flourish · CrownHolders · Netwerk N Chill"]] }
+        ]}
+      ],
+      todos:[
+        {id:"t1", when:"Before",  label:"Table confirmation · on the phone"},
+        {id:"t2", when:"Before",  label:"What comes with the table top · drinks, seating?"},
+        {id:"t3", when:"Saturday",label:"Who's driving · you, Adrienne or Randi"}
       ]
     },
     {
