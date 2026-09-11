@@ -790,32 +790,74 @@
     {
       id:"thrive", uid:"thrive2026", local:true,
       name:"Thrive · BLK Men in Tech", h1:["Thrive","2026"],
-      eyebrow:"Oct 11–13, 2026 · Gilley's Dallas", sub:"Black Men in Tech conference · three days at Gilley's",
+      eyebrow:"Oct 11–13, 2026 · Gilley's Dallas", sub:"Black Men in Tech conference · After Dark, then two full days",
       start:"2026-10-11", end:"2026-10-13",
       theme:{ gold:"#5FC3B8", link:"#1F7F76", ember:"#0F1F1E" },
-      meta:["Gilley's · The Cedars","Sun → Tue · agenda not posted yet"],
+      meta:["Gilley's · The Cedars","Sun → Tue · doors 8:00 AM"],
       stay:null,
-      calNote:"Nothing here until BLK Men in Tech posts the agenda — the days join the calendar once they have start times.",
-      days: span("2026-10-11","2026-10-13", {
-        "2026-10-11":{ title:"Thrive · Day 1", tag:"Gilley's Dallas · times TBA", items:[
-          { time:"TBA", kind:"★ Conference", title:"Thrive · Day 1", where:"Gilley's Dallas · 1135 S Lamar St",
+      calNote:"After Dark, each conference day from doors to the last main-stage block, the Monday socials and the Tuesday afterparty — with alerts. The 6 AM workouts are on the cards but not in the calendar.",
+      days:[
+        { d:"2026-10-11", title:"After Dark", tag:"Before the main event · 6:00 – 9:00 PM", items:[
+          { time:"Day", kind:"Open", title:"Normal Sunday", where:"Nothing until the evening", cls:"open-slot" },
+          { time:"6:00 PM", kind:"★ Kickoff", title:"Thrive After Dark", where:"6:00 – 9:00 PM · venue per the Thrive app",
             cls:"session", anchor:true,
-            facts:[["What","BLK Men in Tech's annual conference — a week after Atlanta"],["Schedule","Not posted yet. Check <a href='https://www.blkmenintech.com/thrive' target='_blank' rel='noopener'>blkmenintech.com/thrive</a>"],["Getting there","<a href='"+m("Gilley's Dallas, 1135 S Lamar St, Dallas, TX 75215")+"' target='_blank' rel='noopener'>Open in Maps</a> · lot on site"]] }
+            ics:{ uid:"after-dark", alarm:60,
+              start:["2026-10-11T18:00","America/Chicago"], end:["2026-10-11T21:00","America/Chicago"],
+              summary:"Thrive After Dark", location:"Dallas, TX (venue per the Thrive app)",
+              desc:"Thrive 2026 kickoff, 6:00 to 9:00 PM. Venue not listed on the agenda — check the Thrive site or app." },
+            facts:[["What","Before the main event, there's the After Dark"],["Where","Not on the agenda — check the Thrive site or app"],["Then","Doors at Gilley's are 8:00 the next morning — and the workout is at 6"]] }
         ]},
-        "2026-10-12":{ title:"Thrive · Day 2", tag:"Gilley's Dallas · times TBA", items:[
-          { time:"TBA", kind:"★ Conference", title:"Thrive · Day 2", where:"Gilley's Dallas", cls:"session", anchor:true,
-            facts:[["Schedule","Not posted yet"]] }
+        { d:"2026-10-12", title:"Thrive · Day 2", tag:"Gilley's · doors 8:00 AM · socials at 6:00 PM", items:[
+          { time:"6:00 AM", kind:"Optional", title:"Workout &amp; Devotion", where:"6:00 – 7:00 AM", cls:"open-slot" },
+          { time:"8:00 AM", kind:"★ Conference", title:"Registration · Expo Hall · Career Hub", where:"Gilley's Dallas · 1135 S Lamar St",
+            cls:"session", anchor:true,
+            ics:{ uid:"day2", alarm:90,
+              start:["2026-10-12T08:00","America/Chicago"], end:["2026-10-12T16:45","America/Chicago"],
+              summary:"Thrive · Day 2 · Gilley's", location:"Gilley's Dallas, 1135 S Lamar St, Dallas, TX 75215",
+              desc:"Doors 8:00 AM: registration, expo hall, career hub. Main stage 9:00–11:00, workshops 11:15–12:00, lunch 12:00–1:30, workshops 1:45–2:30, main stage 2:45–4:45." },
+            facts:[["Doors","8:00 AM — expo hall and career hub open all day"],["Getting there","<a href='"+m("Gilley's Dallas, 1135 S Lamar St, Dallas, TX 75215")+"' target='_blank' rel='noopener'>Open in Maps</a> · lot on site"]] },
+          { time:"9:00 AM", kind:"Main stage", title:"Main Stage Sessions", where:"9:00 – 11:00 AM" },
+          { time:"11:15 AM", kind:"Workshops", title:"Workshop Sessions", where:"11:15 AM – 12:00 PM" },
+          { time:"12:00 PM", kind:"Lunch", title:"Midday Rest &amp; Lunch", where:"12:00 – 1:30 PM", cls:"meal" },
+          { time:"1:45 PM", kind:"Workshops", title:"Workshop Sessions", where:"1:45 – 2:30 PM" },
+          { time:"2:45 PM", kind:"Main stage", title:"Main Stage Sessions", where:"2:45 – 4:45 PM" },
+          { time:"6:00 PM", kind:"★ Evening", title:"Evening Networking Socials", where:"6:00 PM until · venue per the Thrive app",
+            cls:"session", anchor:true,
+            ics:{ uid:"socials", alarm:30,
+              start:["2026-10-12T18:00","America/Chicago"], end:["2026-10-12T23:30","America/Chicago"],
+              summary:"Thrive · Evening Networking Socials", location:"Dallas, TX (venue per the Thrive app)",
+              desc:"Evening Networking Socials, from 6:00 PM until late. Venue not listed on the agenda — check the Thrive site or app. End time is an estimate." },
+            facts:[["Runs","6:00 PM until"],["Where","Not on the agenda — check the Thrive site or app the day of"]] }
         ]},
-        "2026-10-13":{ title:"Thrive · Day 3", tag:"Gilley's Dallas · times TBA", items:[
-          { time:"TBA", kind:"★ Conference", title:"Thrive · Day 3", where:"Gilley's Dallas", cls:"session", anchor:true,
-            facts:[["Schedule","Not posted yet"]] }
+        { d:"2026-10-13", title:"Thrive · Day 3", tag:"Gilley's · doors 8:00 AM · afterparty at 8:00 PM", items:[
+          { time:"6:00 AM", kind:"Optional", title:"Workout &amp; Devotion", where:"6:00 – 7:00 AM", cls:"open-slot" },
+          { time:"8:00 AM", kind:"★ Conference", title:"Registration · Expo Hall · Career Hub", where:"Gilley's Dallas · 1135 S Lamar St",
+            cls:"session", anchor:true,
+            ics:{ uid:"day3", alarm:90,
+              start:["2026-10-13T08:00","America/Chicago"], end:["2026-10-13T16:45","America/Chicago"],
+              summary:"Thrive · Day 3 · Gilley's", location:"Gilley's Dallas, 1135 S Lamar St, Dallas, TX 75215",
+              desc:"Doors 8:00 AM: registration, expo hall, career hub. Main stage 9:00–11:00, workshops 11:15–12:00, lunch 12:00–1:30, workshops 1:45–2:30, main stage 2:45–4:45." },
+            facts:[["Doors","8:00 AM — expo hall and career hub open all day"],["Getting there","<a href='"+m("Gilley's Dallas, 1135 S Lamar St, Dallas, TX 75215")+"' target='_blank' rel='noopener'>Open in Maps</a> · lot on site"]] },
+          { time:"9:00 AM", kind:"Main stage", title:"Main Stage Sessions", where:"9:00 – 11:00 AM" },
+          { time:"11:15 AM", kind:"Workshops", title:"Workshop Sessions", where:"11:15 AM – 12:00 PM" },
+          { time:"12:00 PM", kind:"Lunch", title:"Midday Rest &amp; Lunch", where:"12:00 – 1:30 PM", cls:"meal" },
+          { time:"1:45 PM", kind:"Workshops", title:"Workshop Sessions", where:"1:45 – 2:30 PM" },
+          { time:"2:45 PM", kind:"Main stage", title:"Main Stage Sessions", where:"2:45 – 4:45 PM" },
+          { time:"8:00 PM", kind:"★ Evening", title:"Official Conference Afterparty", where:"8:00 PM until · venue per the Thrive app",
+            cls:"session", anchor:true,
+            ics:{ uid:"afterparty", alarm:30,
+              start:["2026-10-13T20:00","America/Chicago"], end:["2026-10-13T23:30","America/Chicago"],
+              summary:"Thrive · Official Conference Afterparty", location:"Dallas, TX (venue per the Thrive app)",
+              desc:"Official Conference Afterparty, from 8:00 PM until late. Venue not listed on the agenda — check the Thrive site or app. End time is an estimate." },
+            facts:[["Runs","8:00 PM until"],["Where","Not on the agenda — check the Thrive site or app the day of"]] }
         ]}
-      }),
+      ],
       todos:[
         {id:"t1", when:"Before",  label:"Registration · confirmed?"},
-        {id:"t2", when:"Before",  label:"Agenda · daily start times once posted"},
         {id:"t3", when:"Before",  label:"Sessions and people worth planning around"},
-        {id:"t4", when:"Each day",label:"Getting there · drive and park, or rideshare"}
+        {id:"t5", when:"Before",  label:"Venues for After Dark, the socials, the afterparty · not on the agenda"},
+        {id:"t4", when:"Each day",label:"Getting there · drive and park, or rideshare"},
+        {id:"t6", when:"Mon + Tue",label:"6 AM workout · in or out?"}
       ]
     },
     {
