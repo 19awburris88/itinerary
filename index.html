@@ -1014,17 +1014,19 @@
           { time:"7:40 PM", kind:"Arrive", title:"Land at MEX", where:"Immigration, then bags",
             facts:[["Into the city","Still open — on the list below"],["Heads up","Immigration at MEX can take a while in the evening"]] }
         ]},
-        "2026-12-11":{ title:"Frida Kahlo VIP", tag:"Walk, markets &amp; churros · 10:00 AM · Coyoacán", items:[
-          { time:"Morning", kind:"Open", title:"Breakfast, then to the meeting point", where:"Meeting point still to confirm", cls:"open-slot",
-            facts:[["Getting there","Coyoacán is 30–45 min south of Reforma — leave the hotel by 9:00"]] },
-          { time:"10:00 AM", kind:"★ Tour · booked", title:"Frida Kahlo VIP · Walk, Markets &amp; Churros", where:"Museum tickets included · 2 adults",
+        "2026-12-11":{ title:"Frida Kahlo VIP", tag:"Coyoacán · meet 10:00 AM at Plaza de la Conchita", items:[
+          { time:"9:00 AM", kind:"Move", title:"Uber to Coyoacán", where:"Drop at the corner of Vallarta and Plaza de la Conchita", cls:"travel",
+            facts:[["Why 9:00","30–45 min south of Reforma, and the tour wants you at the café, not circling the square"],["Drop-off","<a href='"+m("Plaza de la Conchita 15, Coyoacán, Ciudad de México")+"' target='_blank' rel='noopener'>Pl. de la Conchita 15</a> — tell the driver the corner with Vallarta"],["Coffee first","Academia de Baristas at the meeting point opens at 9 — go early, it's good"]],
+            note:"Meeting point is Plaza de la Conchita #15 (the tour calls it Plaza de la Concepción). Restroom at the café is a 20-peso tip if you don't order — so order." },
+          { time:"10:00 AM", kind:"★ Tour · booked", title:"Frida Kahlo VIP · Walk, Markets &amp; Churros", where:"Meet at Pl. de la Conchita 15 · café Academia de Baristas",
             cls:"session", anchor:true,
             ics:{ uid:"frida-tour", alarm:60,
-              start:["2026-12-11T10:00","America/Mexico_City"], end:["2026-12-11T14:00","America/Mexico_City"],
-              summary:"Frida Kahlo VIP tour · Coyoacán", location:"Coyoacán, Ciudad de México (meeting point per the booking)",
-              desc:"Frida Kahlo VIP — Walk, Markets & Churros, museum tickets included. 2 adults. Booking reference #1449397831. Meeting point per the confirmation email. End time is an estimate." },
-            facts:[["Booking","<span class='mono'>#1449397831</span>"],["Includes","Museum tickets · walk · markets · churros"],["Meeting point","Check the confirmation — on the list below"]] },
-          { time:"Afternoon", kind:"Open", title:"Lunch in Coyoacán, then back", where:"Nothing booked", cls:"open-slot" }
+              start:["2026-12-11T10:00","America/Mexico_City"], end:["2026-12-11T12:30","America/Mexico_City"],
+              summary:"Frida Kahlo VIP tour · Coyoacán", location:"Plaza de la Conchita 15, Coyoacán, Ciudad de México",
+              desc:"Meet at Plaza de la Conchita #15, café Academia de Baristas. Uber drop at the corner with Vallarta. Booking #1449397831, 2 adults. Jardín Centenario (30 min), Coyoacán Market (1 hr), then Museo Frida Kahlo on your own with tickets included (1 hr)." },
+            facts:[["Booking","<span class='mono'>#1449397831</span> · 2 adults"],["1 · Jardín Centenario","30 min — the coyote sculpture and San Juan Bautista church"],["2 · Coyoacán Market","1 hour — food, handmade goods, churros"],["3 · Museo Frida Kahlo","1 hour — tickets included, then you're on your own inside; 30–45 min is typical"]] },
+          { time:"12:30 PM", kind:"Free", title:"Frida's house, then lunch", where:"The tour leaves you at the museum", cls:"open-slot",
+            facts:[["After","Lunch in Coyoacán is easy — the market you just walked is right there"],["Back","Uber to Reforma, 30–45 min"]] }
         ]},
         "2026-12-15":{ title:"Fly home", tag:"Wheels up 4:15 PM", items:[
           { time:"12:45 PM", kind:"Move", title:"Head to MEX", where:"International — be there by 1:15", cls:"travel",
@@ -1038,7 +1040,7 @@
         ]}
       }),
       todos:[
-        {id:"t1", when:"Friday",   label:"Frida tour meeting point · from the confirmation"},
+        {id:"t1", when:"Friday",   label:"Lunch in Coyoacán after Frida's house"},
         {id:"t2", when:"Before",   label:"Passports · both valid past June 2027"},
         {id:"t3", when:"Thursday", label:"Getting from MEX into the city"},
         {id:"t4", when:"The week", label:"What to see and where to eat"},
