@@ -986,12 +986,21 @@
     {
       id:"mex", uid:"mex-dec2026",
       name:"Mexico City", h1:["Mexico","City"],
-      eyebrow:"Dec 10–15, 2026 · Ciudad de México", sub:"Two seats, Business both ways · nothing on the ground yet",
+      eyebrow:"Dec 10–15, 2026 · Ciudad de México", sub:"Sofitel on Reforma · Frida Kahlo VIP tour Friday",
       start:"2026-12-10", end:"2026-12-15",
       theme:{ gold:"#E8608A", link:"#A33456", ember:"#24121B" },
-      meta:["Two seats · 3A + 3B","6 days · Business both ways"],
-      stay:null,
-      calNote:"Both flights, with alerts three hours ahead — it's international, so allow the extra time.",
+      meta:["Sofitel · Paseo de la Reforma","6 days · Business both ways · 2 seats"],
+      stay:{
+        sub:"Sofitel Mexico City Reforma — on the corner of Reforma and Río Danubio, next to the US Embassy.",
+        addr:"Paseo de la Reforma 297", addr2:"Sofitel Mexico City Reforma · Cuauhtémoc, 06500 CDMX",
+        copy:"Sofitel Mexico City Reforma, Av. Paseo de la Reforma 297, Cuauhtémoc, 06500 Ciudad de México",
+        steps:[
+          ["Land at MEX, immigration, then bags.","Evening arrivals queue — budget an hour before you're outside."],
+          ["Into the city.","Still open — authorised airport taxi or a rideshare. Reforma is 30–45 minutes depending on traffic."],
+          ["Reforma 297.","The Sofitel tower is on the Río Danubio corner. Hotel phone +52 55 8660 0500."]
+        ]
+      },
+      calNote:"Both flights with three-hour alerts, and the Frida Kahlo tour with one hour. It's international — allow the extra time.",
       days: span("2026-12-10","2026-12-15", {
         "2026-12-10":{ title:"Fly down", tag:"Wheels up 4:54 PM · lands 7:40 PM", items:[
           { time:"1:45 PM", kind:"Move", title:"Head to DFW", where:"International — be there by 2:00", cls:"travel" },
@@ -1005,6 +1014,18 @@
           { time:"7:40 PM", kind:"Arrive", title:"Land at MEX", where:"Immigration, then bags",
             facts:[["Into the city","Still open — on the list below"],["Heads up","Immigration at MEX can take a while in the evening"]] }
         ]},
+        "2026-12-11":{ title:"Frida Kahlo VIP", tag:"Walk, markets &amp; churros · 10:00 AM · Coyoacán", items:[
+          { time:"Morning", kind:"Open", title:"Breakfast, then to the meeting point", where:"Meeting point still to confirm", cls:"open-slot",
+            facts:[["Getting there","Coyoacán is 30–45 min south of Reforma — leave the hotel by 9:00"]] },
+          { time:"10:00 AM", kind:"★ Tour · booked", title:"Frida Kahlo VIP · Walk, Markets &amp; Churros", where:"Museum tickets included · 2 adults",
+            cls:"session", anchor:true,
+            ics:{ uid:"frida-tour", alarm:60,
+              start:["2026-12-11T10:00","America/Mexico_City"], end:["2026-12-11T14:00","America/Mexico_City"],
+              summary:"Frida Kahlo VIP tour · Coyoacán", location:"Coyoacán, Ciudad de México (meeting point per the booking)",
+              desc:"Frida Kahlo VIP — Walk, Markets & Churros, museum tickets included. 2 adults. Booking reference #1449397831. Meeting point per the confirmation email. End time is an estimate." },
+            facts:[["Booking","<span class='mono'>#1449397831</span>"],["Includes","Museum tickets · walk · markets · churros"],["Meeting point","Check the confirmation — on the list below"]] },
+          { time:"Afternoon", kind:"Open", title:"Lunch in Coyoacán, then back", where:"Nothing booked", cls:"open-slot" }
+        ]},
         "2026-12-15":{ title:"Fly home", tag:"Wheels up 4:15 PM", items:[
           { time:"12:45 PM", kind:"Move", title:"Head to MEX", where:"International — be there by 1:15", cls:"travel",
             note:"Three hours ahead for an international departure, and Mexico City traffic is its own thing." },
@@ -1017,7 +1038,7 @@
         ]}
       }),
       todos:[
-        {id:"t1", when:"Before",   label:"Where you're staying"},
+        {id:"t1", when:"Friday",   label:"Frida tour meeting point · from the confirmation"},
         {id:"t2", when:"Before",   label:"Passports · both valid past June 2027"},
         {id:"t3", when:"Thursday", label:"Getting from MEX into the city"},
         {id:"t4", when:"The week", label:"What to see and where to eat"},
