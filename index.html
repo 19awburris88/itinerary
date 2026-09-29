@@ -1016,18 +1016,18 @@
       eyebrow:"Dec 10–15, 2026 · Ciudad de México", sub:"Sofitel on Reforma · Frida Kahlo VIP tour Friday",
       start:"2026-12-10", end:"2026-12-15",
       theme:{ gold:"#E8608A", link:"#A33456", ember:"#24121B" },
-      meta:["Sofitel · Paseo de la Reforma","6 days · Business both ways · 2 seats"],
+      meta:["Sofitel · Paseo de la Reforma","5 nights · Business both ways · 2 adults"],
       stay:{
-        sub:"Sofitel Mexico City Reforma — on the corner of Reforma and Río Danubio, next to the US Embassy.",
+        sub:"Sofitel Mexico City Reforma — 5 nights, 2 adults, 1 room. On the corner of Reforma and Río Danubio, next to the US Embassy.",
         addr:"Paseo de la Reforma 297", addr2:"Sofitel Mexico City Reforma · Cuauhtémoc, 06500 CDMX",
         copy:"Sofitel Mexico City Reforma, Av. Paseo de la Reforma 297, Cuauhtémoc, 06500 Ciudad de México",
         steps:[
           ["Land at MEX, immigration, then bags.","Evening arrivals queue — budget an hour before you're outside."],
           ["Into the city.","Still open — authorised airport taxi or a rideshare. Reforma is 30–45 minutes depending on traffic."],
-          ["Reforma 297.","The Sofitel tower is on the Río Danubio corner. Hotel phone +52 55 8660 0500."]
+          ["Reforma 297.","The Sofitel tower is on the Río Danubio corner. Confirmation <span class='mono'>9615AL90500</span>, Expedia <span class='mono'>73549155703624</span>. Hotel phone +52 55 8660 0500."]
         ]
       },
-      calNote:"Both flights with three-hour alerts, and the Frida Kahlo tour with one hour. It's international — allow the extra time.",
+      calNote:"Both flights with three-hour alerts, the Frida Kahlo tour, and checkout. It's international — allow the extra time.",
       days: span("2026-12-10","2026-12-15", {
         "2026-12-10":{ title:"Fly down", tag:"Wheels up 4:54 PM · lands 7:40 PM", items:[
           { time:"1:45 PM", kind:"Move", title:"Head to DFW", where:"International — be there by 2:00", cls:"travel" },
@@ -1039,7 +1039,12 @@
             facts:[["Route","Dallas/Fort Worth → Mexico City"],["Seats","3A &amp; 3B · Business"],["Bags","1 checked"],["On board","Dinner"],["In the air","2h 46m"]],
             note:"Passports. Mexico City runs on the same clock as Dallas in December — no time change." },
           { time:"7:40 PM", kind:"Arrive", title:"Land at MEX", where:"Immigration, then bags",
-            facts:[["Into the city","Still open — on the list below"],["Heads up","Immigration at MEX can take a while in the evening"]] }
+            facts:[["Into the city","Still open — on the list below"],["Heads up","Immigration at MEX can take a while in the evening"]] },
+          { time:"9:30 PM", kind:"Check in", title:"Sofitel Mexico City Reforma", where:"Paseo de la Reforma 297 · 5 nights", cls:"meal",
+            facts:[["Confirmation","<span class='mono'>9615AL90500</span>"],["Expedia","<span class='mono'>73549155703624</span>"],["Room","5 nights · 2 adults · 1 room"],["Address","<a href='"+m("Sofitel Mexico City Reforma, Av. Paseo de la Reforma 297, Cuauhtémoc, 06500 Ciudad de México")+"' target='_blank' rel='noopener'>Open in Maps</a>"]],
+            note:"Late check-in after an evening landing — the desk is 24 hours, but the Frida tour meets at 10 the next morning." },
+          { time:"Late", kind:"Open", title:"Something to eat", where:"Nothing booked", cls:"open-slot",
+            facts:[["Nearby","The Zona Rosa side of Reforma runs late"]] }
         ]},
         "2026-12-11":{ title:"Frida Kahlo VIP", tag:"Coyoacán · meet 10:00 AM at Plaza de la Conchita", items:[
           { time:"9:00 AM", kind:"Move", title:"Uber to Coyoacán", where:"Drop at the corner of Vallarta and Plaza de la Conchita", cls:"travel",
@@ -1049,13 +1054,20 @@
             cls:"session", anchor:true,
             ics:{ uid:"frida-tour", alarm:60,
               start:["2026-12-11T10:00","America/Mexico_City"], end:["2026-12-11T12:30","America/Mexico_City"],
-              summary:"Frida Kahlo VIP tour · Coyoacán", location:"Plaza de la Conchita 15, Coyoacán, Ciudad de México",
-              desc:"Meet at Plaza de la Conchita #15, café Academia de Baristas. Uber drop at the corner with Vallarta. Booking #1449397831, 2 adults. Jardín Centenario (30 min), Coyoacán Market (1 hr), then Museo Frida Kahlo on your own with tickets included (1 hr)." },
-            facts:[["Booking","<span class='mono'>#1449397831</span> · 2 adults"],["1 · Jardín Centenario","30 min — the coyote sculpture and San Juan Bautista church"],["2 · Coyoacán Market","1 hour — food, handmade goods, churros"],["3 · Museo Frida Kahlo","1 hour — tickets included, then you're on your own inside; 30–45 min is typical"]] },
+              summary:"Frida Kahlo VIP tour · Coyoacán", location:"Pl. de la Conchita 15, La Concepción, Coyoacán, 04020 Ciudad de México, CDMX",
+              desc:"Walk from Conchita Square, 10:00. Meet at Plaza de la Conchita #15, café Academia de Baristas. Uber drop at the corner with Vallarta. Viator booking #1449397831, 2 adults, $172 paid. Jardín Centenario (30 min), Coyoacán Market (1 hr), then Museo Frida Kahlo on your own with tickets included (1 hr)." },
+            facts:[["Booking","Viator <span class='mono'>#1449397831</span> · 2 adults · $172"],["1 · Jardín Centenario","30 min — the coyote sculpture and San Juan Bautista church"],["2 · Coyoacán Market","1 hour — food, handmade goods, churros"],["3 · Museo Frida Kahlo","1 hour — tickets included, then you're on your own inside; 30–45 min is typical"]] },
           { time:"12:30 PM", kind:"Free", title:"Frida's house, then lunch", where:"The tour leaves you at the museum", cls:"open-slot",
             facts:[["After","Lunch in Coyoacán is easy — the market you just walked is right there"],["Back","Uber to Reforma, 30–45 min"]] }
         ]},
-        "2026-12-15":{ title:"Fly home", tag:"Wheels up 4:15 PM", items:[
+        "2026-12-15":{ title:"Fly home", tag:"Check out by noon · wheels up 4:15 PM", items:[
+          { time:"Morning", kind:"Open", title:"Breakfast, then pack", where:"Last morning", cls:"open-slot" },
+          { time:"12:00 PM", kind:"Check out", title:"Sofitel Mexico City Reforma", where:"Bags to the desk, then the airport", cls:"meal",
+            ics:{ uid:"hotel-checkout", alarm:60,
+              start:["2026-12-15T12:00","America/Mexico_City"], end:["2026-12-15T12:15","America/Mexico_City"],
+              summary:"Check out · Sofitel Mexico City Reforma", location:"Sofitel Mexico City Reforma, Av. Paseo de la Reforma 297, Cuauhtémoc, 06500 Ciudad de México",
+              desc:"Confirmation 9615AL90500, Expedia 73549155703624. Checkout is noon and you leave for MEX at 12:45 — the desk can hold bags if you want the extra 45 minutes." },
+            facts:[["Confirmation","<span class='mono'>9615AL90500</span>"],["Then","Car to MEX at 12:45 — the desk will hold bags if you want the last 45 minutes"]] },
           { time:"12:45 PM", kind:"Move", title:"Head to MEX", where:"International — be there by 1:15", cls:"travel",
             note:"Three hours ahead for an international departure, and Mexico City traffic is its own thing." },
           { time:"4:15 PM", kind:"Flight home", title:"AA 2351 · MEX → DFW", where:"American Airlines · Business · arrives 7:15 PM", cls:"travel", anchor:true,
@@ -1070,7 +1082,7 @@
         {id:"t1", when:"Friday",   label:"Lunch in Coyoacán after Frida's house"},
         {id:"t2", when:"Before",   label:"Passports · both valid past June 2027"},
         {id:"t3", when:"Thursday", label:"Getting from MEX into the city"},
-        {id:"t4", when:"The week", label:"What to see and where to eat"},
+        {id:"t4", when:"The week", label:"What to see and where to eat · Sat, Sun, Mon are wide open"},
         {id:"t5", when:"Tuesday",  label:"Ride back to MEX · leave by 12:45"}
       ]
     }

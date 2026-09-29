@@ -3,7 +3,7 @@
    online load is enough to go fully offline.
    Bump CACHE when you edit index.html so phones pick up the new version. */
 
-const CACHE = "trips-v8";
+const CACHE = "trips-v9";
 
 const SHELL = [
   "./",
