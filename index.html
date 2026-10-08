@@ -156,8 +156,10 @@
     flex:1 1 0;background:none;border:0;border-bottom:2px solid transparent;
     color:var(--muted);cursor:pointer;padding:9px 4px 8px;position:relative;
     font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;
-    transition:color .16s ease,border-color .16s ease,background .16s ease;
+    white-space:nowrap;transition:color .16s ease,border-color .16s ease,background .16s ease;
   }
+  .only-wide{display:none;}
+  @media (max-width:430px){ .tab{font-size:9.5px;letter-spacing:.07em;padding-left:2px;padding-right:2px;} }
   .tab:hover{color:var(--ink);}
   .tab[aria-current="page"]{color:var(--brass);border-bottom-color:var(--brass);}
   .tab:focus-visible{outline:2px solid var(--brass);outline-offset:-3px;}
@@ -191,6 +193,7 @@
       content:"";width:5px;height:5px;border-radius:50%;background:var(--brass);margin-left:auto;
     }
     .tab .ct{margin-left:auto;}
+    .only-wide{display:inline;}
     .tab[aria-current="page"] .ct{margin-left:0;}
     .chanlist{display:block;margin-top:30px;}
     .chanlist h4{
@@ -387,6 +390,34 @@
   .concierge a:hover{text-decoration:underline;}
 
   /* ================= THE GUIDE ================= */
+  .listhead{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin:28px 0 0;}
+  .listhead h2{font-size:clamp(26px,6.6vw,34px);line-height:1.05;}
+  .listhead .eyebrow{margin-bottom:5px;}
+
+  .weeknav{display:flex;align-items:center;gap:9px;margin:26px 0 0;}
+  .navbtn{
+    flex:none;width:32px;height:32px;border-radius:50%;border:1px solid var(--hair);background:var(--card);
+    color:var(--ink);cursor:pointer;font-size:19px;line-height:1;padding:0;
+    display:flex;align-items:center;justify-content:center;transition:border-color .16s ease,background .16s ease;
+  }
+  .navbtn:hover{border-color:var(--brass);background:var(--brass-soft);}
+  .navbtn:focus-visible{outline:2px solid var(--brass);outline-offset:2px;}
+  .wlabel{flex:1;min-width:0;display:flex;align-items:baseline;gap:9px;}
+  .wlabel span{font-family:var(--display);font-size:19px;font-weight:600;white-space:nowrap;}
+  .wlabel em{font-style:normal;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--muted);}
+  .weeknav .btn{padding:7px 11px;font-size:10px;}
+  .jump{
+    flex:none;width:32px;height:32px;border-radius:50%;border:1px solid var(--hair);background:var(--card);
+    color:var(--muted);cursor:pointer;position:relative;display:flex;align-items:center;justify-content:center;
+  }
+  .jump:hover{border-color:var(--brass);color:var(--ink);}
+  .jump svg{width:15px;height:15px;pointer-events:none;}
+  .jump input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+  .jump:focus-within{outline:2px solid var(--brass);outline-offset:2px;}
+  .daybtn.today b{color:var(--accent);}
+  [data-theme="lounge"] .daybtn.today b{color:var(--rose);}
+  .daybtn[aria-pressed="true"].today b{color:var(--brass);}
+
   .daystrip{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px 0 4px;margin:18px 0 0;}
   .daystrip::-webkit-scrollbar{display:none;}
   .daybtn{
@@ -484,8 +515,12 @@
     position:absolute;top:20px;right:20px;z-index:2;font-family:var(--mono);font-size:10px;
     letter-spacing:.08em;padding:4px 9px;border-radius:2px;background:var(--brass);color:var(--dark);font-weight:500;
   }
-  .trip-card.past{opacity:.5;}
-  .trip-card.past .status{background:var(--dark-hair);color:var(--dark-muted);}
+  .trip-card.past{box-shadow:none;}
+  .trip-card.past:before{background:var(--dark-hair);}
+  .trip-card.past:after{display:none;}
+  .trip-card.past .name{color:var(--dark-muted);}
+  .trip-card.past .dates,.trip-card.past .sub{opacity:.6;}
+  .trip-card.past .status{background:transparent;border:1px solid var(--dark-hair);color:var(--dark-muted);padding:3px 8px;}
   .trip-card.now .status{background:#C0392B;color:#fff;}
 
   /* ================= TRIP DETAIL ================= */
@@ -745,7 +780,8 @@
     <p class="tagline">Time,<br>well<br>spent.</p>
     <nav class="tabs" aria-label="Views">
       <button class="tab" data-view="today">Today</button>
-      <button class="tab" data-view="guide">The Guide</button>
+      <button class="tab" data-view="guide"><span class="only-wide">The </span>Guide</button>
+      <button class="tab" data-view="whatson">What's On<span class="ct" id="onCt"></span></button>
       <button class="tab" data-view="trips">Trips<span class="ct" id="tripCt"></span></button>
     </nav>
     <div class="chanlist">
@@ -789,15 +825,33 @@
   </section>
 
   <section id="v-guide" hidden>
-    <p class="eyebrow" style="margin-top:28px">This week</p>
+    <div class="weeknav">
+      <button class="navbtn" id="wPrev" aria-label="Previous week">‹</button>
+      <div class="wlabel"><span id="wRange"></span><em id="wYear"></em></div>
+      <button class="navbtn" id="wNext" aria-label="Next week">›</button>
+      <button class="btn" id="wToday" hidden>Today</button>
+      <label class="jump" title="Jump to a date">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 11h18"/></svg>
+        <input type="date" id="wJump" aria-label="Jump to a date">
+      </label>
+    </div>
     <div class="daystrip" id="daystrip"></div>
     <div class="guide"><div class="guidescroll" id="guidescroll"><div class="gtrack" id="gtrack"></div></div></div>
     <p class="sectlead" id="guideLead" style="margin-top:12px"></p>
     <div id="guideUntimed"></div>
   </section>
 
+  <section id="v-whatson" hidden>
+    <div class="listhead">
+      <div><p class="eyebrow">In and around Dallas</p><h2>What's On</h2></div>
+    </div>
+    <div class="trips" id="whatson"></div>
+  </section>
+
   <section id="v-trips" hidden>
-    <p class="eyebrow" style="margin-top:28px">Coming up &amp; past</p>
+    <div class="listhead">
+      <div><p class="eyebrow">Away from home</p><h2>Trips</h2></div>
+    </div>
     <div class="trips" id="trips"></div>
   </section>
 
@@ -1819,12 +1873,13 @@
 
   function setView(v){
     view = v;
-    ["today","guide","trips","trip"].forEach(function(n){
+    ["today","guide","whatson","trips","trip"].forEach(function(n){
       document.getElementById("v-" + n).hidden = (n !== v);
     });
+    /* a trip page lights up whichever list it came from */
+    var owner = v === "trip" ? (trip && trip.local ? "whatson" : "trips") : v;
     document.querySelectorAll(".tab").forEach(function(b){
-      var on = b.dataset.view === v || (v === "trip" && b.dataset.view === "trips");
-      b.setAttribute("aria-current", on ? "page" : "false");
+      b.setAttribute("aria-current", b.dataset.view === owner ? "page" : "false");
     });
     document.getElementById("addBtn").hidden = (v === "trip");
   }
@@ -1967,11 +2022,25 @@
   function showGuide(){
     trip = null; applyTheme(null); setView("guide");
     document.title = "The Guide";
-    var start = addDays(today0(), -today0().getDay());   /* week starts Sunday */
+    /* The week shown follows whichever day is selected, so ‹ › walk the calendar
+       as far back or forward as you like rather than being pinned to this week. */
+    var sel = iso(guideDay);
+    var start = addDays(sel, -sel.getDay());
+    var endw = addDays(start, 6), tk = dkey(new Date());
+    document.getElementById("wRange").textContent =
+      MON3[start.getMonth()] + " " + start.getDate() + " – " +
+      (start.getMonth() === endw.getMonth() ? "" : MON3[endw.getMonth()] + " ") + endw.getDate();
+    document.getElementById("wYear").textContent =
+      start.getFullYear() === endw.getFullYear() ? start.getFullYear()
+        : start.getFullYear() + "–" + endw.getFullYear();
+    document.getElementById("wToday").hidden = (dkey(start) <= tk && tk <= dkey(endw));
+    document.getElementById("wJump").value = guideDay;
+
     var strip = "";
     for(var i=0;i<7;i++){
       var d = addDays(start, i), k = dkey(d), has = eventsOn(k).length;
-      strip += '<button class="daybtn' + (has ? " has" : "") + '" aria-pressed="' + (k === guideDay) +
+      strip += '<button class="daybtn' + (has ? " has" : "") + (k === tk ? " today" : "") +
+        '" aria-pressed="' + (k === guideDay) +
         '" data-day="' + k + '"><s>' + DOW[d.getDay()].slice(0,3) + '</s><b>' + d.getDate() + '</b></button>';
     }
     document.getElementById("daystrip").innerHTML = strip;
@@ -2011,10 +2080,12 @@
     document.getElementById("gtrack").innerHTML = head + rows + nowMark;
 
     var untimed = list.filter(function(e){ return e.start == null; });
+    var dd = iso(guideDay);
+    var full = DOW[dd.getDay()] + ", " + MON[dd.getMonth()] + " " + dd.getDate() + ", " + dd.getFullYear();
     document.getElementById("guideLead").innerHTML = timed.length
-      ? h(timed.length + (timed.length === 1 ? " programme" : " programmes") + " · " + longDate(iso(guideDay)))
+      ? h(timed.length + (timed.length === 1 ? " programme" : " programmes") + " · " + full)
         + (untimed.length ? " · " + untimed.length + " untimed" : "")
-      : "Nothing scheduled for " + h(longDate(iso(guideDay))) + ".";
+      : "Nothing scheduled for " + h(full) + ".";
     document.getElementById("guideUntimed").innerHTML = untimed.length
       ? '<div class="rule"><span>No set time</span></div><div class="slate">' +
         untimed.map(function(e){ return slotHTML(e, 0); }).join("") + '</div>'
@@ -2022,35 +2093,57 @@
     document.getElementById("foot").innerHTML = "<span>The Guide</span><span>" + h(longDate(iso(guideDay))) + "</span>";
 
     var sc = document.getElementById("guidescroll");
-    var want = Math.max(0, ((nowMin()/60) - lo) * PX_PER_HOUR - 90);
-    if(guideDay === dkey(new Date())) sc.scrollLeft = want;
+    sc.scrollLeft = guideDay === tk
+      ? Math.max(0, ((nowMin()/60) - lo) * PX_PER_HOUR - 90)
+      : 0;
   }
 
   /* ================= TRIPS ================= */
-  function showTrips(){
-    trip = null; applyTheme(null); setView("trips");
-    document.title = "Trips — The Guide";
-    var sorted = TRIPS.slice().sort(function(a,b){
+  /* Dallas is home, so a local booking is something on in town, not a trip. */
+  function listOf(local){
+    return TRIPS.filter(function(t){ return !!t.local === local; }).sort(function(a,b){
       var pa = status(a).state === "past", pb = status(b).state === "past";
       if(pa !== pb) return pa ? 1 : -1;
       return a.start < b.start ? -1 : 1;
     });
-    document.getElementById("trips").innerHTML = sorted.map(function(t){
-      var st = status(t);
-      return '<a class="trip-card ' + st.state + '" href="#trip/' + t.id + '" style="--accent:' +
-        (appTheme === "lounge" ? t.theme.gold : t.theme.link) + '">' +
-        '<span class="dates">' + shortRange(t) + ', ' + iso(t.start).getFullYear() + ' · ' +
-          (t.local ? "Local" : dayCount(t) + " days") + '</span>' +
-        '<span class="name">' + h(t.name) + '</span>' +
-        '<span class="sub">' + h(t.sub) + '</span>' +
-        '<span class="status">' + st.text + '</span></a>';
-    }).join("");
-    document.getElementById("foot").innerHTML = "<span>" + TRIPS.length + " trips</span><span>The Guide</span>";
   }
+  function cardHTML(t){
+    var st = status(t), a = iso(t.start), b = iso(t.end);
+    var span = t.local
+      ? (dkey(a) === dkey(b) ? "Dallas" : "Dallas · " + dayCount(t) + " days")
+      : dayCount(t) + " days";
+    return '<a class="trip-card ' + st.state + '" href="#trip/' + t.id + '" style="--accent:' +
+      (appTheme === "lounge" ? t.theme.gold : t.theme.link) + '">' +
+      '<span class="dates">' + shortRange(t) + ', ' + a.getFullYear() + ' · ' + span + '</span>' +
+      '<span class="name">' + h(t.name) + '</span>' +
+      '<span class="sub">' + h(t.sub) + '</span>' +
+      '<span class="status">' + st.text + '</span></a>';
+  }
+  function showList(local){
+    trip = null; applyTheme(null); setView(local ? "whatson" : "trips");
+    var rows = listOf(local);
+    document.title = (local ? "What's On" : "Trips") + " — The Guide";
+    var html = "", seenPast = false;
+    rows.forEach(function(t){
+      if(status(t).state === "past" && !seenPast){
+        seenPast = true;
+        html += '<div class="rule"><span>Been and gone</span></div>';
+      }
+      html += cardHTML(t);
+    });
+    document.getElementById(local ? "whatson" : "trips").innerHTML = rows.length
+      ? html
+      : '<div class="empty">' + (local ? "Nothing on in Dallas yet." : "No trips booked.") + '</div>';
+    document.getElementById("foot").innerHTML =
+      "<span>" + rows.length + (local ? " in Dallas" : " trip" + (rows.length === 1 ? "" : "s")) + "</span><span>The Guide</span>";
+  }
+  function showWhatsOn(){ showList(true); }
+  function showTrips(){ showList(false); }
 
   function render(){
     if(view === "today") showToday();
     else if(view === "guide") showGuide();
+    else if(view === "whatson") showWhatsOn();
     else if(view === "trips") showTrips();
     else if(trip) showTrip(trip);
   }
@@ -2224,14 +2317,29 @@
       var b = e.target.closest(".daybtn"); if(!b) return;
       guideDay = b.dataset.day; showGuide();
     });
+    function shiftWeek(n){ guideDay = dkey(addDays(iso(guideDay), n * 7)); showGuide(); }
+    document.getElementById("wPrev").addEventListener("click", function(){ shiftWeek(-1); });
+    document.getElementById("wNext").addEventListener("click", function(){ shiftWeek(1); });
+    document.getElementById("wToday").addEventListener("click", function(){ guideDay = dkey(new Date()); showGuide(); });
+    document.getElementById("wJump").addEventListener("change", function(e){
+      if(e.target.value){ guideDay = e.target.value; showGuide(); }
+    });
+    /* arrows walk weeks while the guide is open */
+    document.addEventListener("keydown", function(e){
+      if(view !== "guide" || !document.getElementById("sheet").hidden) return;
+      if(e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
+      if(e.key === "ArrowLeft"){ shiftWeek(-1); }
+      else if(e.key === "ArrowRight"){ shiftWeek(1); }
+    });
   }
 
   /* ================= ROUTING ================= */
   function route(){
     var raw = (location.hash || "").replace(/^#/, "");
     var base = raw.split("&")[0];
-    if(base === "guide")  return showGuide();
-    if(base === "trips")  return showTrips();
+    if(base === "guide")   return showGuide();
+    if(base === "whatson") return showWhatsOn();
+    if(base === "trips")   return showTrips();
     if(base === "today" || base === "") return showToday();
     if(base.indexOf("trip/") === 0){
       var t = tripById(base.slice(5));
@@ -2706,7 +2814,11 @@
     document.getElementById("chanList").innerHTML = CHANNELS.map(function(c){
       return '<li style="--chc:' + chColor(c.id) + '"><i></i>' + c.name + '</li>';
     }).join("");
-    document.getElementById("tripCt").textContent = comingSoon(400).length || "";
+    var up = function(local){
+      return TRIPS.filter(function(t){ return !!t.local === local && status(t).state !== "past"; }).length;
+    };
+    document.getElementById("tripCt").textContent = up(false) || "";
+    document.getElementById("onCt").textContent = up(true) || "";
     document.querySelectorAll(".tab").forEach(function(b){
       b.addEventListener("click", function(){ location.hash = "#" + b.dataset.view; });
     });

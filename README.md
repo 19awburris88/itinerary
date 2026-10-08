@@ -93,7 +93,7 @@ by date, with wrapped trips sinking to the bottom, and its days join The Guide a
 
 ## After you edit index.html
 
-Bump the cache name in `sw.js` (`guide-v2` → `guide-v3`) and push. Without that, phones that
+Bump the cache name in `sw.js` (`guide-v3` → `guide-v4`) and push. Without that, phones that
 already installed it keep serving the old copy. This is the main way this project breaks.
 
 ## Notes
