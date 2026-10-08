@@ -80,7 +80,7 @@ by date, with wrapped trips sinking to the bottom.
 
 ## After you edit index.html
 
-Bump the cache name in `sw.js` (`trips-v11` → `trips-v12`) and push. Without that, phones that
+Bump the cache name in `sw.js` (`trips-v12` → `trips-v13`) and push. Without that, phones that
 already installed it keep serving the old copy. This is the main way this project breaks.
 
 ## Notes

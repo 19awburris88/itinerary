@@ -918,9 +918,119 @@
       ]
     },
     {
+      id:"smokefest", uid:"smokefest-nov2026", local:true,
+      name:"Dallas Smokefest", h1:["Dallas","Smokefest"],
+      eyebrow:"Nov 4–8, 2026 · Dallas", sub:"Five nights of lounges, socials and galas · SOTL Global Movement",
+      start:"2026-11-04", end:"2026-11-08",
+      theme:{ gold:"#D1495B", link:"#96303E", ember:"#221215" },
+      meta:["Wed → Sun · five days","Art Overdose lands mid-festival"],
+      stay:null,
+      calNote:"Every session with a published time. Several venues are still TBD on the flyer — those events are in the calendar with the venue marked, so update them when the festival posts.",
+      days:[
+        { d:"2026-11-04", title:"Welcome to Dallas", tag:"Casa de Montecristo · 6:00 PM – 1:00 AM", items:[
+          { time:"Day", kind:"Open", title:"Normal Wednesday", where:"Nothing until the evening", cls:"open-slot" },
+          { time:"6:00 PM", kind:"★ Opener", title:"Welcome to Dallas", where:"Casa de Montecristo · 6:00 PM – 1:00 AM",
+            cls:"session", anchor:true,
+            ics:{ uid:"welcome", alarm:60,
+              start:["2026-11-04T18:00","America/Chicago"], end:["2026-11-05T01:00","America/Chicago"],
+              summary:"Smokefest · Welcome to Dallas", location:"Casa de Montecristo, Dallas, TX",
+              desc:"Dallas Smokefest opening night at Casa de Montecristo. 6:00 PM to 1:00 AM. Presented with Dallas TPID and SOTL Global Movement." },
+            facts:[["Runs","6:00 PM – 1:00 AM — it is a long one"],["Getting there","<a href='"+m("Casa de Montecristo, Dallas, TX")+"' target='_blank' rel='noopener'>Open in Maps</a>"],["Tomorrow","Induction starts at noon, so pace it"]] }
+        ]},
+        { d:"2026-11-05", title:"Induction day", tag:"Noon induction · smoke session · Divine Nine at 8", items:[
+          { time:"12:00 PM", kind:"★ SOTL", title:"SOTLGM Induction", where:"Smoking Jacket Cigar Lounge · hosted by Chère Smith",
+            cls:"session", anchor:true,
+            ics:{ uid:"induction", alarm:60,
+              start:["2026-11-05T12:00","America/Chicago"], end:["2026-11-05T16:00","America/Chicago"],
+              summary:"SOTLGM Induction · Smoking Jacket", location:"Smoking Jacket Cigar Lounge, Dallas, TX",
+              desc:"Sisters of the Leaf Global Movement induction, hosted by Chère Smith. 12:00 to 4:00 PM." },
+            facts:[["Host","Chère Smith"],["Runs","12:00 – 4:00 PM"],["Getting there","<a href='"+m("Smoking Jacket Cigar Lounge, Dallas, TX")+"' target='_blank' rel='noopener'>Open in Maps</a>"]] },
+          { time:"4:00 PM", kind:"Smoke session", title:"Smoke Session", where:"Leaf Cabana · hosted by Chère Smith", cls:"meal",
+            ics:{ uid:"smoke-thu", alarm:30,
+              start:["2026-11-05T16:00","America/Chicago"], end:["2026-11-05T19:00","America/Chicago"],
+              summary:"Smokefest · Smoke Session at Leaf Cabana", location:"Leaf Cabana, Dallas, TX",
+              desc:"Smoke session hosted by Chère Smith. 4:00 to 7:00 PM. Straight on from the induction." },
+            facts:[["Runs","4:00 – 7:00 PM — straight on from the induction"],["Getting there","<a href='"+m("Leaf Cabana, Dallas, TX")+"' target='_blank' rel='noopener'>Open in Maps</a>"]] },
+          { time:"8:00 PM", kind:"★ Affair", title:"The Divine Nine Cigar Affair", where:"Venue TBD · hosted by Skip Cheatham &amp; Casey Thomas",
+            cls:"session", anchor:true,
+            ics:{ uid:"divine-nine", alarm:60,
+              start:["2026-11-05T20:00","America/Chicago"], end:["2026-11-06T02:00","America/Chicago"],
+              summary:"The Divine Nine Cigar Affair", location:"Dallas, TX (venue TBD on the flyer)",
+              desc:"Hosted by Skip Cheatham and Casey Thomas. 8:00 PM to 2:00 AM. Venue still TBD — check the festival listing." },
+            facts:[["Hosts","Skip Cheatham &amp; Casey Thomas"],["Runs","8:00 PM – 2:00 AM"],["Where","TBD on the flyer — on the list below"]],
+            note:"An hour's gap after the smoke session, then this runs to 2 AM. Friday starts at 11." }
+        ]},
+        { d:"2026-11-06", title:"Bean &amp; Leaf to Bourbon", tag:"Four events · 11:00 AM through 2:00 AM", items:[
+          { time:"11:00 AM", kind:"★ Daytime", title:"Bean &amp; Leaf", where:"Cigar Art Cigar Lounge · 11:00 AM – 3:00 PM",
+            cls:"session", anchor:true,
+            ics:{ uid:"bean-leaf", alarm:60,
+              start:["2026-11-06T11:00","America/Chicago"], end:["2026-11-06T15:00","America/Chicago"],
+              summary:"Bean & Leaf · Cigar Art", location:"Cigar Art Cigar Lounge, Dallas, TX",
+              desc:"Coffee and cigars, 11:00 AM to 3:00 PM at Cigar Art Cigar Lounge." },
+            facts:[["Runs","11:00 AM – 3:00 PM"],["Getting there","<a href='"+m("Cigar Art Cigar Lounge, Dallas, TX")+"' target='_blank' rel='noopener'>Open in Maps</a>"]] },
+          { time:"3:00 PM", kind:"Smoke session", title:"Smoke Session", where:"Venue TBD · 3:00 – 6:00 PM", cls:"meal",
+            ics:{ uid:"smoke-fri", alarm:30,
+              start:["2026-11-06T15:00","America/Chicago"], end:["2026-11-06T18:00","America/Chicago"],
+              summary:"Smokefest · Smoke Session (Friday)", location:"Dallas, TX (venue TBD on the flyer)",
+              desc:"3:00 to 6:00 PM. Venue TBD. Overlaps the VIP dinner, which starts 5:30 — you cannot do all of both." },
+            facts:[["Where","TBD on the flyer"],["Clash","VIP dinner starts 5:30 — this runs to 6:00"]] },
+          { time:"5:30 PM", kind:"★ Dinner", title:"VIP Dinner", where:"Venue TBD · 5:30 – 8:00 PM",
+            cls:"session", anchor:true,
+            ics:{ uid:"vip-dinner", alarm:60,
+              start:["2026-11-06T17:30","America/Chicago"], end:["2026-11-06T20:00","America/Chicago"],
+              summary:"Smokefest · VIP Dinner", location:"Dallas, TX (venue TBD on the flyer)",
+              desc:"5:30 to 8:00 PM. Overlaps the last 30 minutes of the smoke session, and runs right up to Boots & Bourbon at 8:00. Venue TBD." },
+            facts:[["Runs","5:30 – 8:00 PM"],["Where","TBD on the flyer"],["Ticket","Check whether VIP dinner is included or separate"]],
+            note:"Three-way squeeze: the smoke session runs to 6:00, this starts at 5:30, and Boots &amp; Bourbon opens at 8:00 as this ends." },
+          { time:"8:00 PM", kind:"★ Social", title:"Boots &amp; Bourbon Social", where:"Venue TBD · 8:00 PM – 2:00 AM",
+            cls:"session", anchor:true,
+            ics:{ uid:"boots-bourbon", alarm:45,
+              start:["2026-11-06T20:00","America/Chicago"], end:["2026-11-07T02:00","America/Chicago"],
+              summary:"Boots & Bourbon Social", location:"Dallas, TX (venue TBD on the flyer)",
+              desc:"8:00 PM to 2:00 AM. Starts as the VIP dinner ends. Venue TBD." },
+            facts:[["Runs","8:00 PM – 2:00 AM"],["Where","TBD on the flyer"],["Dress","Boots, presumably"]] }
+        ]},
+        { d:"2026-11-07", title:"Education, then two galas", tag:"Noon class · Art Overdose at 4 · Harlem Nights at 8", items:[
+          { time:"12:00 PM", kind:"★ Education", title:"Cigars &amp; Spirits Education", where:"2616 Commerce · 12:00 – 4:00 PM",
+            cls:"session", anchor:true,
+            ics:{ uid:"education", alarm:60,
+              start:["2026-11-07T12:00","America/Chicago"], end:["2026-11-07T16:00","America/Chicago"],
+              summary:"Cigars & Spirits Education · 2616 Commerce", location:"2616 Commerce, Dallas, TX 75226",
+              desc:"Cigars and spirits education session, 12:00 to 4:00 PM at 2616 Commerce in Deep Ellum. Ends exactly as Art Overdose opens." },
+            facts:[["Runs","12:00 – 4:00 PM"],["Getting there","<a href='"+m("2616 Commerce St, Dallas, TX 75226")+"' target='_blank' rel='noopener'>2616 Commerce St</a>"],["Then","Art Overdose opens at 4:00 — this ends right into it"]] },
+          { time:"4:00 PM", kind:"Other ticket", title:"Art Overdose DTX", where:"Stone Water · your table top · 4:00 – 10:00 PM", cls:"meal",
+            facts:[["Separate trip","It has its own card in the app — table top with Adrienne and Randi"],["Flyer says","Smokefest calls this a free afternoon for local lounges and eateries"],["Address","<a href='"+m("Stone Water, 10261 Technology Blvd E, Dallas, TX")+"' target='_blank' rel='noopener'>10261 Technology Blvd E</a>"]],
+            note:"Art Overdose runs to 10:00 and the Harlem Nights Gala opens at 8:00 — you lose two hours of one or the other, and they are a 20-minute drive apart." },
+          { time:"8:00 PM", kind:"★ Gala", title:"Harlem Nights Gala", where:"2016 Commerce · 8:00 PM – 2:00 AM",
+            cls:"session", anchor:true,
+            ics:{ uid:"harlem-nights", alarm:60,
+              start:["2026-11-07T20:00","America/Chicago"], end:["2026-11-08T02:00","America/Chicago"],
+              summary:"Harlem Nights Gala", location:"2016 Commerce, Dallas, TX",
+              desc:"8:00 PM to 2:00 AM. Clashes with Art Overdose, which runs to 10:00 PM. The flyer prints 2016 Commerce here and 2616 Commerce for the afternoon session — likely the same Deep Ellum venue, worth confirming." },
+            facts:[["Runs","8:00 PM – 2:00 AM"],["Dress","Gala — Harlem Nights theme"],["Address check","The flyer prints 2016 Commerce here but 2616 Commerce for the afternoon. Probably the same venue, worth confirming."]],
+            note:"Clashes with Art Overdose until 10:00. Pick one, or arrive here late." }
+        ]},
+        { d:"2026-11-08", title:"Fatigues &amp; Flames", tag:"Sandaga · hosted by Dallas Leaf · time TBA", items:[
+          { time:"TBA", kind:"★ Closer", title:"Fatigues &amp; Flames", where:"Sandaga · hosted by Dallas Leaf",
+            cls:"session", anchor:true,
+            facts:[["Host","Dallas Leaf"],["Theme","Military tribute — the flyer shows fatigues and boots"],["Time","Not printed on the flyer — on the list below"],["Getting there","<a href='"+m("Sandaga, Dallas, TX")+"' target='_blank' rel='noopener'>Open in Maps</a>"]],
+            note:"The only event with no time on the flyer. Not in the calendar export until you have one." }
+        ]}
+      ],
+      todos:[
+        {id:"t1", when:"Before",   label:"Which events need separate tickets · VIP dinner, galas"},
+        {id:"t2", when:"Sunday",   label:"Fatigues &amp; Flames start time · not on the flyer"},
+        {id:"t3", when:"Before",   label:"Venues still TBD · Divine Nine, Fri smoke session, VIP dinner, Boots &amp; Bourbon"},
+        {id:"t4", when:"Friday",   label:"Smoke session or VIP dinner · they overlap 5:30–6:00"},
+        {id:"t5", when:"Saturday", label:"Art Overdose or Harlem Nights for the 8–10 window"},
+        {id:"t6", when:"Saturday", label:"Confirm 2616 vs 2016 Commerce · flyer prints both"},
+        {id:"t7", when:"All week", label:"Late nights four of five days — plan the recovery"}
+      ]
+    },
+    {
       id:"art-overdose", uid:"artoverdose-nov2026", local:true,
       name:"Art Overdose DTX", h1:["Art","Overdose"],
-      eyebrow:"Sat, Nov 7, 2026 · Stone Water, Dallas", sub:"Early Bird Table Top · 4–10 PM · with Adrienne and Randi",
+      eyebrow:"Sat, Nov 7, 2026 · Stone Water, Dallas", sub:"Early Bird Table Top · 4–10 PM · clashes with Harlem Nights",
       start:"2026-11-07", end:"2026-11-07",
       theme:{ gold:"#F08A5D", link:"#B4532C", ember:"#241410" },
       meta:["Adrienne + Randi","Early Bird Table Top · 4:00 – 10:00 PM"],
@@ -936,13 +1046,15 @@
               start:["2026-11-07T16:00","America/Chicago"], end:["2026-11-07T22:00","America/Chicago"],
               summary:"Art Overdose DTX · Stone Water", location:"Stone Water, 10261 Technology Blvd E, Dallas, TX",
               desc:"Art, hip hop, poetry, fashion. Early Bird Table Top with Adrienne and Randi. 4:00 to 10:00 PM." },
-            facts:[["Who","You, Adrienne and Randi"],["Ticket","Early Bird Table Top"],["What","Art, Hip Hop, Poetry, Fashion and more"],["Presented by","Eye Opener · Humble Flourish · CrownHolders · Netwerk N Chill"]] }
+            facts:[["Who","You, Adrienne and Randi"],["Ticket","Early Bird Table Top"],["What","Art, Hip Hop, Poetry, Fashion and more"],["Presented by","Eye Opener · Humble Flourish · CrownHolders · Netwerk N Chill"],["Clash","Smokefest's Harlem Nights Gala opens at 8:00 the same night — see the Smokefest card"]],
+            note:"You are mid-Smokefest this week. The Harlem Nights Gala runs 8:00 PM – 2:00 AM at Commerce St, about 20 minutes from Stone Water." }
         ]}
       ],
       todos:[
         {id:"t1", when:"Before",  label:"Table confirmation · on the phone"},
         {id:"t2", when:"Before",  label:"What comes with the table top · drinks, seating?"},
-        {id:"t3", when:"Saturday",label:"Who's driving · you, Adrienne or Randi"}
+        {id:"t3", when:"Saturday",label:"Who's driving · you, Adrienne or Randi"},
+        {id:"t4", when:"Saturday",label:"Leave early for Harlem Nights, or skip it?"}
       ]
     },
     {
