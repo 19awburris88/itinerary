@@ -6,7 +6,7 @@ Static PWA. No build step, no dependencies, one hand-written file. Push it as-is
 index.html      the whole app (~2,700 lines: CSS, data, logic)
 manifest.json   name, colors, icons
 sw.js           offline cache
-icons/          192 / 512 / maskable / apple-touch
+icons/          favicon.svg + 32 / 192 / 512 / maskable / apple-touch
 fonts/          6 self-hosted woff2, latin subset
 .nojekyll       stops GitHub Pages running Jekyll over it
 ```
@@ -102,7 +102,7 @@ by date, with wrapped trips sinking to the bottom, and its days join The Guide a
 
 ## After you edit index.html
 
-Bump the cache name in `sw.js` (`guide-v5` → `guide-v6`) and push. Without that, phones that
+Bump the cache name in `sw.js` (`guide-v6` → `guide-v7`) and push. Without that, phones that
 already installed it keep serving the old copy. This is the main way this project breaks.
 
 ## Notes

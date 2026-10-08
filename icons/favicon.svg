@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="The Guide">
+  <rect width="512" height="512" rx="96" fill="#F2ECE1"/>
+  <g transform="translate(256,256) scale(1.1) translate(-256,-256)">
+    <path d="M352.2 272.1 A116 116 0 1 1 347.0 212.3" fill="none" stroke="#6E1E2E" stroke-width="64"/>
+    <rect x="246" y="226" width="140" height="56" rx="6" fill="#6E1E2E"/>
+    <path d="M322 166 L390 210 L322 236 Z" fill="#A8853F"/>
+  </g>
+</svg>

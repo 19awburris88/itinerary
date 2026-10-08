@@ -3,7 +3,7 @@
    online load is enough to go fully offline.
    Bump CACHE when you edit index.html so phones pick up the new version. */
 
-const CACHE = "guide-v5";
+const CACHE = "guide-v6";
 
 const SHELL = [
   "./",
@@ -13,6 +13,8 @@ const SHELL = [
   "./icons/icon-512.png",
   "./icons/icon-maskable-512.png",
   "./icons/apple-touch-icon.png",
+  "./icons/favicon.svg",
+  "./icons/favicon-32.png",
   "./fonts/playfair-display-var.woff2",
   "./fonts/playfair-display-italic.woff2",
   "./fonts/instrument-sans-var.woff2",
