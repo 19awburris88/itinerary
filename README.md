@@ -1,46 +1,55 @@
-# Austin's Trips — installable itinerary
+# The Guide — a personal calendar and travel itinerary
 
-Static PWA. No build step, no dependencies. One page holds every trip: a home screen lists
-them, tapping one opens the day-by-day view with the flights, the stay, the events, a
-calendar export, and the open questions for that trip.
+Static PWA. No build step, no dependencies, one hand-written file. Push it as-is.
 
 ```
-index.html      the whole app — CSS in <style>, data + logic in <script>
-manifest.json   name, colours, icons
+index.html      the whole app (~2,700 lines: CSS, data, logic)
+manifest.json   name, colors, icons
 sw.js           offline cache
 icons/          192 / 512 / maskable / apple-touch
-fonts/          5 self-hosted woff2, latin subset
+fonts/          6 self-hosted woff2, latin subset
 ```
 
-Live at `https://19awburris88.github.io/itinerary/`. Push to `main` and Pages redeploys.
+## Three views
 
-## How it's organised
+- **Today** — a concierge page. Greeting, On Now or Up Next with a progress bar and a
+  leave-by, the rest of the day, what's protected, the next trip, and one concierge note.
+- **The Guide** — the week as television programming. Work, Life, Wellness and Travel are
+  channels along a shared timeline; events are program blocks, so overlaps and open time
+  are visible at a glance. A red line marks now.
+- **Trips** — a cover per trip, and inside it the day-by-day rail with flights, hotels,
+  reservations, the calendar export and the checklist.
 
-Everything about a trip lives in one object in the `TRIPS` array:
+A sidebar appears at 900px and up; below that the brand and tabs sit on top.
 
-| field | what it is |
-|---|---|
-| `id` | the URL fragment — `#atl` opens that trip |
-| `uid` | prefix for calendar event ids; keep it stable so re-importing updates instead of duplicating |
-| `name`, `h1`, `eyebrow`, `sub`, `meta` | the words on the home card and the trip hero |
-| `start`, `end` | ISO dates; the countdown, the default day, and the home ordering all key off these |
-| `theme` | `gold` (accent), `link` (the same accent dark enough for the light background), `ember` (event-card background) |
-| `stay` | address, copy string, and the getting-there steps — or `null` to hide the section |
-| `days` | one entry per day: `{d, title, tag, items[]}` |
-| `todos` | the open items for the checklist |
+## Where the data lives
 
-`span(start, end, {date: day})` fills a date range with "wide open" days so a sparse trip
-only spells out the days that matter. Each item has `{time, kind, title, where, cls, anchor,
-facts[], note}`; `cls` is `session` (the highlighted event style) / `travel` / `meal` /
-`open-slot`. Add `ics:{...}` to any item with a fixed time and it joins that trip's calendar
-export — change a time on a card and change it in `ics` too.
+Two sources, merged at read time by `eventsOn(date)`:
+
+- **Trips** are hand-authored in the `TRIPS` array in `index.html`. They carry confirmation
+  numbers, map links and `ics` blocks, and a deploy can never touch them.
+- **Your own events** live in `localStorage` under `guide:events`, created and edited in the
+  app with the **+** button. A deploy can never touch those either.
+
+Repeats (daily, weekdays, weekly on chosen days, monthly) are expanded when a view asks for
+a date range — never stored — so there are no duplicate rows to clean up when a series
+changes. `offair` marks protected time: it shows as a dashed block and is skipped by Up Next.
+
+Trip items join the timeline when they have an `ics` block or a parseable clock. "Morning",
+"Day" and "TBA" stay untimed rather than being invented into a slot.
 
 ## Routing
 
-- no fragment → home, unless a trip is in progress today, in which case it opens straight to it
-- `#trips` → home, always
-- `#atl` → that trip
-- `#atl&s=…` → that trip, with a shared checklist to merge
+`#today` · `#guide` · `#trips` · `#trip/<id>`. Older `#<tripid>` links, including shared
+checklist links, still resolve.
+
+## Themes
+
+`data-theme` on the root plus one block of tokens per theme — **ivory** (warm paper,
+charcoal, deep burgundy, brass) and **lounge** (the same room after dark). Every colour in
+the app comes from those tokens, so adding a third theme means adding one block. Each trip
+tints the app with its own accent on top: the darker value on ivory, the brighter one in
+the lounge. The moon button switches, and the choice is remembered.
 
 ## Install on Android
 
@@ -80,7 +89,7 @@ by date, with wrapped trips sinking to the bottom.
 
 ## After you edit index.html
 
-Bump the cache name in `sw.js` (`trips-v13` → `trips-v14`) and push. Without that, phones that
+Bump the cache name in `sw.js` (`guide-v1` → `guide-v2`) and push. Without that, phones that
 already installed it keep serving the old copy. This is the main way this project breaks.
 
 ## Notes
