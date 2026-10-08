@@ -45,8 +45,8 @@
      adding another means adding a [data-theme=] block, nothing else. Per-trip
      accents layer on top by setting --accent inline. */
   :root, [data-theme="ivory"]{
-    --paper:#F2ECE1;
-    --side:#E9E1D3;
+    --paper:#F4EDE4;
+    --side:#EBE0D9;
     --card:#FBF8F2;
     --card-2:#FFFFFF;
     --panel:#F0DFE0;        /* burgundy wash */
@@ -58,6 +58,8 @@
     --hair-soft:#EBE3D6;
     --accent:#6E1E2E;
     --accent-ink:#FBF8F2;
+    --wine:#6E1E2E;
+    --wine-soft:rgba(110,30,46,.10);
     --rose:#9B3049;
     --brass:#9A7A36;
     --brass-soft:rgba(154,122,54,.14);
@@ -68,8 +70,8 @@
     --shadow:0 1px 2px rgba(35,31,27,.05), 0 10px 28px rgba(35,31,27,.07);
   }
   [data-theme="lounge"]{
-    --paper:#1B1613;        /* the lounge after dark */
-    --side:#141010;
+    --paper:#1C1517;        /* the lounge after dark */
+    --side:#17100F;
     --card:#221B17;
     --card-2:#272019;
     --panel:#3C2029;        /* the ON NOW burgundy */
@@ -81,6 +83,8 @@
     --hair-soft:#272019;
     --accent:#8C2B3D;
     --accent-ink:#F6ECE4;
+    --wine:#8C2B3D;
+    --wine-soft:rgba(185,70,95,.16);
     --rose:#D98B9C;
     --brass:#C9A86A;
     --brass-soft:rgba(201,168,106,.13);
@@ -132,12 +136,9 @@
   }
   .side-in{max-width:1180px;margin:0 auto;padding:11px 18px 0;}
   .brandrow{display:flex;align-items:center;justify-content:space-between;gap:12px;}
-  .brand{display:flex;align-items:baseline;gap:7px;}
-  .brand .the{
-    font-family:var(--mono);font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);
-  }
-  .brand .gd{font-family:var(--display);font-size:22px;font-weight:600;letter-spacing:-.01em;color:var(--ink);}
-  .brand .gd b{color:var(--brass);font-weight:600;}
+  .brand{display:flex;align-items:center;gap:9px;}
+  .gmark{width:27px;height:27px;flex:none;color:var(--wine);}
+  .brand .gd{font-family:var(--display);font-size:21px;font-weight:600;letter-spacing:-.015em;color:var(--ink);white-space:nowrap;}
   .tagline{
     display:none;font-family:var(--mono);font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;
     color:var(--muted);line-height:1.9;margin:16px 0 26px;
@@ -151,7 +152,8 @@
   .iconbtn:hover{background:var(--brass-soft);border-color:var(--brass);}
   .iconbtn:focus-visible{outline:2px solid var(--brass);outline-offset:2px;}
   .iconbtn svg{width:15px;height:15px;}
-  .tabs{display:flex;gap:2px;margin-top:9px;}
+  .tabs{display:flex;gap:2px;margin-top:9px;overflow-x:auto;scrollbar-width:none;}
+  .tabs::-webkit-scrollbar{display:none;}
   .tab{
     flex:1 1 0;background:none;border:0;border-bottom:2px solid transparent;
     color:var(--muted);cursor:pointer;padding:9px 4px 8px;position:relative;
@@ -159,9 +161,10 @@
     white-space:nowrap;transition:color .16s ease,border-color .16s ease,background .16s ease;
   }
   .only-wide{display:none;}
-  @media (max-width:430px){ .tab{font-size:9.5px;letter-spacing:.07em;padding-left:2px;padding-right:2px;} }
+  @media (max-width:620px){ .tab{font-size:9.5px;letter-spacing:.04em;padding-left:3px;padding-right:3px;} }
   .tab:hover{color:var(--ink);}
-  .tab[aria-current="page"]{color:var(--brass);border-bottom-color:var(--brass);}
+  .tab[aria-current="page"]{color:var(--wine);border-bottom-color:var(--wine);}
+  [data-theme="lounge"] .tab[aria-current="page"]{color:var(--rose);border-bottom-color:var(--rose);}
   .tab:focus-visible{outline:2px solid var(--brass);outline-offset:-3px;}
   .tab .ct{
     font-size:9px;opacity:.8;margin-left:5px;
@@ -170,7 +173,10 @@
   .sidequote{display:none;}
 
   @media (min-width:900px){
-    .shell{display:grid;grid-template-columns:232px 1fr;min-height:100vh;}
+    .shell{display:grid;grid-template-columns:232px minmax(0,1fr);min-height:100vh;}
+    /* auto margins stop a grid item stretching, so it sizes to content and the
+       guide's wide track pushes the page. Pin it to the track instead. */
+    .shell > .wrap{min-width:0;width:100%;}
     .side{
       position:sticky;top:0;height:100vh;border-bottom:0;border-right:1px solid var(--hair);
       display:flex;flex-direction:column;
@@ -178,8 +184,8 @@
     .side-in{padding:30px 24px;display:flex;flex-direction:column;height:100%;max-width:none;}
     .brandrow{display:block;}
     .brand{display:block;}
-    .brand .the{display:block;margin-bottom:-2px;}
-    .brand .gd{font-size:31px;line-height:1.05;display:block;}
+    .gmark{width:46px;height:46px;margin-bottom:9px;}
+    .brand .gd{font-size:30px;line-height:1.05;display:block;}
     .tagline{display:block;}
     .iconbtn{position:absolute;top:28px;right:22px;}
     .tabs{display:block;margin-top:0;}
@@ -188,7 +194,7 @@
       border-bottom:0;border-radius:8px;padding:10px 12px;margin-bottom:3px;font-size:11px;
     }
     .tab:hover{background:var(--hair-soft);}
-    .tab[aria-current="page"]{background:var(--card);color:var(--ink);box-shadow:var(--shadow);}
+    .tab[aria-current="page"]{background:var(--wine);color:var(--accent-ink);box-shadow:var(--shadow);}
     .tab[aria-current="page"]:after{
       content:"";width:5px;height:5px;border-radius:50%;background:var(--brass);margin-left:auto;
     }
@@ -220,8 +226,9 @@
   .rule{display:flex;align-items:center;gap:11px;margin:30px 0 14px;}
   .rule span{
     font-family:var(--mono);font-size:10.5px;letter-spacing:.17em;text-transform:uppercase;
-    color:var(--brass);white-space:nowrap;
+    color:var(--wine);white-space:nowrap;
   }
+  [data-theme="lounge"] .rule span{color:var(--rose);}
   .rule:after{content:"";flex:1;height:1px;background:var(--hair);}
   .sectlead{font-size:14px;color:var(--muted);margin:0 0 14px;}
   .empty{
@@ -273,8 +280,9 @@
   .dayhead .l{min-width:0;}
   .dayhead .stamp{
     font-family:var(--mono);font-size:10.5px;letter-spacing:.17em;text-transform:uppercase;
-    color:var(--brass);margin:0 0 9px;
+    color:var(--wine);margin:0 0 9px;
   }
+  [data-theme="lounge"] .dayhead .stamp{color:var(--rose);}
   .dayhead h1{font-size:clamp(28px,7.4vw,40px);line-height:1.08;}
   .dayhead h1 i{font-style:italic;}
   .dayhead .lede{font-size:15px;color:var(--muted);margin:9px 0 0;}
@@ -319,11 +327,11 @@
   /* two-column body */
   .cols{display:block;}
   @media (min-width:900px){
-    .cols{display:grid;grid-template-columns:1fr 288px;gap:34px;align-items:start;margin-top:30px;}
+    .cols{display:grid;grid-template-columns:minmax(0,1fr) 288px;gap:34px;align-items:start;margin-top:30px;}
   }
   .colhead{
     display:flex;align-items:baseline;justify-content:space-between;gap:12px;
-    margin:30px 0 4px;padding-bottom:11px;border-bottom:1px solid var(--hair);
+    margin:30px 0 4px;padding-bottom:11px;border-bottom:2px solid var(--wine);
   }
   @media (min-width:900px){ .colhead{margin-top:0;} }
   .colhead h3{font-size:19px;font-weight:500;}
@@ -355,6 +363,74 @@
   .offairline svg{width:15px;height:15px;flex:none;margin-top:2px;color:var(--brass);}
   .offairline b{display:block;color:var(--ink);font-weight:500;}
 
+  /* ================= THE LIST ================= */
+  .group{
+    background:var(--card);border:1px solid var(--hair);border-left:3px solid var(--wine);
+    border-radius:11px;padding:16px 17px 13px;margin-bottom:14px;
+  }
+  .ghead{display:flex;align-items:center;gap:10px;margin-bottom:4px;}
+  .gname{
+    flex:1;min-width:0;font-family:var(--display);font-size:20px;font-weight:600;
+    background:none;border:0;color:var(--ink);padding:2px 0;
+  }
+  .gname:focus{outline:none;border-bottom:1px solid var(--brass);}
+  .gcount{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--muted);white-space:nowrap;}
+  .gkill{background:none;border:0;color:var(--muted);cursor:pointer;font-size:15px;padding:2px 4px;opacity:.55;}
+  .gkill:hover{color:#C0392B;opacity:1;}
+  .gkill:focus-visible{outline:2px solid var(--brass);outline-offset:2px;}
+
+  .task{display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-bottom:1px solid var(--hair-soft);}
+  .task:last-of-type{border-bottom:0;}
+  .tcheck{
+    flex:none;width:19px;height:19px;border-radius:5px;border:1.5px solid var(--hair);background:var(--card-2);
+    cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;margin-top:2px;
+  }
+  .tcheck svg{width:11px;height:11px;color:#fff;opacity:0;}
+  .task.done .tcheck{background:var(--wine);border-color:var(--wine);}
+  .task.done .tcheck svg{opacity:1;}
+  .tcheck:focus-visible{outline:2px solid var(--brass);outline-offset:2px;}
+  .ttext{
+    flex:1;min-width:0;font-size:14.5px;line-height:1.4;background:none;border:0;color:inherit;
+    font-family:var(--body);padding:0;resize:none;overflow:hidden;
+  }
+  .ttext:focus{outline:none;}
+  .task.done .ttext{text-decoration:line-through;color:var(--muted);}
+  .twhen{
+    flex:none;font-family:var(--mono);font-size:9.5px;letter-spacing:.07em;color:var(--brass);
+    background:var(--brass-soft);border-radius:3px;padding:3px 7px;margin-top:1px;white-space:nowrap;
+  }
+  .task.done .twhen{opacity:.45;}
+  .tdel{
+    flex:none;background:none;border:0;color:var(--muted);cursor:pointer;font-size:15px;line-height:1;
+    padding:2px 4px;opacity:0;transition:opacity .15s ease;
+  }
+  .task:hover .tdel,.tdel:focus-visible{opacity:1;}
+  .tdel:hover{color:#C0392B;}
+  .carry .twhen{color:var(--rose);background:transparent;border:1px solid currentColor;}
+
+  /* habit rows — one tap per day */
+  .days7{display:flex;gap:5px;flex-wrap:wrap;margin:9px 0 2px;}
+  .dpill{
+    flex:1 1 38px;min-width:38px;background:var(--card-2);border:1px solid var(--hair);border-radius:7px;
+    padding:7px 2px 6px;cursor:pointer;text-align:center;font-family:var(--mono);color:var(--muted);
+    transition:all .14s ease;
+  }
+  .dpill s{display:block;text-decoration:none;font-size:9px;letter-spacing:.1em;text-transform:uppercase;}
+  .dpill b{display:block;font-size:13px;font-weight:500;color:var(--ink);margin-top:2px;}
+  .dpill[aria-pressed="true"]{background:var(--brass);border-color:var(--brass);}
+  .dpill[aria-pressed="true"] b,.dpill[aria-pressed="true"] s{color:var(--dark);}
+  .dpill.istoday{border-color:var(--rose);}
+  .dpill:focus-visible{outline:2px solid var(--brass);outline-offset:2px;}
+  .dnote{font-family:var(--mono);font-size:10px;color:var(--muted);margin:7px 0 0;letter-spacing:.04em;}
+
+  .gadd{display:flex;gap:8px;align-items:center;margin-top:9px;}
+  .gadd input{
+    flex:1;min-width:0;background:none;border:0;border-bottom:1px solid var(--hair-soft);
+    font-family:var(--body);font-size:14px;color:var(--ink);padding:7px 2px;
+  }
+  .gadd input::placeholder{color:var(--muted);opacity:.65;}
+  .gadd input:focus{outline:none;border-bottom-color:var(--brass);}
+
   /* right rail */
   .rail-r{display:grid;gap:26px;margin-top:30px;}
   @media (min-width:900px){ .rail-r{margin-top:0;} }
@@ -378,8 +454,9 @@
   .concierge{border-top:1px solid var(--hair);padding-top:20px;}
   .concierge h4{
     font-family:var(--mono);font-size:10px;letter-spacing:.17em;text-transform:uppercase;
-    color:var(--brass);margin:0 0 11px;font-weight:400;
+    color:var(--wine);margin:0 0 11px;font-weight:400;
   }
+  [data-theme="lounge"] .concierge h4{color:var(--rose);}
   .concierge .cz{font-family:var(--display);font-size:20px;line-height:1.2;margin:0 0 9px;}
   .concierge p{font-size:14px;color:var(--muted);line-height:1.55;margin:0;}
   .concierge p b{color:var(--ink);font-weight:600;}
@@ -428,15 +505,16 @@
   .daybtn s{display:block;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;}
   .daybtn b{display:block;font-size:17px;font-weight:500;color:var(--ink);margin-top:2px;}
   .daybtn:hover{border-color:var(--brass);}
-  .daybtn[aria-pressed="true"]{background:var(--dark);border-color:var(--dark);color:var(--dark-muted);}
-  .daybtn[aria-pressed="true"] b{color:var(--brass);}
+  .daybtn[aria-pressed="true"]{background:var(--wine);border-color:var(--wine);color:rgba(255,255,255,.72);}
+  .daybtn[aria-pressed="true"] b{color:#fff;}
   .daybtn:focus-visible{outline:2px solid var(--brass);outline-offset:2px;}
   .daybtn.has:after{content:"";display:block;width:4px;height:4px;border-radius:50%;background:var(--brass);margin:4px auto 0;}
 
   .guide{
     margin:16px 0 0;border:1px solid var(--hair);border-radius:11px;overflow:hidden;background:var(--card);
+    min-width:0;
   }
-  .guidescroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .guidescroll{overflow-x:auto;-webkit-overflow-scrolling:touch;min-width:0;}
   .guidescroll::-webkit-scrollbar{height:7px;}
   .guidescroll::-webkit-scrollbar-thumb{background:var(--hair);border-radius:4px;}
   .gtrack{position:relative;}
@@ -562,8 +640,9 @@
   .day-btn .serve{display:block;width:4px;height:4px;border-radius:50%;background:var(--brass);margin:4px auto 0;opacity:0;}
   .day-btn.has-session .serve{opacity:.5;}
   .day-btn:hover{border-color:var(--brass);}
-  .day-btn[aria-selected="true"]{background:var(--dark);border-color:var(--dark);}
-  .day-btn[aria-selected="true"] .dnum{color:var(--brass);}
+  .day-btn[aria-selected="true"]{background:var(--wine);border-color:var(--wine);}
+  .day-btn[aria-selected="true"] .dow{color:rgba(255,255,255,.7);}
+  .day-btn[aria-selected="true"] .dnum{color:#fff;}
   .day-btn[aria-selected="true"] .serve{opacity:1;}
   .day-btn:focus-visible{outline:2px solid var(--brass);outline-offset:2px;}
 
@@ -772,7 +851,14 @@
 <aside class="side">
   <div class="side-in">
     <div class="brandrow">
-      <span class="brand"><span class="the">The</span><span class="gd">Guide<b>.</b></span></span>
+      <span class="brand">
+        <svg class="gmark" viewBox="0 0 512 512" aria-hidden="true">
+          <path d="M352.2 272.1 A116 116 0 1 1 347.0 212.3" fill="none" stroke="currentColor" stroke-width="64"/>
+          <rect x="246" y="226" width="140" height="56" rx="6" fill="currentColor"/>
+          <path d="M322 166 L390 210 L322 236 Z" fill="var(--brass)"/>
+        </svg>
+        <span class="gd">The Guide</span>
+      </span>
       <button class="iconbtn" id="themeBtn" aria-label="Switch between ivory and lounge">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
       </button>
@@ -781,6 +867,7 @@
     <nav class="tabs" aria-label="Views">
       <button class="tab" data-view="today">Today</button>
       <button class="tab" data-view="guide"><span class="only-wide">The </span>Guide</button>
+      <button class="tab" data-view="list">List<span class="ct" id="listCt"></span></button>
       <button class="tab" data-view="whatson">What's On<span class="ct" id="onCt"></span></button>
       <button class="tab" data-view="trips">Trips<span class="ct" id="tripCt"></span></button>
     </nav>
@@ -819,6 +906,7 @@
         <div class="colhead"><h3>The rest of your day</h3><a href="#guide">Open guide ↗</a></div>
         <div class="slate" id="slate"></div>
         <div id="offairLine"></div>
+
       </div>
       <div class="rail-r" id="railRight"></div>
     </div>
@@ -839,6 +927,21 @@
     <div class="guide"><div class="guidescroll" id="guidescroll"><div class="gtrack" id="gtrack"></div></div></div>
     <p class="sectlead" id="guideLead" style="margin-top:12px"></p>
     <div id="guideUntimed"></div>
+  </section>
+
+  <section id="v-list" hidden>
+    <div class="weeknav">
+      <button class="navbtn" id="lPrev" aria-label="Previous week">‹</button>
+      <div class="wlabel"><span id="lRange"></span><em id="lYear"></em></div>
+      <button class="navbtn" id="lNext" aria-label="Next week">›</button>
+      <button class="btn" id="lThis" hidden>This week</button>
+    </div>
+    <p class="sectlead" id="lProgress" style="margin:14px 0 18px"></p>
+    <div id="groups"></div>
+    <div class="shareRow">
+      <button class="btn" id="gAdd">+ Add a group</button>
+      <button class="btn" id="lCopy">Copy as text</button>
+    </div>
   </section>
 
   <section id="v-whatson" hidden>
@@ -1815,6 +1918,280 @@
     return null;
   }
 
+  /* ================= THE LIST ====================
+     A weekly list the way it is actually kept: named groups, Monday to Sunday.
+     A "list" group holds one-off tasks, optionally tagged with a day and time.
+     A "daily" group is a habit — seven boxes, one per day. Each new week
+     inherits the group structure, carries unfinished tasks forward and resets
+     the habits, which is what turning the page does on paper. */
+  var LKEY = "guide:list";
+  var LIST = {};
+  var D7 = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+  var D7FULL = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+  var listWeek = null;
+
+  function monKey(d){ return dkey(addDays(d, -((d.getDay() + 6) % 7))); }
+  function loadList(){
+    try{ LIST = JSON.parse(localStorage.getItem(LKEY)) || {}; }catch(err){ LIST = {}; }
+    if(!LIST || typeof LIST !== "object") LIST = {};
+    if(!Object.keys(LIST).length) seedList();
+    listWeek = monKey(new Date());
+  }
+  function saveList(){
+    try{ localStorage.setItem(LKEY, JSON.stringify(LIST)); }
+    catch(err){ toast("Couldn't save — storage is full or blocked"); }
+  }
+  function mkDaily(name, done, notes){
+    return {id:newId(), name:name, type:"daily", items:D7.map(function(d,i){
+      return {id:newId(), day:i, done:(done||[]).indexOf(i) >= 0, note:(notes||{})[i] || ""};
+    })};
+  }
+  function mkList(name, rows){
+    return {id:newId(), name:name, type:"list", items:rows.map(function(r){
+      return {id:newId(), text:r[0], when:r[1] || "", done:!!r[2]};
+    })};
+  }
+
+  /* Derive a week from the most recent earlier one; only written to storage
+     when something is actually changed. */
+  function weekData(k){
+    if(LIST[k]) return LIST[k];
+    var prev = Object.keys(LIST).filter(function(x){ return x < k; }).sort().pop();
+    if(!prev) return [];
+    return LIST[prev].map(function(g){
+      if(g.type === "daily") return mkDaily(g.name, [], g.items.reduce(function(o,it){ o[it.day] = it.note; return o; }, {}));
+      return {id:newId(), name:g.name, type:"list", items:g.items.filter(function(it){ return !it.done; })
+        .map(function(it){ return {id:newId(), text:it.text, when:it.when, done:false, carry:true}; })};
+    });
+  }
+  function ensureWeek(k){ if(!LIST[k]) LIST[k] = weekData(k); return LIST[k]; }
+  function groupById(id){
+    var gs = weekData(listWeek);
+    for(var i=0;i<gs.length;i++) if(gs[i].id === id) return gs[i];
+    return null;
+  }
+
+  function showList2(){
+    trip = null; applyTheme(null); setView("list");
+    document.title = "List — The Guide";
+    var mon = iso(listWeek), sun = addDays(mon, 6), tk = dkey(new Date());
+    document.getElementById("lRange").textContent = "Week of " + MON[mon.getMonth()] + " " + mon.getDate();
+    document.getElementById("lYear").textContent =
+      mon.getFullYear() === sun.getFullYear() ? mon.getFullYear() : mon.getFullYear() + "–" + sun.getFullYear();
+    document.getElementById("lThis").hidden = (listWeek === monKey(new Date()));
+
+    var gs = weekData(listWeek), open = 0, total = 0;
+    gs.forEach(function(g){ g.items.forEach(function(it){ total++; if(!it.done) open++; }); });
+    document.getElementById("lProgress").textContent = total
+      ? (total - open) + " of " + total + " done · " + open + " still open"
+      : "Nothing on the list yet.";
+
+    document.getElementById("groups").innerHTML = gs.length
+      ? gs.map(function(g){ return groupHTML(g, tk, mon); }).join("")
+      : '<div class="empty">No groups yet. Add one below — General, Gym, Packages, whatever you keep.</div>';
+    document.querySelectorAll("#groups .ttext").forEach(fitText);
+    document.getElementById("listCt").textContent = openThisWeek() || "";
+    document.getElementById("foot").innerHTML =
+      "<span>" + (total - open) + "/" + total + " done</span><span>Week of " + MON3[mon.getMonth()] + " " + mon.getDate() + "</span>";
+  }
+  function openThisWeek(){
+    var n = 0;
+    (LIST[monKey(new Date())] || []).forEach(function(g){
+      g.items.forEach(function(it){ if(!it.done) n++; });
+    });
+    return n;
+  }
+  function fitText(el){ el.style.height = "auto"; el.style.height = el.scrollHeight + "px"; }
+
+  function groupHTML(g, tk, mon){
+    var body, doneN = g.items.filter(function(i){ return i.done; }).length;
+    if(g.type === "daily"){
+      body = '<div class="days7">' + g.items.map(function(it){
+        var d = addDays(mon, it.day);
+        return '<button class="dpill' + (dkey(d) === tk ? " istoday" : "") + '" aria-pressed="' + it.done +
+          '" data-item="' + h(it.id) + '"><s>' + D7[it.day] + '</s><b>' + d.getDate() + '</b></button>';
+      }).join("") + '</div>';
+      var notes = g.items.filter(function(it){ return it.note; })
+        .map(function(it){ return D7[it.day] + " · " + h(it.note); });
+      if(notes.length) body += '<p class="dnote">' + notes.join("   ") + '</p>';
+    } else {
+      /* unfinished first, exactly like the paper list */
+      var rows = g.items.slice().sort(function(a,b){ return (a.done ? 1 : 0) - (b.done ? 1 : 0); });
+      body = rows.map(function(it){
+        return '<div class="task' + (it.done ? " done" : "") + (it.carry ? " carry" : "") + '" data-item="' + h(it.id) + '">' +
+          '<button class="tcheck" aria-pressed="' + it.done + '" aria-label="Mark done">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' +
+          '</button>' +
+          '<textarea class="ttext" rows="1" aria-label="Task">' + h(it.text) + '</textarea>' +
+          (it.when ? '<span class="twhen">' + h(it.when) + '</span>' : '') +
+          '<button class="tdel" aria-label="Delete">×</button></div>';
+      }).join("");
+      body += '<div class="gadd"><input type="text" placeholder="Add to ' + h(g.name) + '…" data-add="' + h(g.id) + '" autocomplete="off"></div>';
+    }
+    return '<div class="group" data-group="' + h(g.id) + '">' +
+      '<div class="ghead"><input class="gname" value="' + h(g.name) + '" aria-label="Group name">' +
+      '<span class="gcount">' + doneN + '/' + g.items.length + '</span>' +
+      '<button class="gkill" aria-label="Delete group">×</button></div>' + body + '</div>';
+  }
+
+  /* "Church (Sunday, 8:30 AM)" -> text + when, the way the list is already written */
+  function splitWhen(raw){
+    var m = /^(.*?)\s*\(([^()]*)\)\s*$/.exec(raw);
+    if(!m) return [raw.trim(), ""];
+    var inner = m[2].trim();
+    return /^(mon|tue|wed|thu|fri|sat|sun)/i.test(inner) ? [m[1].trim(), inner] : [raw.trim(), ""];
+  }
+
+  function wireList(){
+    document.getElementById("lPrev").addEventListener("click", function(){
+      listWeek = dkey(addDays(iso(listWeek), -7)); showList2();
+    });
+    document.getElementById("lNext").addEventListener("click", function(){
+      listWeek = dkey(addDays(iso(listWeek), 7)); showList2();
+    });
+    document.getElementById("lThis").addEventListener("click", function(){
+      listWeek = monKey(new Date()); showList2();
+    });
+    document.getElementById("gAdd").addEventListener("click", function(){
+      var name = prompt("Name the group — e.g. General, Gym, Packages");
+      if(!name) return;
+      var daily = /gym|stretch|devotion|medicine|water|read|steps/i.test(name) &&
+                  confirm('Make "' + name + '" a daily habit with a box per day?');
+      ensureWeek(listWeek).push(daily ? mkDaily(name, [], {}) : mkList(name, []));
+      saveList(); showList2();
+    });
+    document.getElementById("lCopy").addEventListener("click", copyListText);
+
+    var host = document.getElementById("groups");
+    host.addEventListener("click", function(e){
+      var gEl = e.target.closest(".group"); if(!gEl) return;
+      ensureWeek(listWeek);
+      var g = groupById(gEl.dataset.group); if(!g) return;
+      var itEl = e.target.closest("[data-item]");
+      var it = itEl ? g.items.filter(function(x){ return x.id === itEl.dataset.item; })[0] : null;
+      if(e.target.closest(".dpill") && it){ it.done = !it.done; saveList(); showList2(); }
+      else if(e.target.closest(".tcheck") && it){ it.done = !it.done; delete it.carry; saveList(); showList2(); }
+      else if(e.target.closest(".tdel") && it){
+        g.items = g.items.filter(function(x){ return x.id !== it.id; }); saveList(); showList2();
+      }
+      else if(e.target.closest(".gkill")){
+        if(!confirm('Delete "' + g.name + '" and everything in it?')) return;
+        LIST[listWeek] = LIST[listWeek].filter(function(x){ return x.id !== g.id; });
+        saveList(); showList2();
+      }
+    });
+    host.addEventListener("keydown", function(e){
+      if(e.key !== "Enter") return;
+      if(e.target.dataset.add){
+        e.preventDefault();
+        var v = e.target.value.trim(); if(!v) return;
+        ensureWeek(listWeek);
+        var g = groupById(e.target.dataset.add); if(!g) return;
+        var sw = splitWhen(v);
+        g.items.push({id:newId(), text:sw[0], when:sw[1], done:false});
+        saveList(); showList2();
+        var again = document.querySelector('[data-add="' + g.id + '"]'); if(again) again.focus();
+      } else if(e.target.classList.contains("ttext")){
+        e.preventDefault(); e.target.blur();
+      }
+    });
+    host.addEventListener("input", function(e){ if(e.target.classList.contains("ttext")) fitText(e.target); });
+    host.addEventListener("change", function(e){
+      var gEl = e.target.closest(".group"); if(!gEl) return;
+      ensureWeek(listWeek);
+      var g = groupById(gEl.dataset.group); if(!g) return;
+      if(e.target.classList.contains("gname")){
+        var nm = e.target.value.trim(); if(nm){ g.name = nm; saveList(); } else showList2();
+      } else if(e.target.classList.contains("ttext")){
+        var itEl = e.target.closest("[data-item]");
+        var it = g.items.filter(function(x){ return x.id === itEl.dataset.item; })[0]; if(!it) return;
+        var v = e.target.value.trim();
+        if(v){ var sw = splitWhen(v); it.text = sw[0]; if(sw[1]) it.when = sw[1]; saveList(); }
+        else { g.items = g.items.filter(function(x){ return x.id !== it.id; }); saveList(); showList2(); }
+      }
+    });
+  }
+
+  /* back out to the same markdown the list came from */
+  function copyListText(){
+    var mon = iso(listWeek);
+    var out = ["To Do List - Week of " + MON[mon.getMonth()] + " " + mon.getDate(), ""];
+    weekData(listWeek).forEach(function(g){
+      out.push(g.name);
+      if(g.type === "daily"){
+        g.items.forEach(function(it){
+          out.push("- [" + (it.done ? "x" : " ") + "] " + D7FULL[it.day] + (it.note ? " - " + it.note : ""));
+        });
+      } else {
+        g.items.slice().sort(function(a,b){ return (a.done?1:0)-(b.done?1:0); }).forEach(function(it){
+          out.push("- [" + (it.done ? "x" : " ") + "] " + it.text + (it.when ? " (" + it.when + ")" : ""));
+        });
+      }
+      out.push("");
+    });
+    var txt = out.join("\n");
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(function(){ toast("List copied"); })
+        .catch(function(){ toast("Couldn't copy"); });
+    } else toast("Copy isn't available here");
+  }
+
+  /* The list as it was kept in Notes for the week of 5 October — seeded once,
+     only when there is nothing stored, so clearing it stays cleared. */
+  function seedList(){
+    LIST["2026-10-05"] = [
+      mkList("General", [
+        ["Jewelry Store - Susan Saffron","Thursday"],
+        ["Dallas Shirt Printing","Thursday"],
+        ["Verizon","Thursday"],
+        ["SHEF Food & Wine Grand Tasting @ Epic Rec","Saturday, 5:30 – 9:00"],
+        ["STAG at SDHQ","Saturday, 9:00 AM"],
+        ["Task Rabbit","Friday, 9:30"],
+        ["Fair","Sunday"],
+        ["Church","Sunday, 8:30 AM"],
+        ["Adrienne's Game","Sunday, 11:00 AM"],
+        ["Setup 3D Printer",""],
+        ["Wash Adrienne's Car",""],
+        ["Return RealReal","",1],
+        ["Humidor Connect One Pager","",1],
+        ["Agency Reach Out","",1],
+        ["Weekly LinkedIn Maintenance","",1],
+        ["Haircut","",1],
+        ["Chase","",1],
+        ["Fullstack Survey","",1],
+        ["Walking Pad","",1],
+        ["Pickup / Drop Off Tide","",1],
+        ["Virtual Care Now","",1],
+        ["Health Lenz Case Study","",1],
+        ["Emerging 100 Case Study","",1],
+        ["Lynch Meeting","Tuesday, 9:00",1],
+        ["Work on Business Plan","",1],
+        ["Capitol One Payment","",1],
+        ["Whole Foods Pickup - Tumi","Monday",1],
+        ["Massage Viva","",1],
+        ["Groceries","Monday",1],
+        ["Flight to Dallas","",1],
+        ["Pack","",1],
+        ["E100 Update","",1],
+        ["Return Rental - SIXT 9739777991","Sunday, 8:00",1]
+      ]),
+      mkDaily("Gym", [], {2:"Ivy League 11:00", 4:"Ivy League 11:00"}),
+      mkDaily("Stretch", [0], {}),
+      mkDaily("Devotion", [0,1,2,3], {}),
+      mkDaily("Medicine", [1], {}),
+      mkList("Packages", [
+        ["Savoir Faire","Saturday"],
+        ["Speed Legends",""],
+        ["Pur Oud",""],
+        ["LV Dopp Kitt",""],
+        ["Herbes Troublantes",""],
+        ["Dillards","",1],
+        ["3D Printer","",1]
+      ])
+    ];
+    saveList();
+  }
+
   /* ================= BROADCAST STATES ================= */
   function onNow(list){
     var n = nowMin();
@@ -1873,7 +2250,7 @@
 
   function setView(v){
     view = v;
-    ["today","guide","whatson","trips","trip"].forEach(function(n){
+    ["today","guide","list","whatson","trips","trip"].forEach(function(n){
       document.getElementById("v-" + n).hidden = (n !== v);
     });
     /* a trip page lights up whichever list it came from */
@@ -2143,6 +2520,7 @@
   function render(){
     if(view === "today") showToday();
     else if(view === "guide") showGuide();
+    else if(view === "list") showList2();
     else if(view === "whatson") showWhatsOn();
     else if(view === "trips") showTrips();
     else if(trip) showTrip(trip);
@@ -2338,6 +2716,7 @@
     var raw = (location.hash || "").replace(/^#/, "");
     var base = raw.split("&")[0];
     if(base === "guide")   return showGuide();
+    if(base === "list")    return showList2();
     if(base === "whatson") return showWhatsOn();
     if(base === "trips")   return showTrips();
     if(base === "today" || base === "") return showToday();
@@ -2806,10 +3185,12 @@
   (function init(){
     loadAppTheme();
     loadEvents();
+    loadList();
     wireTodos();
     wireShare();
     wireCal();
     wireSheet();
+    wireList();
     document.getElementById("themeBtn").addEventListener("click", toggleAppTheme);
     document.getElementById("chanList").innerHTML = CHANNELS.map(function(c){
       return '<li style="--chc:' + chColor(c.id) + '"><i></i>' + c.name + '</li>';
