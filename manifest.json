@@ -1,13 +1,13 @@
 {
-  "name": "Austin's Trips",
-  "short_name": "Trips",
-  "description": "Personal itineraries — flights, stays, events, and the open questions for each trip.",
+  "name": "The Guide",
+  "short_name": "Guide",
+  "description": "A personal calendar and travel guide — today, the week as channels, and every trip.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#0A0A0D",
-  "theme_color": "#0A0A0D",
+  "background_color": "#231F1B",
+  "theme_color": "#231F1B",
   "icons": [
     {
       "src": "icons/icon-192.png",

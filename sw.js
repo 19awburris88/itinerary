@@ -1,9 +1,9 @@
-/* Austin's Trips — offline cache.
+/* The Guide — offline cache.
    Fonts are self-hosted, so install() precaches everything the app needs and one
    online load is enough to go fully offline.
    Bump CACHE when you edit index.html so phones pick up the new version. */
 
-const CACHE = "trips-v13";
+const CACHE = "guide-v1";
 
 const SHELL = [
   "./",
@@ -13,7 +13,8 @@ const SHELL = [
   "./icons/icon-512.png",
   "./icons/icon-maskable-512.png",
   "./icons/apple-touch-icon.png",
-  "./fonts/big-shoulders-display-var.woff2",
+  "./fonts/playfair-display-var.woff2",
+  "./fonts/playfair-display-italic.woff2",
   "./fonts/instrument-sans-var.woff2",
   "./fonts/ibm-plex-mono-400.woff2",
   "./fonts/ibm-plex-mono-500.woff2",
