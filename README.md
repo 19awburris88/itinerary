@@ -8,6 +8,7 @@ manifest.json   name, colors, icons
 sw.js           offline cache
 icons/          192 / 512 / maskable / apple-touch
 fonts/          6 self-hosted woff2, latin subset
+.nojekyll       stops GitHub Pages running Jekyll over it
 ```
 
 ## Three views
@@ -51,11 +52,13 @@ the app comes from those tokens, so adding a third theme means adding one block.
 tints the app with its own accent on top: the darker value on ivory, the brighter one in
 the lounge. The moon button switches, and the choice is remembered.
 
-## Install on Android
+## Install
 
-1. Open the URL in Chrome.
-2. Menu (⋮) → **Install app**.
-3. Launch it from the home screen.
+**Android** — open the URL in Chrome, menu (⋮) → **Install app**, launch from the home screen.
+
+**iPhone** — open in Safari, Share → **Add to Home Screen**. Note that a home-screen web app
+gets its own storage, separate from Safari, so events and checklists do not cross between
+the two. Pick one and stay in it.
 
 ## Offline
 
@@ -70,7 +73,8 @@ blocks so the flights keep two timezones each — Central out of DFW, Eastern in
 Indianapolis, and Mexico City's fixed offset (no DST there since 2022). Generated in the
 browser, works offline.
 
-Event ids are `<trip uid>-<item uid>`, stable across regenerations.
+Event ids are `<trip uid>-<item uid>@19awburris88.github.io`, stable across regenerations,
+so re-importing updates the events instead of duplicating them.
 
 ## Sharing a checklist
 
@@ -84,12 +88,12 @@ in whichever one you actually use.
 
 ## Adding a trip
 
-Add an object to `TRIPS`, bump `CACHE` in `sw.js`, push. The home page picks it up, sorted
-by date, with wrapped trips sinking to the bottom.
+Add an object to `TRIPS`, bump `CACHE` in `sw.js`, push. The Trips view picks it up, sorted
+by date, with wrapped trips sinking to the bottom, and its days join The Guide automatically.
 
 ## After you edit index.html
 
-Bump the cache name in `sw.js` (`guide-v1` → `guide-v2`) and push. Without that, phones that
+Bump the cache name in `sw.js` (`guide-v2` → `guide-v3`) and push. Without that, phones that
 already installed it keep serving the old copy. This is the main way this project breaks.
 
 ## Notes

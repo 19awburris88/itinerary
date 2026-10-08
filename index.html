@@ -2594,7 +2594,7 @@
 
   function buildIcs(){
     var evs = calEvents(), used = {}, lines = [
-      "BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Austin's Trips//Itinerary//EN",
+      "BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//The Guide//Itinerary//EN",
       "CALSCALE:GREGORIAN","METHOD:PUBLISH","X-WR-CALNAME:" + icsEsc(trip.name)
     ];
     evs.forEach(function(e){ used[e.start[1]] = 1; used[e.end[1]] = 1; });
