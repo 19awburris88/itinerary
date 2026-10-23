@@ -96,6 +96,15 @@ feedback but drops the movement, `prefers-reduced-transparency` makes surfaces s
 Type tracking is **size-specific** — large display text is tightened (letters read too far
 apart as they grow), body sits near zero, and small uppercase labels are opened up.
 
+## A note on big agendas
+
+AfroTech publishes 192 sessions across five days. Dumping all of them would make the day
+panels unreadable, so that trip carries the anchors — each day's opening, the named
+main-stage sessions, the meetups and the evening parties — and the open items point at the
+full agenda on the AfroTech site. Thrive is handled the same way: every slot is on the
+cards because there are only a few per day, but the calendar export keeps to five anchors.
+The rule is that the calendar should be glanceable, not exhaustive.
+
 ## Install
 
 **Android** — open the URL in Chrome, menu (⋮) → **Install app**, launch from the home screen.
@@ -137,7 +146,7 @@ by date, with wrapped trips sinking to the bottom, and its days join The Guide a
 
 ## After you edit index.html
 
-Bump the cache name in `sw.js` (`guide-v7` → `guide-v8`) and push. Without that, phones that
+Bump the cache name in `sw.js` (`guide-v8` → `guide-v9`) and push. Without that, phones that
 already installed it keep serving the old copy. This is the main way this project breaks.
 
 ## Notes
