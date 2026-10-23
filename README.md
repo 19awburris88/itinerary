@@ -61,6 +61,41 @@ the app comes from those tokens, so adding a third theme means adding one block.
 tints the app with its own accent on top: the darker value on ivory, the brighter one in
 the lounge. The moon button switches, and the choice is remembered.
 
+## Motion and materials
+
+Anything you can touch runs on a **spring**, not a fixed-duration curve — a curve can't be
+grabbed mid-flight. The spring takes Apple's two parameters: *damping* (1.0 settles without
+overshoot, ~0.8 adds bounce) and *response* in seconds, which is not a duration — the settle
+time falls out of the physics. ~40 lines, no dependency.
+
+The event sheet is the showcase:
+
+- **Drag the handle** and it stays glued to your finger, 1:1, from wherever you grabbed it.
+- **Grab it mid-animation** and it stops dead and follows you — re-targeting keeps the
+  current velocity, so reversing blends instead of hitting a brick wall.
+- **Release** and the spring continues at the finger's exact speed, so there's no seam
+  between dragging and animating.
+- **A short fast flick dismisses**, because the landing point is *projected* from velocity
+  — `(v/1000)·d/(1−d)`, the same exponential decay as scroll — not measured from where you
+  let go.
+- **Pull up past the top** and it resists progressively instead of stopping dead.
+- The scrim's opacity tracks the drag the whole way, so the gesture always telegraphs the
+  outcome.
+
+Everything tappable dips on **pointer-down**, never on release, and 32px controls carry a
+44px hit area. Haptics fire only on commits — saving an event, ticking a task.
+
+The top bar is a translucent layer with content scrolling under it, and the divider is a
+**scroll edge** that fades in only once something is actually beneath it. The sheet is a
+material: blur plus saturation, not an opaque rectangle.
+
+Three accessibility signals are honoured independently: `prefers-reduced-motion` keeps the
+feedback but drops the movement, `prefers-reduced-transparency` makes surfaces solid, and
+`prefers-contrast: more` adds defined borders.
+
+Type tracking is **size-specific** — large display text is tightened (letters read too far
+apart as they grow), body sits near zero, and small uppercase labels are opened up.
+
 ## Install
 
 **Android** — open the URL in Chrome, menu (⋮) → **Install app**, launch from the home screen.
@@ -102,7 +137,7 @@ by date, with wrapped trips sinking to the bottom, and its days join The Guide a
 
 ## After you edit index.html
 
-Bump the cache name in `sw.js` (`guide-v6` → `guide-v7`) and push. Without that, phones that
+Bump the cache name in `sw.js` (`guide-v7` → `guide-v8`) and push. Without that, phones that
 already installed it keep serving the old copy. This is the main way this project breaks.
 
 ## Notes

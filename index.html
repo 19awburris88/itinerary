@@ -110,6 +110,31 @@
     --ch-travel:#C9A86A;
   }
 
+  /* ================= PRESS =================
+     Feedback belongs on the press, not the release — the moment it waits for
+     click, directness falls off a cliff. Everything tappable dips instantly
+     and recovers with a short ease. */
+  .btn,.tab,.navbtn,.iconbtn,.chipbtn,.dpill,.tcheck,.gkill,.tdel,
+  .trip-card,.slot,.prog,.daybtn,.day-btn,.soonrow,.fab,.card-top,.cbox,.jump{
+    -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+  }
+  .btn:active,.navbtn:active,.iconbtn:active,.chipbtn:active,.dpill:active,
+  .tcheck:active,.cbox:active,.fab:active,.jump:active{
+    transform:scale(.94);transition:transform 70ms cubic-bezier(.2,.7,.3,1);
+  }
+  .trip-card:active,.slot:active,.soonrow:active,.card-top:active,.prog:active,
+  .daybtn:active,.day-btn:active,.group:active{
+    transform:scale(.985);transition:transform 70ms cubic-bezier(.2,.7,.3,1);
+  }
+  .tab:active{opacity:.6;transition:opacity 60ms linear;}
+  .soonbox .go:active{transform:scale(.97);transition:transform 70ms cubic-bezier(.2,.7,.3,1);}
+  /* §10 — a 32px control needs a 44px target; pad the hit area, not the box */
+  .navbtn,.iconbtn,.jump,.gkill,.tdel{position:relative;}
+  .navbtn:before,.iconbtn:before,.jump:before,.gkill:before,.tdel:before{
+    content:"";position:absolute;top:50%;left:50%;width:44px;height:44px;
+    transform:translate(-50%,-50%);
+  }
+
   /* ================= BASE ================= */
   *{box-sizing:border-box;}
   html{-webkit-text-size-adjust:100%;}
@@ -122,7 +147,17 @@
   .wrap{max-width:780px;margin:0 auto;padding:0 18px 46px;}
   @media (min-width:900px){ .wrap{max-width:940px;padding:0 34px 60px;} }
   .mono{font-family:var(--mono);font-size:.92em;letter-spacing:-.01em;}
-  h1,h2,h3{font-family:var(--display);font-weight:600;margin:0;letter-spacing:-.01em;}
+  /* §15 — letters read too far apart as they grow, too tight as they shrink,
+     so tracking is set per size band rather than once globally. */
+  h1,h2,h3{font-family:var(--display);font-weight:600;margin:0;}
+  h1{letter-spacing:-.022em;line-height:1.05;}
+  h2{letter-spacing:-.016em;line-height:1.08;}
+  h3{letter-spacing:-.008em;line-height:1.18;}
+  .cover h1{letter-spacing:-.028em;}
+  .trip-card .name,.soonbox .nm{letter-spacing:-.015em;}
+  .title,.merge-head,.basecamp .addr{letter-spacing:-.008em;}
+  .marquee .what{letter-spacing:-.018em;}
+  .gname{letter-spacing:-.012em;}
   a{color:inherit;}
   [hidden]{display:none !important;}
 
@@ -131,9 +166,23 @@
      sidebar from 900px up, which is where the TV-guide feel really lands. */
   .shell{display:block;}
   .side{
-    position:sticky;top:0;z-index:40;background:var(--side);
-    border-bottom:1px solid var(--hair);
+    position:sticky;top:0;z-index:40;
+    background:var(--side);
+    background:color-mix(in srgb, var(--side) 78%, transparent);
+    -webkit-backdrop-filter:blur(20px) saturate(180%);
+    backdrop-filter:blur(20px) saturate(180%);
+    border-bottom:1px solid transparent;
+    transition:border-color .2s ease;
   }
+  /* §12 — a scroll edge, not a hard divider: it appears only once content
+     actually slides under the chrome */
+  .side:after{
+    content:"";position:absolute;left:0;right:0;top:100%;height:14px;pointer-events:none;
+    background:linear-gradient(to bottom, color-mix(in srgb, var(--paper) 72%, transparent), transparent);
+    opacity:0;transition:opacity .22s ease;
+  }
+  .side.edge:after{opacity:1;}
+  .side.edge{border-bottom-color:var(--hair);}
   .side-in{max-width:1180px;margin:0 auto;padding:11px 18px 0;}
   .brandrow{display:flex;align-items:center;justify-content:space-between;gap:12px;}
   .brand{display:flex;align-items:center;gap:9px;}
@@ -180,7 +229,10 @@
     .side{
       position:sticky;top:0;height:100vh;border-bottom:0;border-right:1px solid var(--hair);
       display:flex;flex-direction:column;
+      /* a structural region reads as a heavier material than floating chrome */
+      background:var(--side);backdrop-filter:none;-webkit-backdrop-filter:none;
     }
+    .side:after{display:none;}
     .side-in{padding:30px 24px;display:flex;flex-direction:column;height:100%;max-width:none;}
     .brandrow{display:block;}
     .brand{display:block;}
@@ -770,17 +822,29 @@
   .merge .row{display:flex;gap:9px;flex-wrap:wrap;}
 
   /* ================= EVENT SHEET ================= */
-  .scrim{position:fixed;inset:0;background:rgba(20,17,16,.55);z-index:60;opacity:0;transition:opacity .2s ease;}
-  .scrim.show{opacity:1;}
+  .scrim{position:fixed;inset:0;background:rgba(20,17,16,.55);z-index:60;opacity:0;}
   .sheet{
-    position:fixed;left:0;right:0;bottom:0;z-index:70;background:var(--paper);
-    border-radius:16px 16px 0 0;max-height:92vh;overflow-y:auto;
-    transform:translateY(100%);transition:transform .26s cubic-bezier(.2,.8,.3,1);
-    box-shadow:0 -10px 40px rgba(0,0,0,.3);
+    position:fixed;left:0;right:0;bottom:0;z-index:70;
+    /* §12 — a sheet is a material arriving, not a rectangle fading in */
+    background:var(--paper);
+    background:color-mix(in srgb, var(--paper) 88%, transparent);
+    -webkit-backdrop-filter:blur(26px) saturate(170%);
+    backdrop-filter:blur(26px) saturate(170%);
+    border-top:1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+    border-radius:18px 18px 0 0;max-height:92vh;overflow-y:auto;
+    box-shadow:0 -12px 44px rgba(0,0,0,.34);
+    transform:translate3d(0,100%,0);will-change:transform;
+    overscroll-behavior:contain;
   }
-  .sheet.show{transform:translateY(0);}
+  /* the handle owns the gesture so the body keeps scrolling natively */
+  .sheet-grab{touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none;padding:2px 0 2px;}
+  .sheet-grab:active{cursor:grabbing;}
+  .grabber{
+    width:38px;height:4px;border-radius:3px;background:var(--hair);margin:6px auto 14px;
+    transition:background .18s ease,width .18s ease;
+  }
+  .sheet-grab:active .grabber{background:var(--wine);width:52px;}
   .sheet-in{max-width:620px;margin:0 auto;padding:8px 18px 30px;}
-  .grabber{width:38px;height:4px;border-radius:3px;background:var(--hair);margin:0 auto 14px;}
   .sheet h2{font-size:24px;margin:0 0 16px;}
   .fld{margin-bottom:14px;}
   .fld label{
@@ -831,8 +895,29 @@
     .item .clock{right:calc(100% + 24px);font-size:11px;}
     .item .dot{left:-20px;}
   }
+  /* §14 — reduced motion is a gentler equivalent, not an absence of feedback:
+     opacity still responds, only the vestibular movement goes. */
   @media (prefers-reduced-motion:reduce){
-    *{transition:none !important;animation:none !important;scroll-behavior:auto !important;}
+    *{animation:none !important;scroll-behavior:auto !important;}
+    *{transition-duration:.01ms !important;}
+    .btn:active,.navbtn:active,.iconbtn:active,.chipbtn:active,.dpill:active,
+    .tcheck:active,.cbox:active,.fab:active,.jump:active,
+    .trip-card:active,.slot:active,.soonrow:active,.card-top:active,.prog:active,
+    .daybtn:active,.day-btn:active,.group:active,.soonbox .go:active{
+      transform:none;opacity:.65;
+    }
+    .trip-card:hover{transform:none;}
+  }
+  @media (prefers-reduced-transparency:reduce){
+    .side{background:var(--side);backdrop-filter:none;-webkit-backdrop-filter:none;}
+    .sheet{background:var(--paper);}
+    .scrim{background:rgba(20,17,16,.82);}
+  }
+  @media (prefers-contrast:more){
+    .side{background:var(--side);backdrop-filter:none;-webkit-backdrop-filter:none;border-bottom-color:var(--ink);}
+    .card,.group,.trip-card,.marquee,.soonbox{border:1px solid var(--ink);}
+    .slot{border-bottom-color:var(--ink);}
+    .tab[aria-current="page"]{border-bottom-width:3px;}
   }
 </style>
 <link rel="manifest" href="manifest.json">
@@ -1017,8 +1102,10 @@
 <div class="scrim" id="scrim" hidden></div>
 <div class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
   <div class="sheet-in">
-    <div class="grabber"></div>
-    <h2 id="sheetTitle">New event</h2>
+    <div class="sheet-grab" id="sheetGrab">
+      <div class="grabber"></div>
+      <h2 id="sheetTitle">New event</h2>
+    </div>
 
     <div class="fld"><label for="fTitle">What</label><input type="text" id="fTitle" placeholder="Standup, gym, dinner…"></div>
 
@@ -2071,8 +2158,8 @@
       var g = groupById(gEl.dataset.group); if(!g) return;
       var itEl = e.target.closest("[data-item]");
       var it = itEl ? g.items.filter(function(x){ return x.id === itEl.dataset.item; })[0] : null;
-      if(e.target.closest(".dpill") && it){ it.done = !it.done; saveList(); showList2(); }
-      else if(e.target.closest(".tcheck") && it){ it.done = !it.done; delete it.carry; saveList(); showList2(); }
+      if(e.target.closest(".dpill") && it){ it.done = !it.done; haptic(it.done ? 10 : 6); saveList(); showList2(); }
+      else if(e.target.closest(".tcheck") && it){ it.done = !it.done; delete it.carry; haptic(it.done ? 10 : 6); saveList(); showList2(); }
       else if(e.target.closest(".tdel") && it){
         g.items = g.items.filter(function(x){ return x.id !== it.id; }); saveList(); showList2();
       }
@@ -2566,7 +2653,86 @@
       '<ol class="steps">' + s.steps.map(function(st){ return '<li><b>' + st[0] + '</b> ' + st[1] + '</li>'; }).join("") + '</ol>';
   }
 
+  /* ================= MOTION ====================
+     A fixed-duration curve cannot be grabbed mid-flight, so anything the user
+     can touch runs on a spring instead. Apple's two parameters: damping (1.0
+     settles without overshoot, ~0.8 adds bounce) and response in seconds —
+     which is not a duration; the settle time emerges from the physics. */
+  function reducedMotion(){
+    try{ return window.matchMedia("(prefers-reduced-motion: reduce)").matches; }catch(e){ return false; }
+  }
+  function Spring(onUpdate){
+    this.x = 0; this.v = 0; this.target = 0;
+    this.damping = 1; this.response = 0.4;
+    this.onUpdate = onUpdate; this.onRest = null; this._raf = 0; this._t = 0;
+  }
+  Spring.prototype.stop = function(){ if(this._raf) cancelAnimationFrame(this._raf); this._raf = 0; };
+  Spring.prototype.setValue = function(x){ this.stop(); this.x = x; this.v = 0; this.onUpdate(x); };
+  Spring.prototype.to = function(target, o){
+    o = o || {};
+    this.target = target;
+    if(o.damping  != null) this.damping  = o.damping;
+    if(o.response != null) this.response = o.response;
+    if(o.velocity != null) this.v = o.velocity;
+    if(o.onRest   != null) this.onRest = o.onRest;
+    if(reducedMotion()){
+      this.stop(); this.x = target; this.v = 0; this.onUpdate(target);
+      if(this.onRest){ var g = this.onRest; this.onRest = null; g(); }
+      return;
+    }
+    /* already running: re-targeting keeps the current velocity, so a reversal
+       blends instead of hitting a brick wall */
+    if(this._raf) return;
+    var self = this; this._t = performance.now();
+    this._raf = requestAnimationFrame(function step(now){
+      var dt = Math.min(0.064, (now - self._t) / 1000); self._t = now;
+      var w = 2 * Math.PI / self.response, k = w * w, c = 2 * self.damping * w;
+      var n = Math.max(1, Math.ceil(dt / 0.004)), hh = dt / n;
+      for(var i = 0; i < n; i++){
+        var a = -k * (self.x - self.target) - c * self.v;
+        self.v += a * hh; self.x += self.v * hh;
+      }
+      self.onUpdate(self.x);
+      if(Math.abs(self.x - self.target) < 0.15 && Math.abs(self.v) < 2){
+        self.x = self.target; self.v = 0; self.onUpdate(self.x); self._raf = 0;
+        if(self.onRest){ var f = self.onRest; self.onRest = null; f(); }
+        return;
+      }
+      self._raf = requestAnimationFrame(step);
+    });
+  };
+
+  /* §6 — land where the flick is going, not where the finger left off.
+     Exponential decay, the same shape as scroll deceleration. */
+  function project(velocity, decelerationRate){
+    var d = decelerationRate == null ? 0.998 : decelerationRate;
+    return (velocity / 1000) * d / (1 - d);
+  }
+  /* §9 — resist progressively at a boundary; a hard stop reads as frozen */
+  function rubberband(overshoot, dimension, constant){
+    var c = constant == null ? 0.55 : constant;
+    return (overshoot * dimension * c) / (dimension + c * Math.abs(overshoot));
+  }
+  function velocityFrom(hist){
+    if(hist.length < 2) return 0;
+    var last = hist[hist.length - 1], first = hist[0];
+    for(var i = hist.length - 1; i >= 0; i--){
+      first = hist[i];
+      if(last.t - hist[i].t > 80) break;
+    }
+    var dt = (last.t - first.t) / 1000;
+    return dt > 0 ? (last.y - first.y) / dt : 0;
+  }
+  /* §13 — reserved for commits and snaps, never decoration */
+  function haptic(ms){ try{ if(navigator.vibrate) navigator.vibrate(ms || 8); }catch(e){} }
+
   /* ================= EVENT SHEET ================= */
+  var sheetSpring = null, sheetH = 0;
+  function paintSheet(y){
+    document.getElementById("sheet").style.transform = "translate3d(0," + y + "px,0)";
+    var open = sheetH ? 1 - Math.min(1, Math.max(0, y / sheetH)) : 1;
+    document.getElementById("scrim").style.opacity = open;
+  }
   var editing = null;   /* the stored event being edited, or null for a new one */
 
   function openSheet(ev){
@@ -2597,22 +2763,29 @@
     });
     document.getElementById("delBtn").hidden = !ev;
     syncSheet();
-    document.getElementById("scrim").hidden = false;
-    document.getElementById("sheet").hidden = false;
+    var sh = document.getElementById("sheet"), sc = document.getElementById("scrim");
+    sc.hidden = false; sh.hidden = false; sh.scrollTop = 0;
+    sheetH = sh.offsetHeight || Math.round(window.innerHeight * 0.9);
+    if(!sheetSpring) sheetSpring = new Spring(paintSheet);
+    sheetSpring.setValue(sheetH);
     requestAnimationFrame(function(){
-      document.getElementById("scrim").classList.add("show");
-      document.getElementById("sheet").classList.add("show");
-      document.getElementById("fTitle").focus();
+      /* drawer values: a touch of bounce, because a sheet that arrives
+         dead-flat reads as a dialog rather than something you pulled up */
+      sheetSpring.to(0, {damping:0.82, response:0.32});
+      try{ document.getElementById("fTitle").focus({preventScroll:true}); }catch(e){}
     });
   }
-  function closeSheet(){
-    document.getElementById("scrim").classList.remove("show");
-    document.getElementById("sheet").classList.remove("show");
-    setTimeout(function(){
-      document.getElementById("scrim").hidden = true;
-      document.getElementById("sheet").hidden = true;
-    }, 240);
+  function closeSheet(velocity){
     editing = null;
+    if(!sheetSpring){
+      document.getElementById("sheet").hidden = true;
+      document.getElementById("scrim").hidden = true;
+      return;
+    }
+    sheetSpring.to(sheetH, {damping:1, response:0.3, velocity: velocity || 0, onRest:function(){
+      document.getElementById("sheet").hidden = true;
+      document.getElementById("scrim").hidden = true;
+    }});
   }
   function syncSheet(){
     var allday = document.getElementById("fAllday").checked;
@@ -2650,7 +2823,7 @@
     var i = -1;
     for(var j=0;j<EVENTS.length;j++) if(EVENTS[j].id === ev.id) i = j;
     if(i >= 0) EVENTS[i] = ev; else EVENTS.push(ev);
-    saveEvents(); closeSheet(); render();
+    saveEvents(); haptic(10); closeSheet(); render();
     toast(i >= 0 ? "Saved" : "Added to the guide");
   }
   function deleteSheet(){
@@ -2670,7 +2843,52 @@
     if(ev) openSheet(ev);
   }
 
+  function wireSheetGesture(){
+    var grab = document.getElementById("sheetGrab");
+    var sh = document.getElementById("sheet");
+    var hist = [], startY = 0, startVal = 0, active = false, pid = null;
+
+    grab.addEventListener("pointerdown", function(e){
+      if(!sheetSpring) return;
+      active = true; pid = e.pointerId;
+      try{ grab.setPointerCapture(pid); }catch(err){}
+      sheetSpring.stop();                       /* §3 grab it mid-flight */
+      startY = e.clientY; startVal = sheetSpring.x;
+      hist = [{y:e.clientY, t:performance.now()}];
+    });
+    grab.addEventListener("pointermove", function(e){
+      if(!active) return;
+      e.preventDefault();
+      var y = startVal + (e.clientY - startY);
+      /* §9 — pulling up past the top resists instead of stopping dead */
+      if(y < 0) y = -rubberband(-y, sheetH || window.innerHeight);
+      sheetSpring.x = y; sheetSpring.v = 0;     /* §2 glued to the finger */
+      paintSheet(y);
+      hist.push({y:e.clientY, t:performance.now()});
+      if(hist.length > 6) hist.shift();
+    });
+    function release(){
+      if(!active) return;
+      active = false;
+      try{ grab.releasePointerCapture(pid); }catch(err){}
+      var v = velocityFrom(hist);                       /* §5 the finger's speed */
+      var landing = sheetSpring.x + project(v);         /* §6 where it is headed */
+      if(landing > sheetH * 0.4 || v > 850){
+        haptic(10);
+        closeSheet(v);                                  /* hand the velocity over */
+      } else {
+        sheetSpring.to(0, {damping:0.85, response:0.3, velocity:v});
+      }
+    }
+    grab.addEventListener("pointerup", release);
+    grab.addEventListener("pointercancel", release);
+    window.addEventListener("resize", function(){
+      if(!document.getElementById("sheet").hidden) sheetH = sh.offsetHeight || sheetH;
+    });
+  }
+
   function wireSheet(){
+    wireSheetGesture();
     document.getElementById("addBtn").addEventListener("click", function(){ openSheet(null); });
     document.getElementById("scrim").addEventListener("click", closeSheet);
     document.getElementById("cancelBtn").addEventListener("click", closeSheet);
@@ -3008,9 +3226,6 @@
 
   function wireShare(){
     document.getElementById("shareBtn").addEventListener("click", sharePlan);
-    /* A link tapped while the app is already open only changes the fragment —
-       the page never reloads, so init doesn't run again. Catch it here. */
-    window.addEventListener("hashchange", function(){ route(); readSharedLink(); });
     document.getElementById("mergeYes").addEventListener("click", function(){
       var n = pendingChanges ? pendingChanges.length : 0;
       if(pendingChanges) applyChanges(pendingChanges);
@@ -3215,7 +3430,20 @@
       var b = e.target.closest(".day-btn"); if(!b) return;
       select(parseInt(b.dataset.i, 10));
     });
+    /* a link tapped while the app is open only changes the fragment, so the
+       page never reloads and init never runs again — catch it here */
     window.addEventListener("hashchange", function(){ route(); readSharedLink(); });
+    /* §12 — no hard rule under the bar; the edge fades in only once something
+       is actually scrolled beneath it */
+    var sideEl = document.querySelector(".side"), ticking = false;
+    window.addEventListener("scroll", function(){
+      if(ticking) return;
+      ticking = true;
+      requestAnimationFrame(function(){
+        sideEl.classList.toggle("edge", window.scrollY > 4);
+        ticking = false;
+      });
+    }, {passive:true});
     /* keep "On now" honest without burning battery */
     setInterval(function(){ if(view === "today") showToday(); }, 60000);
     route();
